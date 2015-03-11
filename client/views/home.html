@@ -1,3 +1,13 @@
 <template name="home">
 	<p>HOME</p>
+	<form>
+    	<input type="text" name="myInput" />
+    	<input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+    </form>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  	<span class="sr-only">Error:</span>{{errorMessage}}
+  	<div>Repositories: {{repoCounter}}</div>
+	{{#each repoList}}
+		<h2><a href="{{path}}">{{name}}</a></h2>
+	{{/each}}
 </template>

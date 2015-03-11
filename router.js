@@ -2,8 +2,8 @@ Router.map(function () {
 
 	Router.configure({
 		layoutTemplate: 'layout',
-		notFoundTemplate: '404'
-		// loadingTemplate: 'loading',
+		notFoundTemplate: '404',
+		loadingTemplate: 'loading'
 		// waitOn: function() { return Meteor.subscribe('users'); }
 	});
 
@@ -21,10 +21,14 @@ Router.map(function () {
 				Router.go('login');
 			}
 			this.next();
+		},
+		waitOn: function() {
+			return Meteor.subscribe('repos');
 		}
-		// waitOn: function() {
-		// 	return Meteor.subscribe('lastpost');
-		// }
+	});
+
+	this.route('repo', {
+		path: '/:username/:repo'
 	});
 
 	this.route('login', {

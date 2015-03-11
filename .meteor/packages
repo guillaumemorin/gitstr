@@ -5,8 +5,11 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 accounts-twitter
 accounts-facebook
 iron:router
+tomi:upload-server
+tomi:upload-jquery
+cfs:standard-packages
+cfs:filesystem
