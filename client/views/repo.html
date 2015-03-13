@@ -1,16 +1,38 @@
 <template name="repo">
 	<h2>{{name}}</h2>
+	{{#if errorMessage}}
+		<div class="ui negative small message">
+			<i class="close icon"></i>
+			<div class="header">
+				{{errorMessage}}
+			</div>
+		</div>
+	{{/if}}
 	<form>
 		<div class="form-group">
 			<input type="file" id="inputFile">
 		</div>
 	</form>
-	<!-- {{> upload_bootstrap }} -->
-	<!-- <button class="btn btn-primary btn-lg" id="create">List</button> -->
-	<!-- <div>{{test}}</div> -->
-	<div id="repo-list">
-		{{#each files}}
-			<h3>{{this.name}}::{{this.type}}::{{this.size}}</h3>
+	<button class="btn btn-primary btn-lg" id="create">Create folder</button>
+	{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
+	<div id="repo-list">	
+		<table class="ui celled striped table">
+		<thead>
+			<tr>
+			<th colspan="3">Repository</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each file_structure}}
+			<tr>
+			<td class="collapsing">
+			<i class="folder icon"></i>{{this.name}}
+			</td>
+			<td>Initial commit</td>
+			<td class="right aligned collapsing">10 hours ago</td>
+			</tr>
 		{{/each}}
+		</tbody>
+		</table>
 	</div>
 </template>

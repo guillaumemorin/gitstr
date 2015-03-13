@@ -1,6 +1,6 @@
 Template.home.helpers({
 	errorMessage: function () {
-		return Session.get('submitMessage');
+		return Session.get('submit_error_Message');
 	},
 	repoCounter: function () {
 		return Session.get('repo_counter');
@@ -12,7 +12,7 @@ Template.home.helpers({
 		//Redirect if creation is confirmed
 		if (Session.get('repo_counter') + 1 === repo_count) {
 			var path = Repos.findOne({}, {sort: {timestamp : -1}}).path;
-			Router.go('/' + path);
+			Router.go(path);
 		}
 
 		Session.set('repo_counter', repos.count());
@@ -23,9 +23,12 @@ Template.home.helpers({
 Template.home.events({
 	'submit form': function (event, template) {
 		var input_val = event.target.myInput.value;
-		var test = Meteor.call('createRepo', input_val, function (error, result) {
+		if (!input_val) {
+			return false;
+		}
+		Meteor.call('createRepo', input_val, function (error, result) {
 			if (error) {
-				Session.set("submitMessage", error.reason);
+				Session.set("submit_error_Message", error.reason);
 			}
 		});
 		return false

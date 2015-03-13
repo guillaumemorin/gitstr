@@ -9,7 +9,8 @@ insecure
 accounts-twitter
 accounts-facebook
 iron:router
-tomi:upload-server
-tomi:upload-jquery
 cfs:standard-packages
 cfs:filesystem
+cfs:ui
+tomi:upload-server
+tomi:upload-jquery
