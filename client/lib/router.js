@@ -24,7 +24,8 @@ Router.map(function () {
 	this.route('repo', {
 		path: '/:username/:repo',
 		data: function () {
-			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username})
+			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username});
+			console.log('user', user);
 			if (!user) {
 				if (!testing) {
 					testing = true;
@@ -38,7 +39,7 @@ Router.map(function () {
 				this.render('404');
 				return false;	
 			}
-			Session.set('repo', repo.name);
+			Session.set('repo', repo);
 			return repo
 		},
 		waitOn: function() {

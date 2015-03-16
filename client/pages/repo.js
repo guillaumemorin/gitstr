@@ -6,6 +6,10 @@ Template.repo.helpers({
 	errorMessage: function () {
 		return Session.get('upload_error_message');
 	},
+	owner: function () {
+		console.log(Session.get('repo'))
+		return Session.get('repo').user_id === Meteor.userId();
+	},
 	uploadCallback: function() {
 		return {
 			finished: function(index, fileInfo, context) {
