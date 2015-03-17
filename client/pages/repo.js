@@ -5,10 +5,13 @@ Template.repo.helpers({
 	owner: function () {
 		return UI.getData().user_id === Meteor.userId();
 	},
+	icon: function (is_directory) {
+		return (is_directory) ? 'folder' : 'file';
+	},
 	uploadCallback: function() {
 		return {
 			finished: function(index, fileInfo, context) {
-				Meteor.call('moveRepo', {id: Meteor.userId(), repo: UI.getData()}, fileInfo, function(error, result) {
+				Meteor.call('moveRepo', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, fileInfo, function(error, result) {
 					if (error) {
 						console.log(error);
 						Session.set("upload_error_message", error.reason);
@@ -25,6 +28,24 @@ Template.repo.helpers({
 	}
 });
 
+Template.repo.events({
+	'click #upload_button': function (event, template) {
+		$('#upload_modal')
+			.modal('setting', 'transition', 'fade up')
+			.modal('show');
+	},
+	'click #add_folder_button': function (event, template) {
+		Meteor.call('addFolder', {id: Meteor.userId(), repo_id: UI.getData()._id}, function(error, result) {
+			if (error) {
+				console.log(error);
+				Session.set("upload_error_message", error.reason);
+			}
+		});
+	}
+});
+
 Template.repo.rendered = function () {
-	document.title = UI.getData().path;
+	var data = UI.getData();
+	Session.set('repo_id', data._id);
+	document.title = data.path;
 };
