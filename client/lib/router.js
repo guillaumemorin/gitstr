@@ -2,26 +2,27 @@ var testing = false; //Bad tricks to prevent the user undefined on direct access
 Router.map(function () {
 
 	Router.configure({
-		layoutTemplate: 'layout',
 		notFoundTemplate: '404',
-		loadingTemplate: 'loading'
-		// waitOn: function() { return Meteor.subscribe('users'); }
-	});
-
-	this.route('home', {
-		path: '/',
 		onBeforeAction: function () {
 			if (!Meteor.loggingIn() && !Meteor.user()) {
 				Router.go('login');
 			}
 			this.next();
-		},
+		}
+		// waitOn: function() { return Meteor.subscribe('users'); }
+	});
+
+	this.route('home', {
+		layoutTemplate: 'layout',
+		path: '/',
 		waitOn: function() {
-			return [Meteor.subscribe('repos'), Meteor.subscribe('userData')];
+			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
 		}
 	});
 
 	this.route('repo', {
+		layoutTemplate: 'layout',
+		loadingTemplate: 'loading',
 		path: '/:username/:repo',
 		data: function () {
 			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username});
@@ -39,15 +40,15 @@ Router.map(function () {
 				this.render('404');
 				return false;	
 			}
-			Session.set('repo', repo);
 			return repo
 		},
 		waitOn: function() {
-			return [Meteor.subscribe('userData'), Meteor.subscribe('repos')];
+			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
 		}
 	});
 
 	this.route('login', {
+		layoutTemplate: 'login',
 		onBeforeAction: function () {
 			if (Meteor.user()) {
 				Router.go('/');
