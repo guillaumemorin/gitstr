@@ -1,85 +1,80 @@
 <template name="repo">
-	<div class="ui segment">
-		<h2 class="ui header left floated">
-			{{name}}
-			<div class="sub header">144 files</div>
-			<div class="sub header">Last update on Feb. 15</div>
-			<div class="sub header">345 983 followers</div>
-		</h2>
-		<div class="ui compact menu">
-			<a class="item">
-				<i class="icon mail"></i> Files
-				<div class="floating ui red label circular small">22</div>
-			</a>
-			<a class="item">
-				<i class="icon users"></i> Followers
-				<div class="floating ui teal label circular small">28</div>
-			</a>
+	<div class="centered row">
+		<div class="four wide column">
+			{{> profile}}
 		</div>
+		<div class="eleven wide column">
+			<div class="ui segment">
+				<h2 class="ui header left floated">
+					{{name}}
+					<div class="sub header">144 files</div>
+					<div class="sub header">Last update on Feb. 15</div>
+					<div class="sub header">345 983 followers</div>
+				</h2>
+				<div class="ui tiny label">
+					<i class="mail icon"></i> 23
+				</div>
+				<div class="ui tiny label">
+					<i class="mail icon"></i> 23
+				</div>
 
-		{{#if owner}}
-		<div class="ui tiny red vertical animated button right floated">
-			<div class="hidden content">Delete</div>
-			<div class="visible content">	
-				<i class="delete icon"></i>
+				{{#if owner}}
+				<div class="ui tiny red vertical animated button right floated">
+					<div class="hidden content">Delete</div>
+					<div class="visible content">	
+						<i class="delete icon"></i>
+					</div>
+				</div>
+				{{/if}}				
+				<div class="ui clearing hidden divider"></div>
+				{{#if owner}}
+				<div id="add_folder_button" class="ui teal labeled icon button">
+					New Folder
+					<i class="add icon"></i>
+				</div>
+				<div id="upload_button" class="ui blue labeled icon button">
+					Add files
+					<i class="add icon"></i>
+				</div>
+				{{else}}
+				<div class="ui yellow button">
+					<i class="user icon"></i>
+					Add 
+				</div>
+				{{/if}}
+				<h4 class="ui horizontal header divider">
+					<i class="bar file icon"></i>
+					Files
+				</h4>
+				<div class="ui breadcrumb">
+					<a class="section">Home</a>
+					<div class="divider"> / </div>
+					<a class="section">Store</a>
+					<div class="divider"> / </div>
+					<div class="active section">T-Shirt</div>
+				</div>
+				<table class="ui celled striped table">
+					<thead>
+						<tr>
+						<th colspan="3">Repository</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each file_structure}}
+						<tr>
+						<td class="collapsing">
+						<i class="{{icon this.directory}} icon"></i>{{this.name}}
+						</td>
+						<td>Initial commit</td>
+						<td class="right aligned collapsing">10 hours ago</td>
+						</tr>
+					{{/each}}
+					</tbody>
+				</table>
 			</div>
 		</div>
-		{{/if}}				
-		<div class="ui clearing hidden divider"></div>
-		{{#if owner}}
-		<div class="ui teal labeled icon button">
-			New Folder
-			<i class="add icon"></i>
-		</div>
-		<div class="ui blue labeled icon button">
-			Add files
-			<i class="add icon"></i>
-		</div>
-		{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
-		<div class="ui buttons">
-			<div class="ui button">Cancel</div>
-			<div class="or"></div>
-			<div class="ui positive icon button">
-				<i class="upload icon"></i>
-				Upload
-			</div>
-		</div>
-		{{else}}
-		<div class="ui yellow button">
-			<i class="user icon"></i>
-			Follow
-		</div>
-		{{/if}}
-		<h4 class="ui horizontal header divider">
-			<i class="bar file icon"></i>
-			Files
-		</h4>
-		<div class="ui breadcrumb">
-			<a class="section">Home</a>
-			<div class="divider"> / </div>
-			<a class="section">Store</a>
-			<div class="divider"> / </div>
-			<div class="active section">T-Shirt</div>
-		</div>
-		<table class="ui celled striped table">
-			<thead>
-				<tr>
-				<th colspan="3">Repository</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{#each file_structure}}
-				<tr>
-				<td class="collapsing">
-				<i class="folder icon"></i>{{this.name}}
-				</td>
-				<td>Initial commit</td>
-				<td class="right aligned collapsing">10 hours ago</td>
-				</tr>
-			{{/each}}
-			</tbody>
-		</table>
 	</div>
+
 	
 	{{#if errorMessage}}
 		<div class="ui negative small message">
@@ -89,5 +84,19 @@
 			</div>
 		</div>
 	{{/if}}
+
+	<div id="upload_modal" class="ui basic modal">
+		<i class="close icon"></i>
+		<div class="header">
+			Upload Files to {{name}} repository
+		</div>
+		<div class="content">
+			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
+		</div>
+		<div class="actions">
+		<!-- <div class="ui button">Cancel</div>
+		<div class="ui button">OK</div> -->
+		</div>
+	</div>
 	
 </template>
