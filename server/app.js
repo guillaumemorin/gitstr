@@ -6,7 +6,7 @@ var Repository = git.Repository;
 var Clone = git.Clone;
 
 // Publish //
-Meteor.publish('userData', function () {
+Meteor.publish('users', function () {
   return Meteor.users.find({}, {fields: {'services': 1}});
 });
 
@@ -38,7 +38,7 @@ Meteor.startup(function () {
 
 Meteor.methods({
   moveRepo: function (userInfo, file) {
-    
+
     if (!file || !file.path) {
       throw new Meteor.Error("bad-path", "Something went wrong :(");
     }
