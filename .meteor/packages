@@ -9,9 +9,7 @@ insecure
 accounts-twitter
 accounts-facebook
 iron:router
-cfs:standard-packages
-cfs:filesystem
-cfs:ui
 tomi:upload-server
 tomi:upload-jquery
 semantic:ui-css
+momentjs:moment
