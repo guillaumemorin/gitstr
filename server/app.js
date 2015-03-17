@@ -77,7 +77,7 @@ Meteor.methods({
 				{$set: {file_structure: repo.file_structure}}
 			);
 		} catch(e) {
-			throw new Meteor.Error("bad-user-info", "Something went wrong :(");
+			throw new Meteor.Error("mkdir-fail", "Something went wrong :(");
 		}
 
 	},
@@ -101,15 +101,28 @@ Meteor.methods({
 			throw new Meteor.Error("bad-user-info", "Nice try ;)");
 		}
 
-		var dest = path.resolve(process.env.PWD + '/../repos/' + userInfo.id + '/' + userInfo.repo_id + '/' + file.name);
+		var dest = path.resolve(process.env.PWD + '/../repos/' + userInfo.id + '/' + userInfo.repo_id + '/' + file.name)
 
-		fs.rename(source, dest, function (err) {
-			if (err) throw err;
-		fs.stat(dest, function (err, stats) {
-		if (err) throw err;
-		console.log('stats: ' + JSON.stringify(stats));
-		});
-		});
+		try {
+			fs.renameSync(source, dest)
+			var repo = Repos.findOne(
+				{
+					"_id": userInfo.repo_id
+				},
+				{
+					fields: {
+						file_structure: 1
+					}
+				}
+			)
+			repo.file_structure.push({name: file.name, directory: false});
+			Repos.update(
+				{"_id": userInfo.repo_id},
+				{$set: {file_structure: repo.file_structure}}
+			);
+		} catch(e) {
+			throw new Meteor.Error("move-fail", "Something went wrong :(");
+		}
 
 		// var source = fs.createReadStream(source);
 		// var dest = fs.createWriteStream(dest);
