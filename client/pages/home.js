@@ -11,7 +11,7 @@ Template.home.helpers({
 
 		//Redirect if creation is confirmed
 		if (Session.get('repo_counter') + 1 === repo_count) {
-			var path = Repos.findOne({}, {sort: {timestamp : -1}}).path;
+			var path = Repos.findOne({}, {sort: {timestamp : -1}}).url;
 			Router.go(path);
 		}
 
@@ -36,5 +36,5 @@ Template.home.events({
 });
 
 Template.home.rendered = function () {
-	// document.title = doc_title
+	document.title = Meteor.user().profile.name;
 };
