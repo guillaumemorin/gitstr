@@ -6,7 +6,7 @@
 		<div class="eleven wide column">
 			<div class="ui segment">
 				<div>
-					{{#if owner}}
+					{{#if isOwner}}
 					<div class="ui tiny red vertical animated button right floated">
 						<div class="hidden content">Delete</div>
 						<div class="visible content">	
@@ -17,7 +17,7 @@
 					<div class="left floated">
 						<h2 class="ui header">
 							{{title}}
-							<div class="sub header">Last update on Feb. 15</div>
+							<div class="sub header">{{setLastUpdate last_update}}</div>
 						</h2>
 						<div class="ui orange small image label">
 							Watcher
@@ -31,7 +31,7 @@
 				</div>
 				<div class="ui clearing hidden divider"></div>
 				
-				<!-- {{#unless owner}} -->
+				<!-- {{#unless isOwner}} -->
 				<div class="ui labeled icon button">
 					<i class="star icon yellow"></i>
 					Watch
@@ -41,7 +41,7 @@
 					<i class="bar file icon"></i>
 					Files
 				</h4>
-				{{#if owner}}
+				{{#if isOwner}}
 				<div id="add_folder_button" class="ui teal labeled icon button right floated">
 					New Folder
 					<i class="add icon"></i>
@@ -70,11 +70,11 @@
 					{{#each file_structure}}
 						<tr>
 						<td class="collapsing">
-						<i class="{{icon}} icon"></i>
+						<i class="{{setIcon directory}} icon"></i>
 						<a href="#">{{title}}</a>
 						</td>
-						<td>{{size}}</td>
-						<td class="right aligned collapsing">{{date}}</td>
+						<td>{{setSize size}}</td>
+						<td class="right aligned collapsing">{{setDate timestamp}}</td>
 						</tr>
 					{{/each}}
 					</tbody>

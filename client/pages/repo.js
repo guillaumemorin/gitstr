@@ -2,17 +2,23 @@ Template.repo.helpers({
 	errorMessage: function () {
 		return Session.get('upload_error_message');
 	},
-	owner: function () {
+	isOwner: function () {
 		return UI.getData().user_id === Meteor.userId();
 	},
-	icon: function () {
-		return (this.directory) ? 'folder' : 'file';
+	setIcon: function (directory) {
+		return (directory) ? 'folder' : 'file';
 	},
-	size: function () {
-		return filesize(this.size);
+	setSize: function (size) {
+		return filesize(size);
 	},
-	date: function () {
-		return moment(this.timestamp).fromNow();
+	setDate: function (timestamp) {
+		return moment(timestamp).fromNow();
+	},
+	setLastUpdate: function (timestamp) {
+		if (!timestamp) {
+			return '';
+		}
+		return 'Updated ' + moment(timestamp).fromNow();
 	},
 	uploadCallback: function() {
 		return {
