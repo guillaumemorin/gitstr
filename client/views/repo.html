@@ -5,47 +5,52 @@
 		</div>
 		<div class="eleven wide column">
 			<div class="ui segment">
-				<h2 class="ui header left floated">
-					{{name}}
-					<div class="sub header">144 files</div>
-					<div class="sub header">Last update on Feb. 15</div>
-					<div class="sub header">345 983 followers</div>
-				</h2>
-				<div class="ui tiny label">
-					<i class="mail icon"></i> 23
-				</div>
-				<div class="ui tiny label">
-					<i class="mail icon"></i> 23
-				</div>
-
-				{{#if owner}}
-				<div class="ui tiny red vertical animated button right floated">
-					<div class="hidden content">Delete</div>
-					<div class="visible content">	
-						<i class="delete icon"></i>
+				<div>
+					{{#if owner}}
+					<div class="ui tiny red vertical animated button right floated">
+						<div class="hidden content">Delete</div>
+						<div class="visible content">	
+							<i class="delete icon"></i>
+						</div>
+					</div>
+					{{/if}}
+					<div class="left floated">
+						<h2 class="ui header">
+							{{title}}
+							<div class="sub header">Last update on Feb. 15</div>
+						</h2>
+						<div class="ui orange small image label">
+							Watcher
+							<span class="detail">534</span>
+						</div>
+						<div class="ui purple small image label">
+							Download
+							<span class="detail">534 098</span>
+						</div>
 					</div>
 				</div>
-				{{/if}}				
 				<div class="ui clearing hidden divider"></div>
-				{{#if owner}}
-				<div id="add_folder_button" class="ui teal labeled icon button">
-					New Folder
-					<i class="add icon"></i>
+				
+				<!-- {{#unless owner}} -->
+				<div class="ui labeled icon button">
+					<i class="star icon yellow"></i>
+					Watch
 				</div>
-				<div id="upload_button" class="ui blue labeled icon button">
-					Add files
-					<i class="add icon"></i>
-				</div>
-				{{else}}
-				<div class="ui yellow button">
-					<i class="user icon"></i>
-					Add 
-				</div>
-				{{/if}}
+				<!-- {{/unless}} -->
 				<h4 class="ui horizontal header divider">
 					<i class="bar file icon"></i>
 					Files
 				</h4>
+				{{#if owner}}
+				<div id="add_folder_button" class="ui teal labeled icon button right floated">
+					New Folder
+					<i class="add icon"></i>
+				</div>
+				<div id="upload_button" class="ui blue labeled icon button right floated">
+					Add files
+					<i class="add icon"></i>
+				</div>
+				{{/if}}
 				<div class="ui breadcrumb">
 					<a class="section">Home</a>
 					<div class="divider"> / </div>
@@ -53,20 +58,23 @@
 					<div class="divider"> / </div>
 					<div class="active section">T-Shirt</div>
 				</div>
-				<table class="ui celled striped table">
+				<table class="ui small table">
 					<thead>
 						<tr>
-						<th colspan="3">Repository</th>
+						<th>Name</th>
+						<th>Size</th>
+						<th>Last Update</th>
 						</tr>
 					</thead>
-					<tbody>
-						{{#each file_structure}}
+  					<tbody>
+					{{#each file_structure}}
 						<tr>
 						<td class="collapsing">
-						<i class="{{icon this.directory}} icon"></i>{{this.name}}
+						<i class="{{icon}} icon"></i>
+						<a href="#">{{title}}</a>
 						</td>
-						<td>Initial commit</td>
-						<td class="right aligned collapsing">10 hours ago</td>
+						<td>{{size}}</td>
+						<td class="right aligned collapsing">{{date}}</td>
 						</tr>
 					{{/each}}
 					</tbody>
@@ -88,7 +96,7 @@
 	<div id="upload_modal" class="ui basic small modal">
 		<i class="close icon"></i>
 		<div class="header">
-			Upload Files to {{name}} repository
+			Upload Files to {{title}} repository
 		</div>
 		<div class="content">
 			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}

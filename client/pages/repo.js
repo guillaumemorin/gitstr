@@ -5,8 +5,14 @@ Template.repo.helpers({
 	owner: function () {
 		return UI.getData().user_id === Meteor.userId();
 	},
-	icon: function (is_directory) {
-		return (is_directory) ? 'folder' : 'file';
+	icon: function () {
+		return (this.directory) ? 'folder' : 'file';
+	},
+	size: function () {
+		return filesize(this.size);
+	},
+	date: function () {
+		return moment(this.timestamp).fromNow();
 	},
 	uploadCallback: function() {
 		return {
@@ -47,5 +53,5 @@ Template.repo.events({
 Template.repo.rendered = function () {
 	var data = UI.getData();
 	Session.set('repo_id', data._id);
-	document.title = data.path;
+	document.title = data.url;
 };
