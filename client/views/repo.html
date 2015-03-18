@@ -93,18 +93,18 @@
 		</div>
 	{{/if}}
 
-	<div id="upload_modal" class="ui basic small modal">
+	<div id="upload_modal" class="ui small modal">
 		<i class="close icon"></i>
 		<div class="header">
-			Upload Files to {{title}} repository
+			Upload Files on {{title}}
 		</div>
 		<div class="content">
 			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
 		</div>
-		<div class="actions">
-		<!-- <div class="ui button">Cancel</div>
-		<div class="ui button">OK</div> -->
-		</div>
+		<!-- <div class="actions">
+		<div class="ui button">Cancel</div>
+		<div class="ui button">OK</div>
+		</div> -->
 	</div>
 	
 </template>
