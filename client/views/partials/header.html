@@ -5,20 +5,27 @@
 				<a class="item" href="/">
 					<i class="fork large icon"></i>
 				</a>
-				<a class="item">
+				{{#if currentUser}}
+				<a class="item" href="/">
 					<i class="mail icon"></i> Messages
 					<div class="floating ui red label circular mini">22</div>
 				</a>
+				{{/if}}
 				<div class="right menu">
 					<div class="item">
-						<div class="ui icon input">
-							<input type="text" placeholder="Search...">
-							<i class="search link icon"></i>
+						<div id="search" class="ui search">
+							<div class="ui transparent left icon input">
+								<input class="prompt" type="text" placeholder="Search...">
+								<i class="search link icon"></i>
+							</div>
+							<div class="results"></div>
 						</div>
 					</div>
+					{{#if currentUser}}
 					<a id="logout" class="ui item">
 						<i class="sign out icon"></i>
 					</a>
+					{{/if}}
 				</div>
 			</div>
 		</div>
