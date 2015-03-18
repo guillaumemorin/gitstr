@@ -2,13 +2,7 @@ var testing = false; //Bad tricks to prevent the user undefined on direct access
 Router.map(function () {
 
 	Router.configure({
-		notFoundTemplate: '404',
-		onBeforeAction: function () {
-			if (!Meteor.loggingIn() && !Meteor.user()) {
-				Router.go('login');
-			}
-			this.next();
-		}
+		notFoundTemplate: '404'
 		// waitOn: function() { return Meteor.subscribe('users'); }
 	});
 
@@ -17,6 +11,12 @@ Router.map(function () {
 		path: '/',
 		waitOn: function() {
 			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
+		},
+		onBeforeAction: function () {
+			if (!Meteor.loggingIn() && !Meteor.user()) {
+				Router.go('login');
+			}
+			this.next();
 		}
 	});
 
@@ -35,7 +35,7 @@ Router.map(function () {
 				this.render('404');
 				return false;
 			}
-			var repo = Repos.findOne({user_id: user._id, name: this.params.repo});
+			var repo = Repos.findOne({user_id: user._id, title: this.params.repo});
 			if (!repo) {
 				this.render('404');
 				return false;	
