@@ -72,7 +72,8 @@ Meteor.methods({
 							$each: [{title: dir_name, directory: 1, children: [], size: 0, timestamp: new Date().getTime()}],
 							$sort: {directory: -1, title: 1},
 						}
-					}
+					},
+					$set: {last_update: new Date().getTime()}
 				}
 			);
 
@@ -146,7 +147,8 @@ Meteor.methods({
 							$each: [{title: file.name, directory: 0, size: stats.size, timestamp: new Date().getTime()}],
 							$sort: {directory: -1, title: 1},
 						}
-					}
+					},
+					$set: {last_update: new Date().getTime()}
 				}
 			);
 		} catch(e) {
