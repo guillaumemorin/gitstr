@@ -14,59 +14,130 @@
 						</div>
 					</div>
 					{{/if}}
+					<!-- {{#unless isOwner}} -->
+					<div class="ui tiny vertical animated button right floated">
+						<div class="hidden content">Subscribe</div>
+						<div class="visible content">	
+							<i class="star icon"></i>
+						</div>
+					</div>
+					<div class="ui tiny vertical animated button right floated">
+						<div class="hidden content">Download</div>
+						<div class="visible content">	
+							<i class="download icon"></i>
+						</div>
+					</div>
+<!-- 					<div class="ui tiny orange labeled icon button right floated">
+						<i class="star icon"></i>
+						Subscribe
+					</div>
+					<div class="ui tiny purple labeled icon button right floated">
+						<i class="download icon"></i>
+						Download
+					</div> -->
+					<!-- {{/unless}} -->
 					<div class="left floated">
 						<h2 class="ui header">
 							{{title}}
 							<div class="sub header">{{setLastUpdate last_update}}</div>
 						</h2>
-						<div class="ui orange small image label">
+						<div class="ui mini statistics">
+							<div class="orange statistic">
+								<div class="value">
+								27
+								</div>
+								<div class="label">
+								Subscriber
+								</div>
+							</div>
+							<div class="purple statistic">
+								<div class="value">
+								27
+								</div>
+								<div class="label">
+								Download
+								</div>
+							</div>
+							<div class="teal statistic">
+								<div class="value">
+								{{nb_folder}}
+								</div>
+								<div class="label">
+								Folder
+								</div>
+							</div>
+							<div class="blue statistic">
+								<div class="value">
+								{{nb_files}}
+								</div>
+								<div class="label">
+								File
+								</div>
+							</div>
+						</div>
+<!-- 						<div class="ui orange small image label">
 							Watcher
 							<span class="detail">534</span>
 						</div>
 						<div class="ui purple small image label">
 							Download
 							<span class="detail">534 098</span>
-						</div>
+						</div> -->
 					</div>
 				</div>
-				<div class="ui clearing hidden divider"></div>
 				
-				<!-- {{#unless isOwner}} -->
-				<div class="ui labeled icon button">
-					<i class="star icon yellow"></i>
-					Watch
-				</div>
-				<!-- {{/unless}} -->
 				<h4 class="ui horizontal header divider">
-					<i class="bar file icon"></i>
+					<i class="small file icon"></i>
 					Files
 				</h4>
+				{{tmp_data}}
 				{{#if isOwner}}
-				<div id="add_folder_button" class="ui teal labeled icon button right floated">
+				<div id="add_folder_button" class="ui teal labeled icon button">
 					New Folder
 					<i class="add icon"></i>
 				</div>
-				<div id="upload_button" class="ui blue labeled icon button right floated">
+				<div id="upload_button" class="ui blue labeled icon button">
 					Add files
 					<i class="add icon"></i>
 				</div>
-				{{/if}}
-				<div class="ui breadcrumb">
-					<a class="section">Home</a>
-					<div class="divider"> / </div>
-					<a class="section">Store</a>
-					<div class="divider"> / </div>
-					<div class="active section">T-Shirt</div>
+				{{#if tmpNewFiles}}
+      			<div class="ui buttons right floated">
+					<div id="cancel" class="ui button">Cancel</div>
+					<div class="or"></div>
+					<div id="publish" class="ui positive button">Publish</div>
 				</div>
+				{{/if}}
+				{{/if}}
 				<table class="ui small table">
 					<thead>
 						<tr>
-						<th>Name</th>
-						<th>Size</th>
-						<th>Last Update</th>
+							<th colspan="3">
+								<div class="ui breadcrumb">
+									<a class="section">Home</a>
+									<div class="divider"> / </div>
+									<a class="section">Store</a>
+									<div class="divider"> / </div>
+									<div class="active section">T-Shirt</div>
+								</div>
+							</th>
 						</tr>
 					</thead>
   					<tbody>
+  						<tr class="disabled">
+							<td>Name</td>
+							<td>Size</td>
+							<td>Updated</td>
+						</tr>
+					{{#each tmpNewFiles}}
+						<tr class="positive">
+							<td class="collapsing">
+							<i class="{{setIcon directory}} icon"></i>
+							<a href="#">{{title}}</a>
+							</td>
+							<td>{{setSize size}}</td>
+							<td class="right aligned collapsing">{{setDate timestamp}}</td>
+						</tr>
+					{{/each}}
 					{{#each file_structure}}
 						<tr>
 						<td class="collapsing">

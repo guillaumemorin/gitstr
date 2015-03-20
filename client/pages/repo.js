@@ -20,15 +20,30 @@ Template.repo.helpers({
 		}
 		return 'Updated ' + moment(timestamp).fromNow();
 	},
+	tmpNewFiles: function() {
+		return Session.get('tmp_new_files');
+	},
+	nbFiles: function() {
+		return Session.get('repo_nb').files;
+	},
+	nbFolder: function() {
+		return Session.get('repo_nb').folder;
+	},
 	uploadCallback: function() {
 		return {
 			finished: function(index, fileInfo, context) {
-				Meteor.call('moveRepo', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, fileInfo, function(error, result) {
-					if (error) {
-						console.log(error);
-						Session.set("upload_error_message", error.reason);
-					}
-				});
+console.log('fileinfo', fileInfo);
+
+				var tmp = Session.get('tmp_new_files') || [];
+				tmp.push({title: fileInfo.name, directory: 0, size: fileInfo.size, timestamp: new Date().getTime()});
+				Session.set('tmp_new_files', tmp);
+
+				// Meteor.call('moveRepo', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, fileInfo, function(error, result) {
+				// 	if (error) {
+				// 		console.log(error);
+				// 		Session.set("upload_error_message", error.reason);
+				// 	}
+				// });
 			}
 		}
 	},
@@ -47,17 +62,34 @@ Template.repo.events({
 			.modal('show');
 	},
 	'click #add_folder_button': function (event, template) {
-		Meteor.call('addFolder', {id: Meteor.userId(), repo_id: UI.getData()._id}, function(error, result) {
+		var tmp = Session.get('tmp_new_files') || [];
+		var nb_folder = Session.get('nb_folder');
+
+		var title = 'new_folder' + (nb_folder > 0 ? '_' + nb_folder : '');
+		tmp.push({title: title, directory: 1, children: [], size: 0, timestamp: new Date().getTime()})
+		Session.set('tmp_new_files', tmp);
+		Session.set('nb_folder', nb_folder + 1);
+	},
+	'click #cancel': function (event, template) {
+		Session.set('tmp_new_files', []);
+		Session.set('nb_folder', UI.getData().nb_folder);
+		
+	},
+	'click #publish': function (event, template) {
+		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, Session.get('tmp_new_files'), function(error, result) {
 			if (error) {
 				console.log(error);
-				Session.set("upload_error_message", error.reason);
+				// error message to set
 			}
 		});
+		Session.set('tmp_new_files', []);
+		Session.set('nb_folder', UI.getData().nb_folder);
 	}
 });
 
 Template.repo.rendered = function () {
 	var data = UI.getData();
+	Session.set('nb_folder', data.nb_folder);
 	Session.set('repo_id', data._id);
 	document.title = data.url;
 };
