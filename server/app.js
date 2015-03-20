@@ -1,5 +1,3 @@
-var path = Npm.require('path');
-
 // Publish //
 Meteor.publish('users', function () {
 	return Meteor.users.find({}, {fields: {'services': 1, 'repo_counter': 1}});
@@ -14,8 +12,8 @@ Meteor.startup(function () {
 	
 	// Upload
 	UploadServer.init({
-		tmpDir: path.resolve(process.env.PWD + '/../uploads/tmp'),
-		uploadDir: path.resolve(process.env.PWD + '/../uploads/'),
+		tmpDir: UPLOAD_PATH + '/tmp',
+		uploadDir: UPLOAD_PATH,
 		checkCreateDirectories: true,
 		getDirectory: function(fileInfo, formData) {
 			return formData.id;
