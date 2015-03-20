@@ -21,9 +21,14 @@ Meteor.startup(function () {
 	})
 
 	// Services
-	Accounts.loginServiceConfiguration.insert({
-		service: 'twitter',
-		consumerKey: '2J7MBzXbDY6peCccGWLGnHNPD',
-		secret: '7dR10ruKdqyw95s9gzANrBXGZowZd80njhJJQ7L3Xy989Npzzd'
-	});
+	ServiceConfiguration.configurations.upsert(
+		{ service: "twitter" },
+		{
+			$set: {
+				consumerKey: "2J7MBzXbDY6peCccGWLGnHNPD",
+				loginStyle: "popup",
+				secret: "7dR10ruKdqyw95s9gzANrBXGZowZd80njhJJQ7L3Xy989Npzzd"
+			}
+		}
+	);
 });
