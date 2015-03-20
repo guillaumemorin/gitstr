@@ -3,7 +3,6 @@ var Repository = git.Repository;
 var Clone = git.Clone;
 
 var fs = Npm.require('fs');
-var path = Npm.require('path');
 
 Meteor.methods({
 	search: function (search) {
@@ -37,7 +36,8 @@ Meteor.methods({
 			// etc
 		];
 	},
-	addFolder: function (userInfo) {
+	commit: function (userInfo, files) {
+
 		if (!userInfo || !userInfo.id || !userInfo.repo_id) {
 			throw new Meteor.Error("bad-user-info", "Something went wrong :(");
 		}
@@ -46,114 +46,21 @@ Meteor.methods({
 			throw new Meteor.Error("bad-user-info", "Nice try ;)");
 		}
 
-		var repo_path = path.resolve(process.env.PWD + '/../repos/' + userInfo.id + '/' + userInfo.repo_id + '/');
+		var length = files.length;
+		if (!files || length === 0) {
+			throw new Meteor.Error("bad-files-info", "Something went wrong :(");
+		}
 
-		var dir_name = 'new_folder';
-		var dir_path = repo_path + dir_name;
-		while (fs.existsSync(dir_path)) {
-			var dir_name_array = dir_name.split('_');
-			if (dir_name_array.length < 3) {
-				dir_name_array.push(0);
+		for (var i = 0; i < length; i++) {
+			if (files[i].directory) {
+				_addFolder(userInfo, files[i]);
+			} else {
+				_addFiles(userInfo, files[i]);
 			}
-			var index = parseInt(dir_name_array[2]);
-			dir_name_array[2] = index + 1;
-			dir_name = dir_name_array.join('_');
-			dir_path = repo_path + dir_name;
-		}
-
-		try {
-			fs.mkdirSync(dir_path);
-
-			Repos.update(
-				{"_id": userInfo.repo_id},
-				{
-					$push: {
-						file_structure: {
-							$each: [{title: dir_name, directory: 1, children: [], size: 0, timestamp: new Date().getTime()}],
-							$sort: {directory: -1, title: 1},
-						}
-					},
-					$set: {last_update: new Date().getTime()}
-				}
-			);
-
-			var repo;
-			var index;
-			var oid;
-
-			Repository.open(repo_path)
-			.then(function(repoResult) {
-				console.log(repoResult.isEmpty())
-				// return repoResult.getMasterCommit();
-			})
-			.then(function(firstCommitOnMaster) {
-					return firstCommitOnMaster.getTree();
-			})
-			.then(function(tree) {
-				// `walk()` returns an event.
-				var walker = tree.walk();
-				walker.on("entry", function(entry) {
-					console.log(entry)
-					console.log('>>>>', entry, entry.path(), entry.isDirectory(), entry.sha());
-					ret.push(entry.path())
-				});
-
-				// Don't forget to call `start()`!
-				walker.start();
-			})
-			.catch(function(err) {
-				console.log('catched', err);
-			})
-			.done(function(error) {
-				// done_callback()
-				console.log('done');
-			})
-
-		} catch(e) {
-			throw new Meteor.Error("mkdir-fail", "Something went wrong :(");
-		}
-
-	},
-	moveRepo: function (userInfo, file) {
-
-		if (!file || !file.path) {
-			throw new Meteor.Error("bad-path", "Something went wrong :(");
-		}
-
-		var source = path.resolve(process.env.PWD + '/../uploads/' + file.path)
-		var stats = fs.lstatSync(source);
-
-		if (!stats) {
-			throw new Meteor.Error("bad-path", "Something went wrong :(");
-		}
+		};
 		
-		if (!userInfo || !userInfo.id || !userInfo.repo_id) {
-			throw new Meteor.Error("bad-user-info", "Something went wrong :(");
-		}
+		_commit(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
 
-		if (userInfo.id !== Meteor.userId()) {
-			throw new Meteor.Error("bad-user-info", "Nice try ;)");
-		}
-
-		var dest = path.resolve(process.env.PWD + '/../repos/' + userInfo.id + '/' + userInfo.repo_id + '/' + file.name)
-
-		try {
-			fs.renameSync(source, dest);
-			Repos.update(
-				{"_id": userInfo.repo_id},
-				{
-					$push: {
-						file_structure: {
-							$each: [{title: file.name, directory: 0, size: stats.size, timestamp: new Date().getTime()}],
-							$sort: {directory: -1, title: 1},
-						}
-					},
-					$set: {last_update: new Date().getTime()}
-				}
-			);
-		} catch(e) {
-			throw new Meteor.Error("move-fail", "Something went wrong :(");
-		}
 	},
 	openRepo: function (name) {
 
@@ -264,7 +171,7 @@ Meteor.methods({
 			{$inc: {repo_counter: 1}}
 		);
 
-		Repository.init(path.resolve(process.env.PWD + '/../repos/' + this.userId + '/' + insert_id), 0)
+		Repository.init(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id, 0)
 		.catch(function(err) {
 			console.log('catched', err);
 		})
