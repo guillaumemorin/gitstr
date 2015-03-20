@@ -1,7 +1,10 @@
 Template.login.events({
 	'click .btn-info': function () {
 		Meteor.loginWithTwitter({}, function() {
-			Session.set('username', Meteor.user().services.twitter.screenName);
+			// Meteor.users.update(
+			// 	{_id: Meteor.userId()},
+			// 	{$set: {last_con: 1}}
+			// );
 		});
 	},
 
