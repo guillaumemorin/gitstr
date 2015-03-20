@@ -40,6 +40,20 @@ Router.map(function () {
 				this.render('404');
 				return false;	
 			}
+
+			var file_length = repo.file_structure.length;
+			var nb_folder = 0, nb_files = 0;
+			for (var i = 0; i < file_length; i++) {
+				if (repo.file_structure[i].directory) {
+					nb_folder = nb_folder + 1;
+				} else {
+					nb_files = nb_files + 1;
+				}
+			}
+			
+			repo.nb_folder = nb_folder;
+			repo.nb_files = nb_files;
+
 			return repo
 		},
 		waitOn: function() {
