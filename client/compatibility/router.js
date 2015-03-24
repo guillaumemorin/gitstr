@@ -54,7 +54,7 @@ Router.map(function () {
 			repo.nb_folder = nb_folder;
 			repo.nb_files = nb_files;
 
-			return repo
+			return {repo: repo, user: user}
 		},
 		waitOn: function() {
 			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
