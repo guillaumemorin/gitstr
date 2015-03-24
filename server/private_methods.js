@@ -25,7 +25,7 @@ _addFolder = function (userInfo, file) {
 		);
 
 	} catch(e) {
-		throw new Meteor.Error("mkdir-fail", "Something went wrong :(");
+		throw new Meteor.Error("addFolder-fail", "Something went wrong :(");
 	}
 
 }
@@ -61,6 +61,6 @@ _addFiles = function (userInfo, file) {
 			}
 		);
 	} catch(e) {
-		throw new Meteor.Error("move-fail", "Something went wrong :(");
+		throw new Meteor.Error("addFiles-fail", "Something went wrong :(");
 	}
 }

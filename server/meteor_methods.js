@@ -58,8 +58,10 @@ Meteor.methods({
 				_addFiles(userInfo, files[i]);
 			}
 		};
-		
-		_commit(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
+
+		var test = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
+		test.commit()
+		.then(function() {console.log('done callback')});
 
 	},
 	openRepo: function (name) {
@@ -136,9 +138,6 @@ Meteor.methods({
 	// check(comment, String);
 	// check(postId, String);
 
-// Repos.remove({});
-// return;
-
 		if (!this.userId) {
 			throw new Meteor.Error("not-logged-in", "Must be logged in to post a comment.");
 		}
@@ -171,14 +170,21 @@ Meteor.methods({
 			{$inc: {repo_counter: 1}}
 		);
 
-		Repository.init(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id, 0)
-		.catch(function(err) {
-			console.log('catched', err);
-		})
-		.done(function(error) {
-			// done_callback()
-			console.log('done');
-		})
+		var test = new repository(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id);
+		test.init(function() {
+			console.log('resolved');
+		}, function() {
+			console.log('rejected');
+		});
+
+		// Repository.init(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id, 0)
+		// .catch(function(err) {
+		// 	console.log('catched', err);
+		// })
+		// .done(function(error) {
+		// 	// done_callback()
+		// 	console.log('done');
+		// })
 
 		return 'Pending...';
 	}
