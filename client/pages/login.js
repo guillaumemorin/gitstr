@@ -1,5 +1,5 @@
 Template.login.events({
-	'click .btn-info': function () {
+	'click #twitter_signin': function () {
 		Meteor.loginWithTwitter({}, function() {
 			// Meteor.users.update(
 			// 	{_id: Meteor.userId()},

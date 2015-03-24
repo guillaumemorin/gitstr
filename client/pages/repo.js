@@ -1,9 +1,19 @@
+var tmpFilesinit = function() {
+	Session.set('tmp_files', []);
+	Session.set('nb_tmp_folder', 0);
+	Session.set('nb_tmp_files', 0);
+};
+
+var isUserLogged = function() {
+	return Meteor.loggingIn() && Meteor.user();
+};
+
 Template.repo.helpers({
 	errorMessage: function () {
 		return Session.get('upload_error_message');
 	},
 	isOwner: function () {
-		return UI.getData().user_id === Meteor.userId();
+		return UI.getData().repo.user_id === Meteor.userId();
 	},
 	setIcon: function (directory) {
 		return (directory) ? 'folder' : 'file';
@@ -20,76 +30,84 @@ Template.repo.helpers({
 		}
 		return 'Updated ' + moment(timestamp).fromNow();
 	},
-	tmpNewFiles: function() {
-		return Session.get('tmp_new_files');
+	subscribed: function() {
+		return true;
 	},
-	nbFiles: function() {
-		return Session.get('repo_nb').files;
+	tmpFiles: function() {
+		return Session.get('tmp_files');
 	},
-	nbFolder: function() {
-		return Session.get('repo_nb').folder;
+	nbTmpFiles: function() {
+		return Session.get('nb_tmp_files');
 	},
-	uploadCallback: function() {
-		return {
-			finished: function(index, fileInfo, context) {
-console.log('fileinfo', fileInfo);
-
-				var tmp = Session.get('tmp_new_files') || [];
-				tmp.push({title: fileInfo.name, directory: 0, size: fileInfo.size, timestamp: new Date().getTime()});
-				Session.set('tmp_new_files', tmp);
-
-				// Meteor.call('moveRepo', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, fileInfo, function(error, result) {
-				// 	if (error) {
-				// 		console.log(error);
-				// 		Session.set("upload_error_message", error.reason);
-				// 	}
-				// });
-			}
-		}
-	},
-	formData: function () {
-		var user_id = Meteor.userId();
-		return {
-			id: user_id
-		};
+	nbTmpFolder: function() {
+		return Session.get('nb_tmp_folder');
 	}
 });
 
 Template.repo.events({
-	'click #upload_button': function (event, template) {
-		$('#upload_modal')
-			.modal('setting', 'transition', 'fade up')
-			.modal('show');
+	'click #add_dropdown': function (event, template) {
+		console.log('add', $('#add_dropdown'), $('#add_dropdown').dropdown());
+		$('#add_dropdown')
+		.dropdown({
+			action: 'combo',
+			transition: 'horizontal flip'
+		});
 	},
-	'click #add_folder_button': function (event, template) {
-		var tmp = Session.get('tmp_new_files') || [];
+	'click #filter_dropdown': function (event, template) {
+		$('#filter_dropdown')
+		.dropdown({
+			transition: 'horizontal flip'
+		});
+	},
+	'click #history_dropdown': function (event, template) {
+		$('#history_dropdown')
+		.dropdown({
+			transition: 'fade up'
+		});
+	},
+	'click #add:first-child:has(#upload_button)': function (event, template) {
+		$('#upload_modal')
+		.modal('setting', 'transition', 'fade up')
+		.modal('show');
+	},
+	'click #add:first-child:has(#add_folder_button)': function (event, template) {
+		var tmp = Session.get('tmp_files') || [];
 		var nb_folder = Session.get('nb_folder');
 
 		var title = 'new_folder' + (nb_folder > 0 ? '_' + nb_folder : '');
 		tmp.push({title: title, directory: 1, children: [], size: 0, timestamp: new Date().getTime()})
-		Session.set('tmp_new_files', tmp);
+		Session.set('tmp_files', tmp);
 		Session.set('nb_folder', nb_folder + 1);
+		Session.set('nb_tmp_folder', Session.get('nb_tmp_folder') + 1);
+	},
+	'click #subscribe': function (event, template) {
+		if (!Meteor.user()) {
+			$('#signin')
+			.modal('setting', 'transition', 'fade up')
+			.modal('show');
+		}	
 	},
 	'click #cancel': function (event, template) {
-		Session.set('tmp_new_files', []);
-		Session.set('nb_folder', UI.getData().nb_folder);
-		
+		tmpFilesinit();
+	
 	},
 	'click #publish': function (event, template) {
-		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, Session.get('tmp_new_files'), function(error, result) {
+		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, Session.get('tmp_files'), function(error, result) {
 			if (error) {
 				console.log(error);
 				// error message to set
 			}
 		});
-		Session.set('tmp_new_files', []);
-		Session.set('nb_folder', UI.getData().nb_folder);
+		tmpFilesinit();
+		Session.set('nb_folder', UI.getData().repo.nb_folder); // to remove ??
 	}
 });
 
 Template.repo.rendered = function () {
 	var data = UI.getData();
-	Session.set('nb_folder', data.nb_folder);
-	Session.set('repo_id', data._id);
+	Session.set('nb_folder', data.repo.nb_folder);
+	Session.set('repo_id', data.repo._id);
+	tmpFilesinit();
+	$('.dropdown').dropdown();
 	document.title = data.url;
 };
