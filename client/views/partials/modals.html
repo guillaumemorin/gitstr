@@ -1,0 +1,37 @@
+<template name="upload_modal">
+	<div id="upload_modal" class="ui small modal">
+		<i class="close icon"></i>
+		<div class="header">
+			Upload Files on {{repo.title}}
+		</div>
+		<div class="content">
+			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
+		</div>
+		<!-- <div class="actions">
+		<div class="ui button">Cancel</div>
+		<div class="ui button">OK</div>
+		</div> -->
+	</div>
+</template>
+
+<template name="signin_modal">
+<!-- 	<div id="upload_modal" class="ui small modal">
+		<i class="close icon"></i>
+		<div class="header">
+			Upload Files on {{title}}
+		</div>
+		<div class="content">
+			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
+		</div>
+		<div class="actions">
+		<div class="ui button">Cancel</div>
+		<div class="ui button">OK</div>
+		</div> -->
+	<div id="signin" class="ui small modal">
+		<div class="ui center aligned segment">
+			<div class="ui button">A</div>
+			<div class="ui horizontal divider">and</div>
+			<div class="teal ui button">B</div>
+		</div>
+	</div>
+</template>
