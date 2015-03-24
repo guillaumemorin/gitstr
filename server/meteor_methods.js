@@ -6,35 +6,41 @@ var fs = Npm.require('fs');
 
 Meteor.methods({
 	search: function (search) {
-		var rep = Repos.findOne({title: 'test'});
-		return [rep];
-		return [
-			{ title: 'Andorra', url: '/', description: 'baby'},
-			{ title: 'United Arab Emirates' , url: '/' , description: 'baby'},
-			{ title: 'Afghanistan', url: '/'  , description: 'baby'},
-			{ title: 'Antigua', url: '/'  , description: 'baby'},
-			{ title: 'Anguilla', url: '/'  , description: 'baby'},
-			{ title: 'Albania', url: '/'  , description: 'baby'},
-			{ title: 'Armenia', url: '/'  , description: 'baby'},
-			{ title: 'Netherlands Antilles' , url: '/' , description: 'baby'},
-			{ title: 'Angola' , url: '/' , description: 'baby'},
-			{ title: 'Argentina', url: '/'  , description: 'baby'},
-			{ title: 'American Samoa' , url: '/' , description: 'baby'},
-			{ title: 'Austria', url: '/'  , description: 'baby'},
-			{ title: 'Australia' , url: '/' , description: 'baby'},
-			{ title: 'Aruba', url: '/'  , description: 'baby'},
-			{ title: 'Aland Islands', url: '/'  , description: 'baby'},
-			{ title: 'Azerbaijan' , url: '/' , description: 'baby'},
-			{ title: 'Bosnia' , url: '/' , description: 'baby'},
-			{ title: 'Barbados' , url: '/' , description: 'baby'},
-			{ title: 'Bangladesh' , url: '/' , description: 'baby'},
-			{ title: 'Belgium' , url: '/' , description: 'baby'},
-			{ title: 'Burkina Faso' , url: '/' , description: 'baby'},
-			{ title: 'Bulgaria' , url: '/' , description: 'baby'},
-			{ title: 'Bahrain', url: '/'  , description: 'baby'},
-			{ title: 'Burundi', url: '/'  , description: 'baby'}
-			// etc
-		];
+		var ret = [];
+		Repos.find({title: {$regex: search}}).forEach(function(doc) {
+			ret.push(doc);
+		});
+
+		return ret;
+
+		// TESTING
+		// return [
+		// 	{ title: 'Andorra', url: '/', description: 'baby'},
+		// 	{ title: 'United Arab Emirates' , url: '/' , description: 'baby'},
+		// 	{ title: 'Afghanistan', url: '/'  , description: 'baby'},
+		// 	{ title: 'Antigua', url: '/'  , description: 'baby'},
+		// 	{ title: 'Anguilla', url: '/'  , description: 'baby'},
+		// 	{ title: 'Albania', url: '/'  , description: 'baby'},
+		// 	{ title: 'Armenia', url: '/'  , description: 'baby'},
+		// 	{ title: 'Netherlands Antilles' , url: '/' , description: 'baby'},
+		// 	{ title: 'Angola' , url: '/' , description: 'baby'},
+		// 	{ title: 'Argentina', url: '/'  , description: 'baby'},
+		// 	{ title: 'American Samoa' , url: '/' , description: 'baby'},
+		// 	{ title: 'Austria', url: '/'  , description: 'baby'},
+		// 	{ title: 'Australia' , url: '/' , description: 'baby'},
+		// 	{ title: 'Aruba', url: '/'  , description: 'baby'},
+		// 	{ title: 'Aland Islands', url: '/'  , description: 'baby'},
+		// 	{ title: 'Azerbaijan' , url: '/' , description: 'baby'},
+		// 	{ title: 'Bosnia' , url: '/' , description: 'baby'},
+		// 	{ title: 'Barbados' , url: '/' , description: 'baby'},
+		// 	{ title: 'Bangladesh' , url: '/' , description: 'baby'},
+		// 	{ title: 'Belgium' , url: '/' , description: 'baby'},
+		// 	{ title: 'Burkina Faso' , url: '/' , description: 'baby'},
+		// 	{ title: 'Bulgaria' , url: '/' , description: 'baby'},
+		// 	{ title: 'Bahrain', url: '/'  , description: 'baby'},
+		// 	{ title: 'Burundi', url: '/'  , description: 'baby'}
+		// 	// etc
+		// ];
 	},
 	commit: function (userInfo, files) {
 
@@ -59,9 +65,11 @@ Meteor.methods({
 			}
 		};
 
-		var test = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
-		test.commit()
-		.then(function() {console.log('done callback')});
+		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
+		repo.commit()
+		.then(function() {
+			console.log('done callback');
+		});
 
 	},
 	openRepo: function (name) {
