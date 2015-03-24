@@ -1,123 +1,181 @@
 <template name="repo">
+	{{> header}}
 	<div class="centered row">
 		<div class="four wide column">
 			{{> profile}}
 		</div>
 		<div class="eleven wide column">
-			<div class="ui segment">
+			<div class="ui raised segment">
 				<div>
 					{{#if isOwner}}
-					<div class="ui tiny red vertical animated button right floated">
+					<div class="ui mini red basic vertical animated button right floated">
 						<div class="hidden content">Delete</div>
 						<div class="visible content">	
 							<i class="delete icon"></i>
 						</div>
 					</div>
 					{{/if}}
-					<!-- {{#unless isOwner}} -->
-					<div class="ui tiny vertical animated button right floated">
-						<div class="hidden content">Subscribe</div>
-						<div class="visible content">	
-							<i class="star icon"></i>
-						</div>
-					</div>
-					<div class="ui tiny vertical animated button right floated">
-						<div class="hidden content">Download</div>
-						<div class="visible content">	
-							<i class="download icon"></i>
-						</div>
-					</div>
-<!-- 					<div class="ui tiny orange labeled icon button right floated">
-						<i class="star icon"></i>
-						Subscribe
-					</div>
-					<div class="ui tiny purple labeled icon button right floated">
-						<i class="download icon"></i>
-						Download
-					</div> -->
-					<!-- {{/unless}} -->
-					<div class="left floated">
+					<div>
 						<h2 class="ui header">
-							{{title}}
-							<div class="sub header">{{setLastUpdate last_update}}</div>
+							<i class="slack teal icon left floated"></i> {{repo.title}}
+							<div class="sub header">{{setLastUpdate repo.last_update}}</div>
 						</h2>
-						<div class="ui mini statistics">
-							<div class="orange statistic">
-								<div class="value">
-								27
-								</div>
-								<div class="label">
-								Subscriber
-								</div>
-							</div>
-							<div class="purple statistic">
-								<div class="value">
-								27
-								</div>
-								<div class="label">
-								Download
-								</div>
-							</div>
-							<div class="teal statistic">
-								<div class="value">
-								{{nb_folder}}
-								</div>
-								<div class="label">
-								Folder
-								</div>
-							</div>
-							<div class="blue statistic">
-								<div class="value">
-								{{nb_files}}
-								</div>
-								<div class="label">
-								File
-								</div>
-							</div>
-						</div>
-<!-- 						<div class="ui orange small image label">
-							Watcher
-							<span class="detail">534</span>
-						</div>
-						<div class="ui purple small image label">
-							Download
-							<span class="detail">534 098</span>
-						</div> -->
+						<i class="star link {{#if subscribed}}yellow{{/if}} icon"></i>
+						<i class="copy link icon"></i>
 					</div>
 				</div>
+				<div class="ui hidden divider"></div>
+				<a class="ui small yellow image label">
+					<i class="star icon"></i>
+					Subscriber
+					<span class="detail">23 490</span>
+				</a>
+				<a class="ui small green image label">
+					<i class="copy icon"></i>
+					Copier
+					<span class="detail">6375</span>
+				</a>
+				<a class="ui small purple image label">
+					<i class="download icon"></i>
+					Downloader
+					<span class="detail">234</span>
+				</a>
+				<!-- <div class="ui hidden divider"></div>
+				<div class="ui tiny statistics">
+					<div class="statistic">
+						<div class="value">
+						27
+						</div>
+						<div class="label">
+						Download
+						</div>
+					</div>
+					<div class="statistic">
+						<div class="value">
+						27
+						</div>
+						<div class="label">
+						Subscriber
+						</div>
+					</div>
+					<div class="statistic">
+						<div class="value">
+						{{repo.nb_folder}}
+						</div>
+						<div class="label">
+						Folder
+						</div>
+					</div>
+					<div class="statistic">
+						<div class="value">
+						{{repo.nb_files}}
+						</div>
+						<div class="label">
+						File
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<h4 class="ui horizontal header divider">
+				<i class="small file icon"></i>
+				Files
+			</h4>
+			<div class="ui segment">
 				
-				<h4 class="ui horizontal header divider">
-					<i class="small file icon"></i>
-					Files
-				</h4>
-				{{tmp_data}}
 				{{#if isOwner}}
-				<div id="add_folder_button" class="ui teal labeled icon button">
-					New Folder
-					<i class="add icon"></i>
-				</div>
-				<div id="upload_button" class="ui blue labeled icon button">
-					Add files
-					<i class="add icon"></i>
-				</div>
-				{{#if tmpNewFiles}}
-      			<div class="ui buttons right floated">
-					<div id="cancel" class="ui button">Cancel</div>
-					<div class="or"></div>
-					<div id="publish" class="ui positive button">Publish</div>
-				</div>
-				{{/if}}
+
+					<div class="ui buttons right floated">
+						<div id="add" class="ui basic teal small button">
+							<i class="add icon"></i>
+							Add
+						</div>
+						<div id="add_dropdown" class="ui combo floating dropdown icon button">
+							<i class="dropdown small icon"></i>
+							<div class="menu">
+								<div class="item">
+									<i id="add_folder_button" class="folder icon"></i>
+									Add Folder(s)
+								</div>
+								<div class="item">
+									<i id="upload_button" class="file icon"></i>
+									Add File(s)
+								</div>
+								<div class="item">
+									<i class="linkify icon"></i>
+									Add Link(s)
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui buttons">
+						<div id="filter_dropdown" class="ui simple floating small basic blue labeled dropdown icon button">
+							<span class="text">Filters</span>
+							<i class="filter icon"></i>
+							<div class="menu">
+								<div class="item">
+									<div class="ui checkbox">
+										<input type="checkbox">
+										<label>Folders</label>
+									</div>
+								</div>
+								<div class="item">
+									<div class="ui checkbox">
+										<input type="checkbox">
+										<label>Files</label>
+									</div>
+								</div>
+								<div class="item">
+									<div class="ui checkbox">
+										<input type="checkbox">
+										<label>Links</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui buttons">
+						<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button">
+							<span class="text">History</span>
+							<i class="history icon"></i>
+							<div class="menu">
+								<div class="item">
+									<i class="clock icon"></i>
+									Added 3 files, 1 folder one hour ago
+								</div>
+							</div>
+						</div>
+					</div>
 				{{/if}}
 				<table class="ui small table">
 					<thead>
 						<tr>
 							<th colspan="3">
-								<div class="ui breadcrumb">
-									<a class="section">Home</a>
-									<div class="divider"> / </div>
-									<a class="section">Store</a>
-									<div class="divider"> / </div>
-									<div class="active section">T-Shirt</div>
+								<div class="ui right aligned grid">
+									<div class="right floated right aligned eight wide column">
+										{{#if tmpFiles}}
+										<div class="ui tiny teal label">
+											{{#if nbTmpFolder}} {{nbTmpFolder}} new folder{{/if}}
+											{{#if nbTmpFiles}}{{#if nbTmpFolder}}, {{/if}} {{nbTmpFiles}} new files{{/if}}
+										</div>
+										<div id="cancel" class="ui basic compact mini icon red button">
+											<i class="delete icon"></i>
+										</div>
+										<div  id="publish" class="ui basic compact mini icon green button">
+											<i class="check icon"></i>
+										</div>
+										{{/if}}
+									</div>
+									<div class="left aligned eight wide column">
+										<div class="ui breadcrumb">
+											<a class="section">Home</a>
+											<div class="divider"> / </div>
+											<a class="section">Store</a>
+											<div class="divider"> / </div>
+											<div class="active section">T-Shirt</div>
+										</div>
+									</div>
 								</div>
 							</th>
 						</tr>
@@ -126,25 +184,25 @@
   						<tr class="disabled">
 							<td>Name</td>
 							<td>Size</td>
-							<td>Updated</td>
+							<td class="right aligned">Updated</td>
 						</tr>
-					{{#each tmpNewFiles}}
+					{{#each tmpFiles}}
 						<tr class="positive">
 							<td class="collapsing">
 							<i class="{{setIcon directory}} icon"></i>
 							<a href="#">{{title}}</a>
 							</td>
-							<td>{{setSize size}}</td>
-							<td class="right aligned collapsing">{{setDate timestamp}}</td>
+							<td>{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
+							<td class="right aligned collapsing">-</td>
 						</tr>
 					{{/each}}
-					{{#each file_structure}}
+					{{#each repo.file_structure}}
 						<tr>
 						<td class="collapsing">
 						<i class="{{setIcon directory}} icon"></i>
 						<a href="#">{{title}}</a>
 						</td>
-						<td>{{setSize size}}</td>
+						<td>{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
 						<td class="right aligned collapsing">{{setDate timestamp}}</td>
 						</tr>
 					{{/each}}
@@ -164,18 +222,6 @@
 		</div>
 	{{/if}}
 
-	<div id="upload_modal" class="ui small modal">
-		<i class="close icon"></i>
-		<div class="header">
-			Upload Files on {{title}}
-		</div>
-		<div class="content">
-			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
-		</div>
-		<!-- <div class="actions">
-		<div class="ui button">Cancel</div>
-		<div class="ui button">OK</div>
-		</div> -->
-	</div>
+	{{> upload_modal}}
 	
 </template>
