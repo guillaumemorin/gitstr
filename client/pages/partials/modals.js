@@ -5,7 +5,8 @@ Template.upload_modal.helpers({
 				console.log('fileinfo', fileInfo);
 
 				var tmp = Session.get('tmp_files') || [];
-				tmp.push({title: fileInfo.name, directory: 0, size: fileInfo.size, timestamp: new Date().getTime()});
+				var type = fileInfo.type.split('/')[0] || '';
+				tmp.push({title: fileInfo.name, directory: 0, size: fileInfo.size, timestamp: new Date().getTime(), url: fileInfo.url, type: type});
 				Session.set('tmp_files', tmp);
 				Session.set('nb_tmp_files', Session.get('nb_tmp_files') + 1);
 
@@ -23,5 +24,16 @@ Template.upload_modal.helpers({
 		return {
 			id: user_id
 		};
+	},
+	imageModalUrl: function() {
+		console.log('imageModalUrl')
+		return Session.get('image_modal_url');
+	}
+})
+
+Template.image_modal.helpers({
+	imageUrl: function() {
+		console.log('imageModalUrl')
+		return Session.get('image_modal_url');
 	}
 })

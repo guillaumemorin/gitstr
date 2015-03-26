@@ -2,7 +2,7 @@
 	<div id="upload_modal" class="ui small modal">
 		<i class="close icon"></i>
 		<div class="header">
-			Upload Files on {{repo.title}}
+			Add Files to {{repo.title}} repository
 		</div>
 		<div class="content">
 			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
@@ -32,6 +32,15 @@
 			<div class="ui button">A</div>
 			<div class="ui horizontal divider">and</div>
 			<div class="teal ui button">B</div>
+		</div>
+	</div>
+</template>
+
+<template name="image_modal">
+	<div id="image_modal" class="ui long small basic modal">
+		<!-- <i class="close icon"></i> -->
+		<div class="ui rounded centered big image">
+			<img src="{{imageUrl}}" />
 		</div>
 	</div>
 </template>
