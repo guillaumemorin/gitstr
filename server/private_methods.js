@@ -2,11 +2,9 @@ var fs = Npm.require('fs');
 
 _addFolder = function (userInfo, file) {
 
-	var repo_path = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id;
+	console.log('_addFOlder');
 
-	if (!file.title) {
-		throw new Meteor.Error("bad-file-info", "Something went wrong :(");
-	}
+	var repo_path = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id;
 
 	try {
 		fs.mkdirSync(repo_path + '/' + file.title);
@@ -20,47 +18,55 @@ _addFolder = function (userInfo, file) {
 						$sort: {directory: -1, title: 1},
 					}
 				},
-				$set: {last_update: new Date().getTime()}
+				$set: {last_update: new Date().getTime()},
+				$inc: {nb_folders: 1}
 			}
 		);
 
 	} catch(e) {
 		throw new Meteor.Error("addFolder-fail", "Something went wrong :(");
 	}
-
 }
 
-_addFiles = function (userInfo, file) {
+_addFiles = function (userInfo, file_name) {
 
-	if (!file.title || !file.size) {
-		throw new Meteor.Error("bad-file-info", "Something went wrong :(");
-	}
-
-	var source = UPLOAD_PATH + '/' + userInfo.id + '/' + file.title;
+	var source = UPLOAD_PATH + '/' + userInfo.id + '/' + file_name;
 	var stats = fs.lstatSync(source);
 
 	if (!stats) {
 		throw new Meteor.Error("bad-path", "Something went wrong :(");
 	}
 	
-	var dest = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id + '/' + file.title;
+	var dest = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id + '/' + file_name;
 
 	try {
-		fs.renameSync(source, dest);
-
-		Repos.update(
-			{"_id": userInfo.repo_id},
-			{
-				$push: {
-					file_structure: {
-						$each: [{title: file.title, directory: 0, size: file.size, timestamp: new Date().getTime()}],
-						$sort: {directory: -1, title: 1},
-					}
-				},
-				$set: {last_update: new Date().getTime()}
-			}
-		);
+		// fs.renameSync(source, dest);
+		fs.writeFileSync(dest, fs.readFileSync(source));
 	} catch(e) {
 		throw new Meteor.Error("addFiles-fail", "Something went wrong :(");
+	}
+}
+
+_addCallback = function (repo_id, file) {
+
+	if (!file.title) {
+		throw new Meteor.Error("bad-file-info", "Something went wrong :(");
+	}
+
+	console.log('tttt', repo_id, file);
+
+	// if (!file.title || !file.size) {
+	// 	throw new Meteor.Error("bad-file-info", "Something went wrong :(");
+	// }
+
+	try {
+
+		console.log(Repos);
+
+		
+
+	} catch(e) {
+		console.log('error', e);
+		// throw new Meteor.Error("addFolder-fail", "Something went wrong :(");
 	}
 }

@@ -5,6 +5,7 @@ var Clone = git.Clone;
 var fs = Npm.require('fs');
 
 Meteor.methods({
+	
 	search: function (search) {
 		var ret = [];
 		Repos.find({title: {$regex: search}}).forEach(function(doc) {
@@ -12,36 +13,8 @@ Meteor.methods({
 		});
 
 		return ret;
-
-		// TESTING
-		// return [
-		// 	{ title: 'Andorra', url: '/', description: 'baby'},
-		// 	{ title: 'United Arab Emirates' , url: '/' , description: 'baby'},
-		// 	{ title: 'Afghanistan', url: '/'  , description: 'baby'},
-		// 	{ title: 'Antigua', url: '/'  , description: 'baby'},
-		// 	{ title: 'Anguilla', url: '/'  , description: 'baby'},
-		// 	{ title: 'Albania', url: '/'  , description: 'baby'},
-		// 	{ title: 'Armenia', url: '/'  , description: 'baby'},
-		// 	{ title: 'Netherlands Antilles' , url: '/' , description: 'baby'},
-		// 	{ title: 'Angola' , url: '/' , description: 'baby'},
-		// 	{ title: 'Argentina', url: '/'  , description: 'baby'},
-		// 	{ title: 'American Samoa' , url: '/' , description: 'baby'},
-		// 	{ title: 'Austria', url: '/'  , description: 'baby'},
-		// 	{ title: 'Australia' , url: '/' , description: 'baby'},
-		// 	{ title: 'Aruba', url: '/'  , description: 'baby'},
-		// 	{ title: 'Aland Islands', url: '/'  , description: 'baby'},
-		// 	{ title: 'Azerbaijan' , url: '/' , description: 'baby'},
-		// 	{ title: 'Bosnia' , url: '/' , description: 'baby'},
-		// 	{ title: 'Barbados' , url: '/' , description: 'baby'},
-		// 	{ title: 'Bangladesh' , url: '/' , description: 'baby'},
-		// 	{ title: 'Belgium' , url: '/' , description: 'baby'},
-		// 	{ title: 'Burkina Faso' , url: '/' , description: 'baby'},
-		// 	{ title: 'Bulgaria' , url: '/' , description: 'baby'},
-		// 	{ title: 'Bahrain', url: '/'  , description: 'baby'},
-		// 	{ title: 'Burundi', url: '/'  , description: 'baby'}
-		// 	// etc
-		// ];
 	},
+
 	commit: function (userInfo, files) {
 
 		if (!userInfo || !userInfo.id || !userInfo.repo_id) {
@@ -57,89 +30,51 @@ Meteor.methods({
 			throw new Meteor.Error("bad-files-info", "Something went wrong :(");
 		}
 
-		for (var i = 0; i < length; i++) {
-			if (files[i].directory) {
-				_addFolder(userInfo, files[i]);
+		console.log(files);
+
+		var commit = false;
+		_.map(files, function(file) {
+			if (file.directory) {
+				_addFolder(userInfo, file);
 			} else {
-				_addFiles(userInfo, files[i]);
+				_addFiles(userInfo, file.title);
+				commit = true;
 			}
-		};
+		});
+
+		if (!commit) {
+			return;
+		}
+
+		var then_callback = Meteor.bindEnvironment(function(err) {
+
+				Repos.update(
+					{"_id": userInfo.repo_id},
+					{
+						$push: {
+							file_structure: {
+								$each: files,
+								$sort: {directory: -1, title: 1},
+							}
+						},
+						$set: {last_update: new Date().getTime()},
+						$inc: {nb_files: files.length}
+					}
+				);
+
+				// Insert in history with commit_id
+				// _addCallback(userInfo.repo_id, file)
+		})
 
 		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
-		repo.commit()
-		.then(function() {
-			console.log('done callback');
+		repo.commit(files.length, Meteor.user().profile)
+		.then(function(commit_id) {
+			console.log('done callback', commit_id);
+			then_callback();
 		});
 
 	},
-	openRepo: function (name) {
 
-	// var clone = Clone.clone
-	// clone("git://github.com/nodegit/nodegit", "/Users/guillaume/test_nodegit").then(function(repo) {
-
-	// console.log('initiated');
-		
-	//   // Use a known commit sha from this repository.
-	//   var sha = "59b20b8d5c6ff8d09518454d4dd8b7b30f095ab5";
-
-	//   // Look up this known commit.
-	//   repo.getCommit(sha).then(function(commit) {
-	//     // Look up a specific file within that commit.
-	//     commit.getEntry("README.md").then(function(entry) {
-	//       // Get the blob contents from the file.
-	//       entry.getBlob().then(function(blob) {
-	//         // Show the name, sha, and filesize in byes.
-	//         console.log(entry.filename(), entry.sha(), blob.rawsize());
-
-	//         // Show a spacer.
-	//         console.log(Array(72).join("=") + "\n\n");
-
-	//         // Show the entire file.
-	//         console.log(String(blob));
-	//         Meteor.publish("repo", function () {
-	//           // this.ready();
-	//           return [String(blob)];
-	//         });
-	//       });
-	//     });
-	//   });
-	// });
-
-
-
-		// console.log('openRepo');
-		var ret = []; 
-		Repository.open(path.resolve('/Users/guillaume/repo_test'))
-		.then(function(repo) {
-		return repo.getMasterCommit();
-	})
-	.then(function(firstCommitOnMaster) {
-			return firstCommitOnMaster.getTree();
-	})
-	.then(function(tree) {
-		// `walk()` returns an event.
-		var walker = tree.walk();
-		walker.on("entry", function(entry) {
-			console.log(entry)
-			console.log('>>>>', entry, entry.path(), entry.isDirectory(), entry.sha());
-			ret.push(entry.path())
-		});
-
-		// Don't forget to call `start()`!
-		walker.start();
-	})
-	.done();
-		// .then(function(repoResult) {
-		//     // console.log(repoResult.workdir(), repoResult,  repoResult.openIndex(), repoResult.openIndex().value());
-		//     return repoResult.openIndex();
-		//     // Session.set('repo', repoResult.openIndex());
-		//     // Meteor.publish("repo", function () {
-		//     //   // this.ready();
-		//     //   return [];
-		//     // });
-		// })
-		// return 'yoyo';
-	},
 	createRepo: function (name) {
 
 	// Check argument types

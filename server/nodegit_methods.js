@@ -3,7 +3,7 @@ var git = Npm.require(process.env.NODEGIT_PATH);
 repository = function(repo_path) {
 	this.repo_path = repo_path;
 
-	var _repository, _index, _path, _parent;
+	var _repository, _index, _path, _tree;
 
 	var _openIndex = function() {
 
@@ -80,44 +80,54 @@ repository = function(repo_path) {
 		})
 	}
 
-	this.commit = function() {
+	this.commit = function(nb_files, user) {
 
 		return new Promise(function(resolve, reject) {
 
 			_openIndex()
+
 			.then(function() {
-				_addAll()
-
-				.then(function() {
-					return _repository.getBranchCommit("master");
-				})
-
-				.then(function(master_commit) {
-
-					var author = git.Signature.create("Scott jacky", "schacon@gmail.com", new Date().getTime(), 60);
-					var committer = git.Signature.create("Scott A Chacon", "scott@github.com", new Date().getTime(), 90);
-
-					var parent_count = master_commit.parentcount();
-					var parent_array = parent_count > 0 ? [master_commit] : [];
-
-					return git.Commit.create(_repository, "HEAD", author, committer, "UTF-8", "biloute", _tree, parent_count, parent_array);
-				})
-
-				.then(function(oid) {
-					console.log('commit id:' + oid.tostrS());
-					resolve();
-				})
-
-				// .done(function() {
-				// 	console.log('commit ok:');
-				// 	// resolve();
-				// })
-
-				.catch(function(err) {
-					console.log('catched', err);
-					reject();
-				})
+				return _addAll();
 			})
+
+			.then(function() {
+
+				if (_repository.headUnborn()) {
+					return false;
+				}					
+
+				return _repository.getBranchCommit("master");
+			})
+
+			.then(function(master_commit) {
+
+				var username = user.name || '';
+				var email = 'gm@gitstr.com';
+				var author = git.Signature.now(username, email);
+				var committer = git.Signature.now(username, email);
+
+				var commit_message = 'Added ' + nb_files + ' new files';
+
+				var parents = (!master_commit) ? [] : [master_commit];
+				var parents_count = (!master_commit) ? 0 : 1; //master_commit.parentcount();
+
+				return git.Commit.create(_repository, "HEAD", author, committer, "UTF-8", commit_message, _tree, parents_count, parents);
+			})
+
+			.then(function(oid) {
+				resolve(oid.tostrS());
+			})
+
+			.catch(function(err) {
+				console.log('catched', err);
+				reject();
+			})
+
+			// .done(function() {
+			// 	console.log('commit ok:');
+			// 	// resolve();
+			// })
+
 		});
 	}
 }

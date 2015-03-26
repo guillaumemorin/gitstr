@@ -7,6 +7,10 @@ Meteor.publish('repos', function () {
 	return Repos.find({});
 });
 
+Meteor.publish('repos_history', function () {
+	return Repos_history.find({});
+});
+
 // Startup //
 Meteor.startup(function () {
 	
@@ -18,6 +22,7 @@ Meteor.startup(function () {
 		getDirectory: function(fileInfo, formData) {
 			return formData.id;
 		},
+		// imageVersions: {thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}} // NEED IMAGEMAGICK INSTALL
 	})
 
 	// Services
