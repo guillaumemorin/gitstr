@@ -1,3 +1,23 @@
+/* Global - SEMANTIC UI */
+
+/***** addon *****/ 
+.grey {
+	color: #82888a;	
+}
+
+.grey-light {
+	color: #D3D3D3;
+}
+
+.grey-dark {
+	color: ##565a5c !important;	
+}
+
+.teal-light {
+	color: #79cccd;
+}
+
+/***** change *****/
 #loading-segment {
 	height: 500px;
 }
