@@ -5,7 +5,7 @@
 			{{> profile}}
 		</div>
 		<div class="eleven wide column">
-			<div class="ui raised segment">
+			<div class="ui basic segment">
 				<div>
 					{{#if isOwner}}
 					<div class="ui mini red basic vertical animated button right floated">
@@ -20,11 +20,11 @@
 							<i class="slack teal icon left floated"></i> {{repo.title}}
 							<div class="sub header">{{setLastUpdate repo.last_update}}</div>
 						</h2>
-						<i class="star link {{#if subscribed}}yellow{{/if}} icon"></i>
-						<i class="copy link icon"></i>
+						<!-- <i class="star link {{#if subscribed}}yellow{{/if}} icon"></i>
+						<i class="copy link icon"></i> -->
 					</div>
 				</div>
-				<div class="ui hidden divider"></div>
+				<!-- <div class="ui hidden divider"></div>
 				<a class="ui small yellow image label">
 					<i class="star icon"></i>
 					Subscriber
@@ -39,47 +39,42 @@
 					<i class="download icon"></i>
 					Downloader
 					<span class="detail">234</span>
-				</a>
-				<!-- <div class="ui hidden divider"></div>
-				<div class="ui tiny statistics">
+				</a> -->
+				<div class="ui mini statistics">
 					<div class="statistic">
 						<div class="value">
-						27
+							<i class="ui download grey-light icon"></i>
 						</div>
-						<div class="label">
-						Download
-						</div>
+						<span>27</span>
+						<span class="label">Download</span>
 					</div>
 					<div class="statistic">
 						<div class="value">
-						27
+							<i class="ui heart grey-light icon"></i>
 						</div>
-						<div class="label">
-						Subscriber
-						</div>
+						<span>36</span>
+						<span class="label">Followers</span>
 					</div>
 					<div class="statistic">
 						<div class="value">
-						{{repo.nb_folder}}
+							<i class="ui folder grey-light icon"></i>
 						</div>
-						<div class="label">
-						Folder
-						</div>
+						<span>{{#if repo.nb_folders}} {{repo.nb_folders}} {{else}} 0 {{/if}}</span>
+						<span class="label">Folders</span>
 					</div>
 					<div class="statistic">
 						<div class="value">
-						{{repo.nb_files}}
+							<i class="ui file grey-light icon"></i>
 						</div>
-						<div class="label">
-						File
-						</div>
+						<span>{{#if repo.nb_files}} {{repo.nb_files}} {{else}} 0 {{/if}}</span>
+						<span class="label">Files</span>
 					</div>
-				</div> -->
+				</div>
 			</div>
-			<h4 class="ui horizontal header divider">
+			<!--<h4 class="ui horizontal header divider">
 				<i class="small file icon"></i>
 				Files
-			</h4>
+			</h4> -->
 			<div class="ui segment">
 				
 				{{#if isOwner}}
@@ -100,15 +95,15 @@
 									<i id="upload_button" class="file icon"></i>
 									Add File(s)
 								</div>
-								<div class="item">
+								<!-- <div class="item">
 									<i class="linkify icon"></i>
 									Add Link(s)
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
 
-					<div class="ui buttons">
+<!-- 					<div class="ui buttons">
 						<div id="filter_dropdown" class="ui simple floating small basic blue labeled dropdown icon button">
 							<span class="text">Filters</span>
 							<i class="filter icon"></i>
@@ -133,7 +128,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="ui buttons">
 						<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button">
@@ -148,7 +143,7 @@
 						</div>
 					</div>
 				{{/if}}
-				<table class="ui small table">
+				<table class="ui small table grey">
 					<thead>
 						<tr>
 							<th colspan="3">
@@ -168,12 +163,13 @@
 										{{/if}}
 									</div>
 									<div class="left aligned eight wide column">
-										<div class="ui breadcrumb">
-											<a class="section">Home</a>
-											<div class="divider"> / </div>
-											<a class="section">Store</a>
-											<div class="divider"> / </div>
-											<div class="active section">T-Shirt</div>
+										<div class="ui small breadcrumb">
+											<a class="section"> / </a>
+											<!-- {{#each currentPath}} -->
+												<div class="active section">{{setCurrentExplorerPath}}</div>
+<!-- 												<a class="section">Home</a>
+												<div class="divider"> / </div> -->
+											<!-- {{/each}} -->
 										</div>
 									</div>
 								</div>
@@ -182,29 +178,59 @@
 					</thead>
   					<tbody>
   						<tr class="disabled">
-							<td>Name</td>
-							<td>Size</td>
-							<td class="right aligned">Updated</td>
+							<td class="ten wide">Name</td>
+							<td class="three wide right aligned">Size</td>
+							<td class="three wide right aligned">Updated</td>
 						</tr>
 					{{#each tmpFiles}}
 						<tr class="positive">
-							<td class="collapsing">
-							<i class="{{setIcon directory}} icon"></i>
-							<a href="#">{{title}}</a>
+							<td>
+								<i class="{{setIcon directory}} icon"></i>
+								<a href="#">{{title}}</a>
 							</td>
-							<td>{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
-							<td class="right aligned collapsing">-</td>
+							<td class="right aligned">{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
+							<td class="right aligned">-</td>
 						</tr>
 					{{/each}}
-					{{#each repo.file_structure}}
+					{{#each setIndex}}
 						<tr>
-						<td class="collapsing">
-						<i class="{{setIcon directory}} icon"></i>
-						<a href="#">{{title}}</a>
-						</td>
-						<td>{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
-						<td class="right aligned collapsing">{{setDate timestamp}}</td>
+							<td>
+								<i class="{{setIcon directory}} icon"></i>
+								{{#if isEqual type "image"}}
+									{{title}}
+								{{else}}
+									<a href="{{url}}" target="_blank" class="explorer-link" data-index="{{index}}">{{title}}</a>
+								{{/if}}
+							</td>
+							<td class="right aligned">{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
+							<td class="right aligned">{{setDate timestamp}}</td>
 						</tr>
+						{{#if isEqual type "image"}}
+						<tr>
+							<td colspan="3" style="border-top: 0px">
+								<div class="ui fluid rounded centered large image" href="#">
+									<div class="ui fluid card">
+										<a class="image thumbnail" href="{{url}}">
+											<div class="ui small ribbon teal label">
+												<i class="camera icon"></i>
+											</div>
+											<div data-href="{{url}}" style="background-image: url({{url}}); background-repeat: no-repeat; background-size: 800px; background-position: -100px; height: 150px; border-radius: 4px"></div>
+										</a>
+										<!-- <div class="extra content">
+											<span class="left floated">
+												<i class="size icon"></i>
+												{{setSize size}}
+											</span>
+											<span class="right floated star">
+												<i class="clock icon"></i>
+												{{setDate timestamp}}
+											</span>
+										</div> -->
+									</div>
+								</div>
+							</td>
+						</tr>
+						{{/if}}
 					{{/each}}
 					</tbody>
 				</table>
@@ -223,5 +249,6 @@
 	{{/if}}
 
 	{{> upload_modal}}
+	{{> image_modal}}
 	
 </template>
