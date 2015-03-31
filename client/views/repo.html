@@ -6,24 +6,68 @@
 		</div>
 		<div class="twelve wide column">
 			<div class="ui basic segment">
-				<div>
-					{{#if isOwner}}
-					<div class="ui mini red basic vertical animated button right floated">
-						<div class="hidden content">Delete</div>
-						<div class="visible content">	
-							<i class="delete icon"></i>
+				<div class="ui grid">
+					<div class="row">
+						<div class="left aligned eight wide column">
+							<h2 class="ui header">
+								<span class="teal">#</span> {{repo.title}}
+								<div class="sub header">{{setLastUpdate repo.last_update}}</div>
+							</h2>
+						</div>
+						<div class="right aligned eight wide column">
+							<div class="right aligned bottom aligned eight wide column">
+								<div class="ui basic icon button">
+									<i class="download icon"></i>
+								</div>
+								<div class="ui basic icon button">
+									<i class="copy icon"></i>
+								</div>
+								<div class="ui basic icon button">
+									<i class="star icon"></i>
+								</div>
+								<div class="ui basic icon button">
+									<i class="share icon"></i>
+								</div>
+							</div>
 						</div>
 					</div>
-					{{/if}}
-					<div>
-						<h2 class="ui header">
-							<i class="slack teal icon left floated"></i> {{repo.title}}
-							<div class="sub header">{{setLastUpdate repo.last_update}}</div>
-						</h2>
-						<!-- <i class="star link {{#if subscribed}}yellow{{/if}} icon"></i>
-						<i class="copy link icon"></i> -->
+					<div class="row">
+						<div class="left aligned eight wide column">
+							<div class="ui mini statistics">
+								<div class="statistic">
+									<div class="value">
+										<i class="ui download grey-light icon"></i>
+									</div>
+									<span>27</span>
+									<span class="label">Download</span>
+								</div>
+								<div class="statistic">
+									<div class="value">
+										<i class="ui star grey-light icon"></i>
+									</div>
+									<span>36</span>
+									<span class="label">Subscriber</span>
+								</div>
+								<div class="statistic">
+									<div class="value">
+										<i class="ui file grey-light icon"></i>
+									</div>
+									<span>{{#if repo.nb_files}} {{repo.nb_files}} {{else}} 0 {{/if}}</span>
+									<span class="label">Files</span>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+
+
+
+
+						
+						<!-- <i class="star link {{#if subscribed}}yellow{{/if}} icon"></i>
+						<i class="copy link icon"></i> -->
+
 				<!-- <div class="ui hidden divider"></div>
 				<a class="ui small yellow image label">
 					<i class="star icon"></i>
@@ -40,142 +84,120 @@
 					Downloader
 					<span class="detail">234</span>
 				</a> -->
-				<div class="ui mini statistics">
-					<div class="statistic">
-						<div class="value">
-							<i class="ui download grey-light icon"></i>
+
+			<div class="ui segment">
+				<div class="ui grid">
+					<div class="left aligned eight wide column">
+						<div class="ui mini statistics">
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small blue camera grey-light circular inverted icon"></i>
+								</div>
+								<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
+								<span class="label">Image</span>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small red record grey-light circular inverted icon"></i>
+								</div>
+								<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
+								<span class="label">Video</span>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small yellow unmute grey-light circular inverted icon"></i>
+								</div>
+								<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
+								<span class="label">Audio</span>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small file outline grey-light circular icon"></i>
+								</div>
+								<span class="grey-light">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
+								<span class="label">Other</span>
+							</div>
 						</div>
-						<span>27</span>
-						<span class="label">Download</span>
 					</div>
-					<div class="statistic">
-						<div class="value">
-							<i class="ui heart grey-light icon"></i>
+					<div class="right aligned eight wide column">
+						{{#if tmpFiles}}
+						<div class="ui large teal label">
+							{{#if nbTmpFiles}}{{nbTmpFiles}} new files{{/if}}
 						</div>
-						<span>36</span>
-						<span class="label">Followers</span>
-					</div>
-					<div class="statistic">
-						<div class="value">
-							<i class="ui folder grey-light icon"></i>
+						<div id="cancel" class="ui basic compact icon red button">
+							<i class="delete icon"></i>
 						</div>
-						<span>{{#if repo.nb_folders}} {{repo.nb_folders}} {{else}} 0 {{/if}}</span>
-						<span class="label">Folders</span>
-					</div>
-					<div class="statistic">
-						<div class="value">
-							<i class="ui file grey-light icon"></i>
+						<div  id="publish" class="ui basic compact icon green button">
+							<i class="check icon"></i>
 						</div>
-						<span>{{#if repo.nb_files}} {{repo.nb_files}} {{else}} 0 {{/if}}</span>
-						<span class="label">Files</span>
+						{{/if}}
 					</div>
 				</div>
-			</div>
-			<!--<h4 class="ui horizontal header divider">
-				<i class="small file icon"></i>
-				Files
-			</h4> -->
-			<div class="ui segment">
-				
 				{{#if isOwner}}
-
-					<div class="ui buttons right floated">
-						<div id="add" class="ui basic teal small button">
-							<i class="add icon"></i>
-							Add
-						</div>
-						<div id="add_dropdown" class="ui combo floating dropdown icon button">
-							<i class="dropdown small icon"></i>
-							<div class="menu">
-								<div class="item">
-									<i id="add_folder_button" class="folder icon"></i>
-									Add Folder(s)
-								</div>
-								<div class="item">
-									<i id="upload_button" class="file icon"></i>
-									Add File(s)
-								</div>
-								<!-- <div class="item">
-									<i class="linkify icon"></i>
-									Add Link(s)
-								</div> -->
-							</div>
-						</div>
-					</div>
-
-<!-- 					<div class="ui buttons">
-						<div id="filter_dropdown" class="ui simple floating small basic blue labeled dropdown icon button">
-							<span class="text">Filters</span>
-							<i class="filter icon"></i>
-							<div class="menu">
-								<div class="item">
-									<div class="ui checkbox">
-										<input type="checkbox">
-										<label>Folders</label>
-									</div>
-								</div>
-								<div class="item">
-									<div class="ui checkbox">
-										<input type="checkbox">
-										<label>Files</label>
-									</div>
-								</div>
-								<div class="item">
-									<div class="ui checkbox">
-										<input type="checkbox">
-										<label>Links</label>
+				<div class="ui grid">
+					<div class="left aligned eight wide column">
+						<div class="ui buttons">
+							<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button">
+								<span class="text">History</span>
+								<i class="history icon"></i>
+								<div class="menu">
+									<div class="item">
+										<i class="clock icon"></i>
+										Added 3 files, 1 folder one hour ago
 									</div>
 								</div>
 							</div>
 						</div>
-					</div> -->
-
-					<div class="ui buttons">
-						<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button">
-							<span class="text">History</span>
-							<i class="history icon"></i>
-							<div class="menu">
-								<div class="item">
-									<i class="clock icon"></i>
-									Added 3 files, 1 folder one hour ago
+						<div class="ui buttons">
+							<div id="filter_dropdown" class="ui floating small basic blue labeled dropdown icon button">
+								<span class="text">Filters</span>
+								<i class="filter icon"></i>
+								<div class="menu">
+									<div id="filter_image" class="item">
+										<i class="blue camera icon"></i>
+										Image
+									</div>
+									<div id="filter_video" class="item">
+										<i class="red record icon"></i>
+										Video
+									</div>
+									<div id="filter_audio" class="item">
+										<i class="yellow unmute icon"></i>
+										Audio
+									</div>
+									<div id="filter_other" class="item">
+										<i class="grey-light file outline icon"></i>
+										Other
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="right aligned eight wide column">
+						<div class="ui buttons right floated">
+							<div id="add" class="ui basic teal small button">
+								<i class="add icon"></i>
+								Add
+							</div>
+							<div id="add_dropdown" class="ui combo floating dropdown icon button">
+								<i class="dropdown small icon"></i>
+								<div class="menu">
+									<div class="item">
+										<i id="upload_button" class="file icon"></i>
+										Add File(s)
+									</div>
+									<!-- <div class="item">
+										<i class="linkify icon"></i>
+										Add Link(s)
+									</div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				{{/if}}
-				<table class="ui small table grey">
-					<thead>
-						<tr>
-							<th colspan="3">
-								<div class="ui right aligned grid">
-									<div class="right floated right aligned eight wide column">
-										{{#if tmpFiles}}
-										<div class="ui tiny teal label">
-											{{#if nbTmpFolder}} {{nbTmpFolder}} new folder{{/if}}
-											{{#if nbTmpFiles}}{{#if nbTmpFolder}}, {{/if}} {{nbTmpFiles}} new files{{/if}}
-										</div>
-										<div id="cancel" class="ui basic compact mini icon red button">
-											<i class="delete icon"></i>
-										</div>
-										<div  id="publish" class="ui basic compact mini icon green button">
-											<i class="check icon"></i>
-										</div>
-										{{/if}}
-									</div>
-									<div class="left aligned eight wide column">
-										<div class="ui small breadcrumb">
-											<a class="section"> / </a>
-											<!-- {{#each currentPath}} -->
-												<div class="active section">{{setCurrentExplorerPath}}</div>
-<!-- 												<a class="section">Home</a>
-												<div class="divider"> / </div> -->
-											<!-- {{/each}} -->
-										</div>
-									</div>
-								</div>
-							</th>
-						</tr>
-					</thead>
+				<table class="ui small table grey-dark">
+					<thead></thead>
   					<tbody>
   						<tr class="disabled">
 							<td class="ten wide">Name</td>
@@ -185,51 +207,94 @@
 					{{#each tmpFiles}}
 						<tr class="positive">
 							<td>
-								<i class="{{setIcon directory}} icon"></i>
+								<i class="{{setIcon type.subtype}} icon"></i>
 								<a href="#">{{title}}</a>
 							</td>
 							<td class="right aligned">{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
 							<td class="right aligned">-</td>
 						</tr>
 					{{/each}}
-					{{#each setIndex}}
-						<tr>
-							<td>
-								<i class="{{setIcon directory}} icon"></i>
-								{{#if isEqual type "image"}}
+					{{#each repo.file_structure}}
+
+								<!-- <i class="{{setIcon type.subtype}} icon"></i> -->
+<!-- 								<div class="ui mini yellow label">
 									{{title}}
-								{{else}}
-									<a href="{{url}}" target="_blank" class="explorer-link" data-index="{{index}}">{{title}}</a>
-								{{/if}}
-							</td>
-							<td class="right aligned">{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
-							<td class="right aligned">{{setDate timestamp}}</td>
-						</tr>
-						{{#if isEqual type "image"}}
-						<tr>
-							<td colspan="3" style="border-top: 0px">
-								<div class="ui fluid rounded centered large image" href="#">
-									<div class="ui fluid card">
-										<a class="image thumbnail" href="{{url}}">
-											<div class="ui small ribbon teal label">
-												<i class="camera icon"></i>
+								</div> -->
+						{{#if supported type.subtype}}
+							{{#if equal type.subtype "audio"}}
+							<tr>
+								<td><i class="{{setIcon type.subtype}} yellow icon"></i>{{title}}</td>
+								<td class="right aligned">{{setSize size}}</td>
+								<td class="right aligned">{{setDate timestamp}}</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border-top: 0px">
+									<div class="ui tertiary raised yellow segment">
+										<div class="ui grid">
+											<div class="left aligned thirteen wide column grey-extra-light site-size">
+												<a href="{{url}}" class="play-audio">
+													<i class="audio play grey icon"></i>
+												</a>
+												<span class="grey-dark playing">Playing </span>
+												{{title}}
 											</div>
-											<div data-href="{{url}}" style="background-image: url({{url}}); background-repeat: no-repeat; background-size: 800px; background-position: -100px; height: 150px; border-radius: 4px"></div>
-										</a>
-										<!-- <div class="extra content">
-											<span class="left floated">
-												<i class="size icon"></i>
-												{{setSize size}}
-											</span>
-											<span class="right floated star">
-												<i class="clock icon"></i>
-												{{setDate timestamp}}
-											</span>
+											<div class="right aligned three wide column grey site-size">
+												<span class="timer">0:00</span>
+											</div>
+										</div>
+ 										<!-- <div class="ui bottom orange disabled inverted attached progress">
+											<div class="bar"></div>
 										</div> -->
 									</div>
-								</div>
-							</td>
-						</tr>
+								</td>
+							</tr>
+							{{/if}}
+
+							{{#if equal type.subtype "image"}}
+							<tr>
+								<td><i class="{{setIcon type.subtype}} blue icon"></i>{{title}}</td>
+								<td class="right aligned">{{setSize size}}</td>
+								<td class="right aligned">{{setDate timestamp}}</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border-top: 0px; text-align: center">
+									<a class="cover" href="{{url}}">
+										<img src="{{url}}" style="width: 60%" />
+									</a>
+									<div class="ui hidden divider"></div>
+								</td>
+							</tr>
+							{{/if}}
+
+
+							{{#if equal type.subtype "video"}}
+							<tr>
+								<td><i class="{{setIcon type.subtype}} red icon"></i>{{title}}</td>
+								<td class="right aligned">{{setSize size}}</td>
+								<td class="right aligned">{{setDate timestamp}}</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border-top: 0px; text-align: center">
+									<a class="cover-video" href="{{url}}">
+										<img src="{{cover_url}}" style="width: 60%" />
+										<video style="display:none" width="450" height="240" controls>
+											<source src="{{url}}" type="video/mp4">
+											Your browser does not support the video tag.
+										</video>
+									</a>
+									<div class="ui hidden divider"></div>
+								</td>
+							</tr>
+							{{/if}}
+						{{else}}
+							<tr>
+								<td>
+									<i class="{{setIcon type.subtype}} icon"></i>
+									<a href="{{url}}" target="_blank" >{{title}}</a>
+								</td>
+								<td class="right aligned">{{setSize size}}</td>
+								<td class="right aligned">{{setDate timestamp}}</td>
+							</tr>
 						{{/if}}
 					{{/each}}
 					</tbody>

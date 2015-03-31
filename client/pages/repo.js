@@ -1,12 +1,27 @@
+// Global Helpers
+Template.registerHelper('equal', function(a, b) {
+	return a === b;
+});
+
+
 var tmpFilesinit = function() {
 	Session.set('tmp_files', []);
-	Session.set('nb_tmp_folder', 0);
 	Session.set('nb_tmp_files', 0);
 };
 
+var audio_player = {};
+
 Template.repo.helpers({
-	isEqual: function (type, val) {
-		return type === val;
+	supported: function (type) {
+		var cover_supported_type = {
+			image: true,
+			audio: true,
+			video: true
+		}
+		return cover_supported_type[type];
+	},
+	equal: function (a, b) {
+		return a === b;
 	},
 	errorMessage: function () {
 		return Session.get('upload_error_message');
@@ -14,8 +29,17 @@ Template.repo.helpers({
 	isOwner: function () {
 		return UI.getData().repo.user_id === Meteor.userId();
 	},
-	setIcon: function (directory) {
-		return (directory) ? 'folder' : 'file';
+	setIcon: function (type) {
+		var type_map = {
+			image: 'camera',
+			video: 'record',
+			audio: 'unmute'
+		}
+
+		if (!type || !type_map[type]) {
+			return 'file';
+		}
+		return type_map[type];
 	},
 	setLink: function (type, href) {
 		return (type === 'application') ? href : '#';
@@ -32,13 +56,6 @@ Template.repo.helpers({
 		}
 		return 'Updated ' + moment(timestamp).fromNow();
 	},
-	setIndex: function () {
-		var structure = UI.getData().repo.file_structure;//Session.get('current_display_file_structure');
-		return _.map(structure, function(value, index) {
-			value.index = index;
-			return value;
-		});
-	},
 	setCurrentExplorerPath: function () {
 		return Session.get('current_explorer_path')
 	},
@@ -50,34 +67,87 @@ Template.repo.helpers({
 	},
 	nbTmpFiles: function() {
 		return Session.get('nb_tmp_files');
-	},
-	nbTmpFolder: function() {
-		return Session.get('nb_tmp_folder');
 	}
 });
 
 Template.repo.events({
-	'click .explorer-link': function (event, template) {
-		// var file_structure = Session.get('current_display_file_structure');
-		// var index = event.target.dataset.index;
-		// var child_structure = file_structure[index].children;
-			
-		// Session.set('current_display_file_structure', child_structure);
-		// Session.set('current_explorer_path', event.target.textContent);
-
-
-		// console.log('children', child_structure);
-		// console.log(event.target.dataset, event.target.textContent);
-	},
-	'click .image.thumbnail': function (event, template) {
-		event.stopPropagation();
+	'click .cover': function (event, template) {
 		event.preventDefault();
 
-		var url = event.target.dataset.href || image_404;
-		Session.set('image_modal_url', url);
+		var url = event.currentTarget.href || false;
+		if (!url) {
+			$('#image_fail_dimmer').dimmer('show');
+			return;
+		}
+
+		console.log(event.currentTarget.href);
+
+		Session.set('modal_info', {type: 'image', url: url});
 		$('#image_modal')
-			.modal('setting', 'transition', 'fade up')
+			// .modal('setting', 'transition', 'fade up')
 			.modal('show');
+	},
+	'click #filter_image, click #filter_video, click #filter_audio, click #filter_other': function (event, template) {
+		console.log('dropdown', event.target.id);
+	},
+	'click .cover-video' : function (event, template) {
+		event.preventDefault();
+
+		var cover = template.$(event.target);
+		var video_player = cover.next();
+		cover.hide();
+		video_player.show();
+		// video_player.play();
+	},
+	'click .play-audio': function (event, template) {
+		event.preventDefault();
+
+		var current_target = event.currentTarget;
+		var url = current_target.href || false;
+		if (!url) {
+			$('#image_fail_dimmer').dimmer('show');
+			return;
+		}
+
+		if (audio_player.playing) {
+			audio_player.instance.pause();
+			audio_player.playing = !audio_player.playing;
+			if (event.target.className === 'audio stop grey icon') {
+				event.target.className = 'audio play grey icon';
+				template.$(current_target).next().transition('fade down');
+				return;
+			}
+			template.$('.audio.icon').each(function() {
+				var elmt = $(this);
+				elmt.attr('class', 'audio play grey icon');
+				if (elmt.parent().next().is(":visible")) {
+					elmt.parent().next().transition('fade down');
+				}
+			})
+		}
+
+		audio_player.instance = new Audio(url);
+		audio_player.instance.play();
+		template.$(current_target).next().transition('fade down');
+		event.target.className = 'audio stop grey icon';
+		audio_player.instance.onplaying = function() {
+			audio_player.playing = true;
+		}
+
+		// audio.ondurationchange = function(a) {
+		// 	console.log("The video duration has changed", a, this.duration);
+		// };
+		var current_timer;
+		audio_player.instance.ontimeupdate = function() {
+			var time = moment.duration(this.currentTime, 'seconds');
+			var seconds = time.seconds();
+			if (seconds === current_timer) {
+				return;
+			}
+			current_timer = seconds;
+			var timer = time.minutes() + ':' + (seconds < 10 ? '0' + seconds : seconds);
+			template.$(current_target).parent().next().children().text(timer);
+		}
 	},
 	'click #add_dropdown': function (event, template) {
 		console.log('add', $('#add_dropdown'), $('#add_dropdown').dropdown());
@@ -104,16 +174,6 @@ Template.repo.events({
 			.modal('setting', 'transition', 'fade up')
 			.modal('show');
 	},
-	'click #add:first-child:has(#add_folder_button)': function (event, template) {
-		var tmp = Session.get('tmp_files') || [];
-		var nb_folders = Session.get('nb_folders') || 0;
-
-		var title = 'new_folder' + (nb_folders > 0 ? '_' + nb_folders : '');
-		tmp.push({title: title, directory: 1, children: [], size: 0, timestamp: new Date().getTime()})
-		Session.set('tmp_files', tmp);
-		Session.set('nb_folders', nb_folders + 1);
-		Session.set('nb_tmp_folder', Session.get('nb_tmp_folder') + 1);
-	},
 	'click #subscribe': function (event, template) {
 		if (!Meteor.user()) {
 			$('#signin')
@@ -138,11 +198,11 @@ Template.repo.events({
 
 Template.repo.rendered = function () {
 	var data = UI.getData();
-	Session.set('nb_folders', data.repo.nb_folders);
 	Session.set('repo_id', data.repo._id);
 	Session.set('current_explorer_path', '');
-	// Session.set('current_display_file_structure', data.repo.file_structure);
 	tmpFilesinit();
+
+	//Init
 	$('.dropdown').dropdown();
-	document.title = data.url;
+	document.title = data.repo.url;
 };
