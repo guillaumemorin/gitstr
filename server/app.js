@@ -22,7 +22,8 @@ Meteor.startup(function () {
 		getDirectory: function(fileInfo, formData) {
 			return formData.id;
 		},
-		// imageVersions: {thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}} // NEED IMAGEMAGICK INSTALL
+		// imageVersions: {thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}
+		imageVersions: {cover: {width: 450, height: 300}}
 	})
 
 	// Services
