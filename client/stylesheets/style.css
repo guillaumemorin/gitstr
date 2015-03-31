@@ -1,29 +1,55 @@
 /* Global - SEMANTIC UI */
 
+.site-size {
+	font-size: 12px !important;
+}
+
+.teal {
+	color: rgb(0, 181, 173) !important;
+}
+
+.blue {
+	color: rgb(59, 131, 192) !important;
+}
+
+.yellow {
+	color: rgb(242, 198, 31) !important;
+}
+
+.red {
+	color: rgb(217, 92, 92) !important;
+}
+
 /***** addon *****/ 
 .grey {
-	color: #82888a;	
+	color: #82888a !important;
 }
 
 .grey-light {
-	color: #D3D3D3;
+	color: #D3D3D3 !important;
 }
 
 .grey-extra-light {
-	color: #aaa;
+	color: #aaa !important;
 }
 
 .grey-dark {
-	color: ##565a5c !important;	
+	color: #565a5c !important;
 }
 
 .teal-light {
-	color: #79cccd;
+	color: #79cccd !important;
 }
 
 /***** change *****/
 #loading-segment {
 	height: 500px;
+}
+
+/* Audio player */
+.playing {
+	display: none;
+	padding-right: 5px;
 }
 
 /* CSS declarations go here */
