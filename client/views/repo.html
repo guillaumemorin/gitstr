@@ -153,6 +153,10 @@
 								<span class="text">Filters</span>
 								<i class="filter icon"></i>
 								<div class="menu">
+									<div id="filter_all" class="item">
+										<i class="list icon"></i>
+										All
+									</div>
 									<div id="filter_image" class="item">
 										<i class="blue camera icon"></i>
 										Image
@@ -165,7 +169,7 @@
 										<i class="yellow unmute icon"></i>
 										Audio
 									</div>
-									<div id="filter_other" class="item">
+									<div id="filter_application" class="item">
 										<i class="grey-light file outline icon"></i>
 										Other
 									</div>
@@ -214,7 +218,7 @@
 							<td class="right aligned">-</td>
 						</tr>
 					{{/each}}
-					{{#each repo.file_structure}}
+					{{#each filter repo.file_structure}}
 
 								<!-- <i class="{{setIcon type.subtype}} icon"></i> -->
 <!-- 								<div class="ui mini yellow label">

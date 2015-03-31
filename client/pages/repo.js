@@ -20,8 +20,18 @@ Template.repo.helpers({
 		}
 		return cover_supported_type[type];
 	},
-	equal: function (a, b) {
-		return a === b;
+	filter: function (files) {
+		var filter = Session.get('filter');
+		var files_ret = [];
+		_.map(files, function(file) {
+			if (filter === file.type.subtype) {
+				files_ret.push(file);	
+			}
+		});
+
+		console.log('return', files_ret.length);
+
+		return files_ret.length > 0 ? files_ret : files;
 	},
 	errorMessage: function () {
 		return Session.get('upload_error_message');
@@ -56,9 +66,6 @@ Template.repo.helpers({
 		}
 		return 'Updated ' + moment(timestamp).fromNow();
 	},
-	setCurrentExplorerPath: function () {
-		return Session.get('current_explorer_path')
-	},
 	subscribed: function() {
 		return true;
 	},
@@ -86,9 +93,6 @@ Template.repo.events({
 		$('#image_modal')
 			// .modal('setting', 'transition', 'fade up')
 			.modal('show');
-	},
-	'click #filter_image, click #filter_video, click #filter_audio, click #filter_other': function (event, template) {
-		console.log('dropdown', event.target.id);
 	},
 	'click .cover-video' : function (event, template) {
 		event.preventDefault();
@@ -163,6 +167,11 @@ Template.repo.events({
 			transition: 'horizontal flip'
 		});
 	},
+	'click #filter_image, click #filter_video, click #filter_audio, click #filter_application, click #filter_all': function (event, template) {
+		var filter_id = event.target.id;
+		var filter = filter_id.split('_');
+		Session.set('filter', filter[1]);
+	},
 	'click #history_dropdown': function (event, template) {
 		$('#history_dropdown')
 		.dropdown({
@@ -199,7 +208,6 @@ Template.repo.events({
 Template.repo.rendered = function () {
 	var data = UI.getData();
 	Session.set('repo_id', data.repo._id);
-	Session.set('current_explorer_path', '');
 	tmpFilesinit();
 
 	//Init
