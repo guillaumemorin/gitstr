@@ -37,10 +37,31 @@
 </template>
 
 <template name="image_modal">
+	
 	<div id="image_modal" class="ui long small basic modal">
 		<!-- <i class="close icon"></i> -->
+		{{#if equal modalInfo.type "video"}}
+			<video width="100%" height="340" controls>
+				<source src="{{modalInfo.url}}" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		{{else}}
 		<div class="ui rounded centered big image">
-			<img src="{{imageUrl}}" />
+			<img src="{{modalInfo.url}}" />
+		</div>
+		{{/if}}
+	</div>
+
+	<div id="image_fail_dimmer" class="ui page dimmer">
+		<div class="content">
+			<div class="center">
+				<h2 class="ui inverted icon header">
+					<i class="emergency icon"></i>
+						Oooopss...sorry about that!
+					<div class="sub header"></div>
+				</h2>
+			</div>
 		</div>
 	</div>
+
 </template>
