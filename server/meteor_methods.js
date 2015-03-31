@@ -30,47 +30,16 @@ Meteor.methods({
 			throw new Meteor.Error("bad-files-info", "Something went wrong :(");
 		}
 
-		console.log(files);
-
-		var commit = false;
 		_.map(files, function(file) {
-			if (file.directory) {
-				_addFolder(userInfo, file);
-			} else {
-				_addFiles(userInfo, file.title);
-				commit = true;
-			}
+			_writeFiles(userInfo, file);
 		});
 
-		if (!commit) {
-			return;
-		}
-
-		var then_callback = Meteor.bindEnvironment(function(err) {
-
-				Repos.update(
-					{"_id": userInfo.repo_id},
-					{
-						$push: {
-							file_structure: {
-								$each: files,
-								$sort: {directory: -1, title: 1},
-							}
-						},
-						$set: {last_update: new Date().getTime()},
-						$inc: {nb_files: files.length}
-					}
-				);
-
-				// Insert in history with commit_id
-				// _addCallback(userInfo.repo_id, file)
-		})
+		_insertFilesInfo(userInfo.repo_id, files);
 
 		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
 		repo.commit(files.length, Meteor.user().profile)
 		.then(function(commit_id) {
-			console.log('done callback', commit_id);
-			then_callback();
+			console.log('commit: ', commit_id);
 		});
 
 	},
