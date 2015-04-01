@@ -64,7 +64,7 @@ Template.repo.helpers({
 		if (!timestamp) {
 			return '';
 		}
-		return 'Updated ' + moment(timestamp).fromNow();
+		return moment(timestamp).fromNow();
 	},
 	subscribed: function(subscriber) {
 		console.log('sub', ~_.indexOf(subscriber, Meteor.userId()));

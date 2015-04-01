@@ -67,7 +67,7 @@ Meteor.methods({
 			var repo_path = Meteor.user().services.twitter.screenName + '/' + name
 			var insert_id = Repos.insert({
 				title: name,
-				timestamp: new Date().getTime(),
+				created_at: new Date().getTime(),
 				user_id: Meteor.userId(),
 				url: '/' + repo_path,
 				description: 'By ' + Meteor.user().profile.name,

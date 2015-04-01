@@ -11,7 +11,13 @@
 						<div class="left aligned eight wide column">
 							<h2 class="ui header">
 								<span class="teal">#</span> {{repo.title}}
-								<div class="sub header">{{setLastUpdate repo.last_update}}</div>
+								<div class="sub header">
+									{{#if repo.last_updtae}}
+										Updated {{setLastUpdate repo.last_update}}
+									{{else}}
+										Created {{setLastUpdate repo.created_at}}
+									{{/if}}	
+								</div>
 							</h2>
 						</div>
 						<div class="right aligned eight wide column">
