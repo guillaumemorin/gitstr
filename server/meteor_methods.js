@@ -79,7 +79,7 @@ Meteor.methods({
 
 		Meteor.users.update(
 			{_id: Meteor.userId()},
-			{$inc: {repo_counter: 1}}
+			{$inc: {nb_repo: 1}}
 		);
 
 		var test = new repository(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id);

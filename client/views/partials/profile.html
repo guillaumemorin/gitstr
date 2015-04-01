@@ -1,23 +1,31 @@
 <template name="profile">
 	<div class="ui card">
 		<div class="image">
-		<img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png">
+		<!-- <img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png"> -->
+		<img src="{{user.services.twitter.profile_image_url}}">
 		</div>
 		<div class="content">
 			<div class="header">{{user.profile.name}}</div>
 			<div class="meta">
-			<span class="date">Joined in {{moment}}</span>
+			<span class="date">Joined in {{moment user.createdAt}}</span>
 			</div>
 			<div class="description"></div>
 		</div>
 		<div class="extra content">
 			<span>
-				{{user.repo_counter}} Repositories
+				<i class="flag icon"></i>
+				{{#if user.nb_repo}} {{user.nb_repo}} {{else}} 0 {{/if}} Repositories
+			</span>		
+		</div>
+		<div class="extra content">
+			<span>
+				<i class="star icon"></i>
+				{{#if user.nb_subscription}} {{user.nb_subscription}} {{else}} 0 {{/if}} Subscription
 			</span>
+		</div>
 			<!-- <div><a class="friends">
 			<i class="user icon"></i>
 			22 Friends
 			</a></div> -->
-		</div>
 	</div>
 </template>
