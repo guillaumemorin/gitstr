@@ -190,6 +190,7 @@ Template.repo.events({
 			.modal('show');
 		}
 
+		var repo_id = Session.get('repo_id');
 		var subscribers = UI.getData().repo.subscribers;
 		var inc = 1;
 		var action = '$addToSet';
@@ -200,13 +201,19 @@ Template.repo.events({
 			inc = -1;
 		}
 
-		action_obj[action] = {subscribers: Meteor.userId()};
-		action_obj['$inc'] = {nb_subscribers: inc}
+		action_obj[action] = {subscription: repo_id};
+		action_obj['$inc'] = {nb_subscription: inc};
 
-		console.log('action', action_obj)
+		Meteor.users.update(
+			{_id: Meteor.userId()},
+			action_obj
+		);
+
+		action_obj[action] = {subscribers: Meteor.userId()};
+		action_obj['$inc'] = {nb_subscribers: inc};
 
 		Repos.update(
-			{"_id": Session.get('repo_id')},
+			{"_id": repo_id},
 			action_obj
 		);	
 	},

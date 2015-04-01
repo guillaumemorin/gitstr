@@ -22,9 +22,11 @@
 								<div class="ui basic icon button">
 									<i class="copy icon"></i>
 								</div>
+								{{#unless isOwner}}
 								<div id="subscribe" class="ui basic icon button">
 									<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
 								</div>
+								{{/unless}}
 								<div class="ui basic icon button">
 									<i class="share icon"></i>
 								</div>
