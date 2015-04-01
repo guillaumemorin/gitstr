@@ -1,7 +1,7 @@
 <template name="repo">
 	{{> header}}
 	<div class="centered row">
-		<div class="four wide column">
+		<div class="four wide computer only column">
 			{{> profile}}
 		</div>
 		<div class="twelve wide column">
@@ -22,8 +22,8 @@
 								<div class="ui basic icon button">
 									<i class="copy icon"></i>
 								</div>
-								<div class="ui basic icon button">
-									<i class="star icon"></i>
+								<div id="subscribe" class="ui basic icon button">
+									<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
 								</div>
 								<div class="ui basic icon button">
 									<i class="share icon"></i>
@@ -38,14 +38,14 @@
 									<div class="value">
 										<i class="ui download grey-light icon"></i>
 									</div>
-									<span>27</span>
+									<span>{{#if repo.nb_download}} {{repo.nb_download}} {{else}} 0 {{/if}}</span>
 									<span class="label">Download</span>
 								</div>
 								<div class="statistic">
 									<div class="value">
 										<i class="ui star grey-light icon"></i>
 									</div>
-									<span>36</span>
+									<span>{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
 									<span class="label">Subscriber</span>
 								</div>
 								<div class="statistic">
@@ -124,10 +124,10 @@
 						<div class="ui large teal label">
 							{{#if nbTmpFiles}}{{nbTmpFiles}} new files{{/if}}
 						</div>
-						<div id="cancel" class="ui basic compact icon red button">
+						<div id="commit_cancel" class="ui basic compact icon red button">
 							<i class="delete icon"></i>
 						</div>
-						<div  id="publish" class="ui basic compact icon green button">
+						<div  id="commit" class="ui basic compact icon green button">
 							<i class="check icon"></i>
 						</div>
 						{{/if}}

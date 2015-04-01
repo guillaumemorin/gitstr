@@ -66,8 +66,9 @@ Template.repo.helpers({
 		}
 		return 'Updated ' + moment(timestamp).fromNow();
 	},
-	subscribed: function() {
-		return true;
+	subscribed: function(subscriber) {
+		console.log('sub', ~_.indexOf(subscriber, Meteor.userId()));
+		return ~_.indexOf(subscriber, Meteor.userId());
 	},
 	tmpFiles: function() {
 		return Session.get('tmp_files');
@@ -154,7 +155,6 @@ Template.repo.events({
 		}
 	},
 	'click #add_dropdown': function (event, template) {
-		console.log('add', $('#add_dropdown'), $('#add_dropdown').dropdown());
 		$('#add_dropdown')
 		.dropdown({
 			action: 'combo',
@@ -188,13 +188,33 @@ Template.repo.events({
 			$('#signin')
 			.modal('setting', 'transition', 'fade up')
 			.modal('show');
-		}	
+		}
+
+		var subscribers = UI.getData().repo.subscribers;
+		var inc = 1;
+		var action = '$addToSet';
+		var action_obj = {};
+
+		if (~_.indexOf(subscribers, Meteor.userId())) {
+			action = '$pull';
+			inc = -1;
+		}
+
+		action_obj[action] = {subscribers: Meteor.userId()};
+		action_obj['$inc'] = {nb_subscribers: inc}
+
+		console.log('action', action_obj)
+
+		Repos.update(
+			{"_id": Session.get('repo_id')},
+			action_obj
+		);	
 	},
-	'click #cancel': function (event, template) {
+	'click #commit_cancel': function (event, template) {
 		tmpFilesinit();
 	
 	},
-	'click #publish': function (event, template) {
+	'click #commit': function (event, template) {
 		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, Session.get('tmp_files'), function(error, result) {
 			if (error) {
 				console.log(error);
