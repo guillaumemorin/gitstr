@@ -1,6 +1,6 @@
 // Publish //
 Meteor.publish('users', function () {
-	return Meteor.users.find({}, {fields: {'services': 1, 'repo_counter': 1}});
+	return Meteor.users.find({}, {fields: {services: 1, nb_repo: 1, nb_subscription: 1, subscription: 1, createdAt: 1, profile: 1}});
 });
 
 Meteor.publish('repos', function () {
