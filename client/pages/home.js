@@ -3,12 +3,12 @@ Template.home.helpers({
 		return Session.get('submit_error_Message');
 	},
 	repoList: function () {
-		var repos = Repos.find({}, {sort: {timestamp : -1}});
+		var repos = Repos.find({user_id: Meteor.userId()}, {sort: {created_at : -1}});
 		var repo_count = repos.count();
 
 		//Redirect if creation is confirmed
 		if (Session.get('nb_repo') + 1 === repo_count) {
-			var path = Repos.findOne({}, {sort: {timestamp : -1}}).url;
+			var path = Repos.findOne({}, {sort: {created_at : -1}}).url;
 			Router.go(path);
 		}
 
