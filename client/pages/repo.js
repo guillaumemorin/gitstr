@@ -22,6 +22,10 @@ Template.repo.helpers({
 	},
 	filter: function (files) {
 		var filter = Session.get('filter');
+		if (!filter || filter === 'all') {
+			return files;
+		}
+
 		var files_ret = [];
 		_.map(files, function(file) {
 			if (filter === file.type.subtype) {
@@ -29,9 +33,7 @@ Template.repo.helpers({
 			}
 		});
 
-		console.log('return', files_ret.length);
-
-		return files_ret.length > 0 ? files_ret : files;
+		return files_ret;
 	},
 	errorMessage: function () {
 		return Session.get('upload_error_message');
