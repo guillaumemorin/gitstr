@@ -1,6 +1,105 @@
 <template name="home">
 	{{> header}}
 	<div class="centered row">
+		<div class="four wide computer tablet only column">
+			{{> profile}}
+		</div>
+		<div class="twelve wide column">
+			<h2 class="ui header">
+				<i class="orange flag icon"></i>
+				<div class="content">
+					Your repositories
+					<div class="sub header">
+						{{user.nb_repo}} Repositories
+					</div>
+				</div>
+			</h2>
+			<form>
+				<div class="ui right floated labeled action small input">
+					<div class="ui label">#</div>
+					<input type="text" name="repo_input" placeholder="New repository">
+					<input type="submit" class="ui positive button" value="Submit" />
+					<!-- <button class="ui positive button">
+						<i class="check icon"></i>
+					</button> -->
+				</div>
+			</form>
+			<div class="ui divider"></div>
+			<div class="ui three column grid">
+				{{#each repos}}
+				<div class="column">
+					<div class="ui fluid card">
+						<div class="content">
+							{{#unless isOwner user_id}}
+								<i class="right floated star {{#if subscribed subscribers}}yellow{{/if}} icon"></i>
+							{{/unless}}
+							<div class="header"><span class="teal">#</span> <a href="{{url}}" class="grey">{{title}}</a></div>
+							<div class="meta">	
+								<span class="time">
+								{{#if last_updtate}}
+									Updated {{setLastUpdate last_update}}
+								{{else}}
+									Created {{setLastUpdate created_at}}
+								{{/if}}
+								</span>
+								<div class="ui divider"></div>
+								{{#unless nb_files}}	
+									 <i class="teal frown icon"></i>
+									<span class="category">Empty</span>
+								{{else}}
+									{{#if nb_image}}
+									<div>
+										<i class="blue camera icon"></i> 
+										<a class="grey site-size" href="{{url}}/image">
+											{{nb_image}} Image
+										</a>
+									</div>
+									{{/if}}
+									{{#if nb_video}}
+									<div>
+										<i class="red record icon"></i>
+										<a class="grey site-size" href="{{url}}/video">
+											{{nb_video}} Video
+										</a>
+									</div>
+									{{/if}}
+									{{#if nb_audio}}
+									<div>
+										<i class="yellow unmute icon"></i>
+										<a class="grey site-size" href="{{url}}/audio">
+											{{nb_audio}} Audio
+										</a>
+									</div>
+									{{/if}}
+									{{#if nb_application}}
+									<div>
+										<i class="grey file outline icon"></i>
+										<a class="grey site-size" href="{{url}}/application">
+											{{nb_application}} Other
+										</a>
+									</div>
+									{{/if}}
+								{{/unless}}
+								<div class="ui divider"></div>
+								<div>
+									<i class="star outline icon"></i>{{#if nb_subscribers}} {{nb_subscribers}} {{else}} 0 {{/if}} Subscribers
+								</div>
+							</div>
+						</div>
+						{{#unless isOwner user_id}}
+						<div class="extra content">
+							<div class="author">
+								<img class="ui avatar image" src="{{user_profile_image_url}}"> {{user_name}}
+							</div>
+						</div>
+						{{/unless}}
+					</div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	<!-- <div class="centered row">
 		<h2 class="ui header">
 			<img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png" class="ui circular image">
 			Guillaume Morin
@@ -40,5 +139,5 @@
 		{{#each repoList}}
 			<h2><a class="link-repo" href="{{url}}">{{title}}</a></h2>
 		{{/each}}
-	</div>
+	</div> -->
 </template>

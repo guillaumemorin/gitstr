@@ -3,6 +3,21 @@ Template.registerHelper('equal', function(a, b) {
 	return a === b;
 });
 
+Template.registerHelper('setLastUpdate', function(timestamp) {
+	if (!timestamp) {
+		return '';
+	}
+	return moment(timestamp).fromNow();
+});
+
+Template.registerHelper('isOwner', function(repo_owner_id) {
+	return repo_owner_id === Meteor.userId();
+});
+
+Template.registerHelper('subscribed', function(subscriber) {
+	console.log('sub', ~_.indexOf(subscriber, Meteor.userId()));
+	return ~_.indexOf(subscriber, Meteor.userId());
+});
 
 var tmpFilesinit = function() {
 	Session.set('tmp_files', []);
@@ -44,8 +59,8 @@ Template.repo.helpers({
 	errorMessage: function () {
 		return Session.get('upload_error_message');
 	},
-	isOwner: function () {
-		return UI.getData().repo.user_id === Meteor.userId();
+	repoOwnerId: function () {
+		return UI.getData().repo.user_id;
 	},
 	setIcon: function (type) {
 		var type_map = {
@@ -67,16 +82,6 @@ Template.repo.helpers({
 	},
 	setDate: function (timestamp) {
 		return moment(timestamp).fromNow();
-	},
-	setLastUpdate: function (timestamp) {
-		if (!timestamp) {
-			return '';
-		}
-		return moment(timestamp).fromNow();
-	},
-	subscribed: function(subscriber) {
-		console.log('sub', ~_.indexOf(subscriber, Meteor.userId()));
-		return ~_.indexOf(subscriber, Meteor.userId());
 	},
 	tmpFiles: function() {
 		return Session.get('tmp_files');

@@ -19,7 +19,7 @@ Template.home.helpers({
 
 Template.home.events({
 	'submit form': function (event, template) {
-		var input_val = event.target.myInput.value;
+		var input_val = event.target.repo_input.value;
 		if (!input_val) {
 			return false;
 		}

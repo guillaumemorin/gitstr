@@ -14,11 +14,12 @@
 		<div class="extra content">
 			<div>
 				<i class="flag orange icon"></i>
-				{{#if user.nb_repo}} {{user.nb_repo}} {{else}} 0 {{/if}} Repositories
+				<a href="/rep" class="grey">{{#if user.nb_repo}} {{user.nb_repo}} {{else}} 0 {{/if}} Repositories</a>
 			</div>		
 			<div>
 				<i class="star yellow icon"></i>
-				{{#if user.nb_subscription}} {{user.nb_subscription}} {{else}} 0 {{/if}} Subscription
+				<a href="/sub" class="grey">{{#if user.nb_subscription}} {{user.nb_subscription}} {{else}} 0 {{/if}} Subscription</a>
+				
 			</div>
 		</div>
 		<!-- <div><a class="friends">

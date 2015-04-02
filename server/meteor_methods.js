@@ -69,6 +69,8 @@ Meteor.methods({
 				title: name,
 				created_at: new Date().getTime(),
 				user_id: Meteor.userId(),
+				user_name: Meteor.user().profile.name,
+				user_profile_image_url: Meteor.user().services.twitter.profile_image_url,
 				url: '/' + repo_path,
 				description: 'By ' + Meteor.user().profile.name,
 				permalink: service_url + repo_path,

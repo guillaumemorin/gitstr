@@ -10,7 +10,7 @@ Router.map(function () {
 
 	this.route('home', {
 		layoutTemplate: 'layout',
-		path: '/',
+		path: '/:item?',
 		waitOn: function() {
 			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
 		},
@@ -19,6 +19,31 @@ Router.map(function () {
 				Router.go('login');
 			}
 			this.next();
+		},
+		data: function () {
+
+			var repos = [];
+			if (this.params.item === 'rep') {
+				repos = Repos.find({user_id: Meteor.userId()});
+			}
+
+			if (this.params.item === 'sub') {
+				console.log(Meteor.user());
+				var user = Meteor.user();
+				if (!user) {
+					if (!testing) {
+						testing = true;
+						return false;
+					}
+					this.render('404');
+					return false;
+				}
+				_.map(user.subscription, function(id){
+					repos.push(Repos.findOne({_id: id}));
+				});
+			}
+			
+			return {user: Meteor.user(), repos: repos}
 		}
 	});
 

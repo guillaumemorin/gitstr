@@ -20,6 +20,14 @@
 	border-bottom: 3px solid rgba(0, 0, 0, 0.1);*/	
 }
 
+
+
+a.grey:hover {
+	/*text-decoration: underline;*/
+	color: #565a5c !important;
+}
+
+/***** Global *****/
 .site-size {
 	font-size: 12px !important;
 }
@@ -40,7 +48,7 @@
 	color: rgb(217, 92, 92) !important;
 }
 
-/***** addon *****/ 
+/***** Addon *****/ 
 .grey {
 	color: #82888a !important;
 }

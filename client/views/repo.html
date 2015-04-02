@@ -1,15 +1,13 @@
 <template name="repo">
 	{{> header}}
 	<div class="centered row">
-		<div class="four wide computer tablet only column">
-			{{> profile}}
-		</div>
-		<div class="twelve wide column">
+		<div class="fourteen wide column">
 			<div class="ui basic segment">
 				<div class="ui grid">
 					<div class="row">
 						<div class="left aligned eight wide column">
 							<h2 class="ui header">
+								<span class="grey-light">{{user.services.twitter.screenName}} / </span>
 								<span class="teal">#</span> {{repo.title}}
 								<div class="sub header">
 									{{#if repo.last_updtae}}
@@ -28,7 +26,7 @@
 								<div class="ui basic icon button">
 									<i class="copy icon"></i>
 								</div>
-								{{#unless isOwner}}
+								{{#unless isOwner repoOwnerId}}
 								<div id="subscribe" class="ui basic icon button">
 									<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
 								</div>
@@ -142,7 +140,6 @@
 						{{/if}}
 					</div>
 				</div>
-				{{#if isOwner}}
 				<div class="ui grid">
 					<div class="left aligned eight wide column">
 						<div class="ui buttons">
@@ -186,6 +183,7 @@
 							</div>
 						</div>
 					</div>
+					{{#if isOwner repoOwnerId}}
 					<div class="right aligned eight wide column">
 						<div class="ui buttons right floated">
 							<div id="add" class="ui basic teal small button">
@@ -207,8 +205,8 @@
 							</div>
 						</div>
 					</div>
+					{{/if}}
 				</div>
-				{{/if}}
 				<table class="ui small table grey-dark">
 					<thead></thead>
   					<tbody>
