@@ -21,7 +21,13 @@ Template.repo.helpers({
 		return cover_supported_type[type];
 	},
 	filter: function (files) {
+
 		var filter = Session.get('filter');
+		if (!filter && UI.getData().filter_type) {
+			filter = UI.getData().filter_type;
+			Session.set('filter', filter);
+		}
+
 		if (!filter || filter === 'all') {
 			return files;
 		}
@@ -240,6 +246,6 @@ Template.repo.rendered = function () {
 	tmpFilesinit();
 
 	//Init
-	$('.dropdown').dropdown();
+	$('.dropdown').dropdown('set selected', (Session.get('filter') || 'Filter'));
 	document.title = data.repo.url;
 };

@@ -25,10 +25,10 @@ Router.map(function () {
 	this.route('repo', {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',
-		path: '/:username/:repo',
+		path: '/:username/:repo/:filter_type?',
 		data: function () {
+
 			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username});
-			console.log('user', user);
 			if (!user) {
 				if (!testing) {
 					testing = true;
@@ -55,7 +55,7 @@ Router.map(function () {
 			// 	return false;	
 			// }
 
-			return {repo: repo, user: user, repo_history: history}
+			return {repo: repo, user: user, repo_history: history, filter_type: this.params.filter_type}
 		},
 		waitOn: function() {
 			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history')];
