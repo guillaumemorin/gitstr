@@ -33,5 +33,6 @@ Template.home.events({
 });
 
 Template.home.rendered = function () {
-	document.title = Meteor.user().profile.name;
+	// document.title = Meteor.user().profile.name;
+	document.title = service_name;
 };
