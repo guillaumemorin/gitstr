@@ -2,19 +2,22 @@ Template.home.helpers({
 	errorMessage: function () {
 		return Session.get('submit_error_Message');
 	},
-	repoList: function () {
-		var repos = Repos.find({user_id: Meteor.userId()}, {sort: {created_at : -1}});
-		var repo_count = repos.count();
-
-		//Redirect if creation is confirmed
-		if (Session.get('nb_repo') + 1 === repo_count) {
-			var path = Repos.findOne({}, {sort: {created_at : -1}}).url;
-			Router.go(path);
-		}
-
-		Session.set('nb_repo', repos.count());
-		return repos;
+	display: function () {
+		return Session.get('display') || 'feed';
 	}
+	// repoList: function () {
+	// 	var repos = Repos.find({user_id: Meteor.userId()}, {sort: {created_at : -1}});
+	// 	var repo_count = repos.count();
+
+	// 	//Redirect if creation is confirmed
+	// 	if (Session.get('nb_repo') + 1 === repo_count) {
+	// 		var path = Repos.findOne({}, {sort: {created_at : -1}}).url;
+	// 		Router.go(path);
+	// 	}
+
+	// 	Session.set('nb_repo', repos.count());
+	// 	return repos;
+	// }
 });
 
 Template.home.events({

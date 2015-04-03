@@ -6,13 +6,35 @@
 		</div>
 		<div class="twelve wide column">
 			<h2 class="ui header">
+				{{#if equal display "feed"}}
+				<i class="green heartbeat icon"></i>
+				<div class="content">
+					Feed
+					<div class="sub header">
+						Updated a few seconds ago
+					</div>
+				</div>
+				{{/if}}
+
+				{{#if equal display "repositories"}}
 				<i class="orange flag icon"></i>
 				<div class="content">
 					Your repositories
 					<div class="sub header">
-						{{user.nb_repo}} Repositories
+						{{currentUser.nb_repo}} Repositories
 					</div>
 				</div>
+				{{/if}}
+
+				{{#if equal display "subscription"}}
+				<i class="yellow star icon"></i>
+				<div class="content">
+					Your subscriptions
+					<div class="sub header">
+						{{currentUser.nb_subscription}} Subscriptions
+					</div>
+				</div>
+				{{/if}}
 			</h2>
 			<form>
 				<div class="ui right floated labeled action small input">
@@ -25,78 +47,11 @@
 				</div>
 			</form>
 			<div class="ui divider"></div>
-			<div class="ui three column grid">
-				{{#each repos}}
-				<div class="column">
-					<div class="ui fluid card">
-						<div class="content">
-							{{#unless isOwner user_id}}
-								<i class="right floated star {{#if subscribed subscribers}}yellow{{/if}} icon"></i>
-							{{/unless}}
-							<div class="header"><span class="teal">#</span> <a href="{{url}}" class="grey">{{title}}</a></div>
-							<div class="meta">	
-								<span class="time">
-								{{#if last_updtate}}
-									Updated {{setLastUpdate last_update}}
-								{{else}}
-									Created {{setLastUpdate created_at}}
-								{{/if}}
-								</span>
-								<div class="ui divider"></div>
-								{{#unless nb_files}}	
-									 <i class="teal frown icon"></i>
-									<span class="category">Empty</span>
-								{{else}}
-									{{#if nb_image}}
-									<div>
-										<i class="blue camera icon"></i> 
-										<a class="grey site-size" href="{{url}}/image">
-											{{nb_image}} Image
-										</a>
-									</div>
-									{{/if}}
-									{{#if nb_video}}
-									<div>
-										<i class="red record icon"></i>
-										<a class="grey site-size" href="{{url}}/video">
-											{{nb_video}} Video
-										</a>
-									</div>
-									{{/if}}
-									{{#if nb_audio}}
-									<div>
-										<i class="yellow unmute icon"></i>
-										<a class="grey site-size" href="{{url}}/audio">
-											{{nb_audio}} Audio
-										</a>
-									</div>
-									{{/if}}
-									{{#if nb_application}}
-									<div>
-										<i class="grey file outline icon"></i>
-										<a class="grey site-size" href="{{url}}/application">
-											{{nb_application}} Other
-										</a>
-									</div>
-									{{/if}}
-								{{/unless}}
-								<div class="ui divider"></div>
-								<div>
-									<i class="star outline icon"></i>{{#if nb_subscribers}} {{nb_subscribers}} {{else}} 0 {{/if}} Subscribers
-								</div>
-							</div>
-						</div>
-						{{#unless isOwner user_id}}
-						<div class="extra content">
-							<div class="author">
-								<img class="ui avatar image" src="{{user_profile_image_url}}"> {{user_name}}
-							</div>
-						</div>
-						{{/unless}}
-					</div>
-				</div>
-				{{/each}}
-			</div>
+			{{#if equal display "feed"}}
+				{{> feed}}
+			{{else}}
+				{{> repositories_grid}}
+			{{/if}}
 		</div>
 	</div>
 	<!-- <div class="centered row">

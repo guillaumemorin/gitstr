@@ -10,40 +10,16 @@ Router.map(function () {
 
 	this.route('home', {
 		layoutTemplate: 'layout',
-		path: '/:item?',
+		path: '/',
 		waitOn: function() {
 			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
 		},
 		onBeforeAction: function () {
 			if (!Meteor.loggingIn() && !Meteor.user()) {
-				Router.go('login');
+				this.render('login');
+				return;
 			}
 			this.next();
-		},
-		data: function () {
-
-			var repos = [];
-			if (this.params.item === 'rep') {
-				repos = Repos.find({user_id: Meteor.userId()});
-			}
-
-			if (this.params.item === 'sub') {
-				console.log(Meteor.user());
-				var user = Meteor.user();
-				if (!user) {
-					if (!testing) {
-						testing = true;
-						return false;
-					}
-					this.render('404');
-					return false;
-				}
-				_.map(user.subscription, function(id){
-					repos.push(Repos.findOne({_id: id}));
-				});
-			}
-			
-			return {user: Meteor.user(), repos: repos}
 		}
 	});
 
@@ -57,19 +33,19 @@ Router.map(function () {
 			if (!user) {
 				if (!testing) {
 					testing = true;
-					return false;
+					return;
 				}
 				this.render('404');
-				return false;
+				return;
 			}
 			var repo = Repos.findOne({user_id: user._id, title: this.params.repo});
 			if (!repo) {
 				if (!testing_repo) {
 					testing_repo = true;
-					return false;
+					return;
 				}
 				this.render('404');
-				return false;	
+				return;	
 			}
 
 			var history;
@@ -77,23 +53,13 @@ Router.map(function () {
 			// if (!history) {
 			// 	console.log('render 404');
 			// 	this.render('404');
-			// 	return false;	
+			// 	return;	
 			// }
 
 			return {repo: repo, user: user, repo_history: history, filter_type: this.params.filter_type}
 		},
 		waitOn: function() {
 			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history')];
-		}
-	});
-
-	this.route('login', {
-		layoutTemplate: 'login',
-		onBeforeAction: function () {
-			if (Meteor.user()) {
-				Router.go('/');
-			}
-			this.next();
 		}
 	});
 });

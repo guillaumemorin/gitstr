@@ -2,29 +2,30 @@
 	<div class="ui card">
 		<div class="image">
 		<!-- <img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png"> -->
-		<img src="{{user.services.twitter.profile_image_url}}">
+		<img src="{{currentUser.services.twitter.profile_image_url}}">
 		</div>
 		<div class="content">
-			<div class="header">{{user.profile.name}}</div>
+			<div class="header">{{currentUser.profile.name}}</div>
 			<div class="meta">
-			<span class="date">Joined in {{moment user.createdAt}}</span>
+			<span class="date">Joined in {{moment currentUser.createdAt}}</span>
 			</div>
 			<div class="description"></div>
 		</div>
 		<div class="extra content">
 			<div>
+				<i class="heartbeat green icon"></i>
+				<a id="feed_list" href="#">Feed</a>
+			</div>		
+			<div>
 				<i class="flag orange icon"></i>
-				<a href="/rep" class="grey">{{#if user.nb_repo}} {{user.nb_repo}} {{else}} 0 {{/if}} Repositories</a>
+				<a id="repo_list" href="#">Repositories</a>
+				<span class="right floated">{{#if currentUser.nb_repo}} {{currentUser.nb_repo}} {{else}} 0 {{/if}}</span>
 			</div>		
 			<div>
 				<i class="star yellow icon"></i>
-				<a href="/sub" class="grey">{{#if user.nb_subscription}} {{user.nb_subscription}} {{else}} 0 {{/if}} Subscription</a>
-				
+				<a id="sub_list" href="#">Subscriptions</a>
+				<span class="right floated">{{#if currentUser.nb_subscription}} {{currentUser.nb_subscription}} {{else}} 0 {{/if}}</span>
 			</div>
 		</div>
-		<!-- <div><a class="friends">
-		<i class="user icon"></i>
-		22 Friends
-		</a></div> -->
 	</div>
 </template>
