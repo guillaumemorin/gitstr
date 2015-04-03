@@ -1,4 +1,4 @@
-var git = Npm.require(process.env.NODEGIT_PATH);
+var git = Npm.require(NODEGIT_PATH);
 
 repository = function(repo_path) {
 	this.repo_path = repo_path;

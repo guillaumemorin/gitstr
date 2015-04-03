@@ -1,5 +1,5 @@
 var fs = Npm.require('fs');
-var thumbgen = Npm.require('/Users/guillaume/npm_packages/thumbnails-webvtt');
+var thumbgen = Npm.require(THUMBGEN_PATH);
 
 // _addFolder = function (userInfo, file) {
 

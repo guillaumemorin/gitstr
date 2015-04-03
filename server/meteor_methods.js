@@ -1,7 +1,3 @@
-var git = Npm.require(process.env.NODEGIT_PATH);
-var Repository = git.Repository;
-var Clone = git.Clone;
-
 var fs = Npm.require('fs');
 
 Meteor.methods({
