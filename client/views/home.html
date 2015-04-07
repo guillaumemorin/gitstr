@@ -1,57 +1,59 @@
 <template name="home">
 	{{> header}}
-	<div class="centered row">
-		<div class="four wide computer tablet only column">
-			{{> profile}}
-		</div>
-		<div class="twelve wide column">
-			<h2 class="ui header">
+	<div class="ui page vertically padded grid">
+		<div class="centered row">
+			<div class="four wide computer tablet only column">
+				{{> profile}}
+			</div>
+			<div class="twelve wide column">
+				<h2 class="ui header">
+					{{#if equal display "feed"}}
+					<i class="green heartbeat icon"></i>
+					<div class="content">
+						Feed
+						<div class="sub header">
+							Updated a few seconds ago
+						</div>
+					</div>
+					{{/if}}
+
+					{{#if equal display "repositories"}}
+					<i class="orange flag icon"></i>
+					<div class="content">
+						Your repositories
+						<div class="sub header">
+							{{currentUser.nb_repo}} Repositories
+						</div>
+					</div>
+					{{/if}}
+
+					{{#if equal display "subscription"}}
+					<i class="yellow star icon"></i>
+					<div class="content">
+						Your subscriptions
+						<div class="sub header">
+							{{currentUser.nb_subscription}} Subscriptions
+						</div>
+					</div>
+					{{/if}}
+				</h2>
+				<form>
+					<div class="ui right floated labeled action small input">
+						<div class="ui label">#</div>
+						<input type="text" name="repo_input" placeholder="New repository">
+						<input type="submit" class="ui positive button" value="Submit" />
+						<!-- <button class="ui positive button">
+							<i class="check icon"></i>
+						</button> -->
+					</div>
+				</form>
+				<div class="ui divider"></div>
 				{{#if equal display "feed"}}
-				<i class="green heartbeat icon"></i>
-				<div class="content">
-					Feed
-					<div class="sub header">
-						Updated a few seconds ago
-					</div>
-				</div>
+					{{> feed}}
+				{{else}}
+					{{> repositories_grid}}
 				{{/if}}
-
-				{{#if equal display "repositories"}}
-				<i class="orange flag icon"></i>
-				<div class="content">
-					Your repositories
-					<div class="sub header">
-						{{currentUser.nb_repo}} Repositories
-					</div>
-				</div>
-				{{/if}}
-
-				{{#if equal display "subscription"}}
-				<i class="yellow star icon"></i>
-				<div class="content">
-					Your subscriptions
-					<div class="sub header">
-						{{currentUser.nb_subscription}} Subscriptions
-					</div>
-				</div>
-				{{/if}}
-			</h2>
-			<form>
-				<div class="ui right floated labeled action small input">
-					<div class="ui label">#</div>
-					<input type="text" name="repo_input" placeholder="New repository">
-					<input type="submit" class="ui positive button" value="Submit" />
-					<!-- <button class="ui positive button">
-						<i class="check icon"></i>
-					</button> -->
-				</div>
-			</form>
-			<div class="ui divider"></div>
-			{{#if equal display "feed"}}
-				{{> feed}}
-			{{else}}
-				{{> repositories_grid}}
-			{{/if}}
+			</div>
 		</div>
 	</div>
 	<!-- <div class="centered row">
