@@ -1,24 +1,3 @@
-// Global Helpers
-Template.registerHelper('equal', function(a, b) {
-	return a === b;
-});
-
-Template.registerHelper('setLastUpdate', function(timestamp) {
-	if (!timestamp) {
-		return '';
-	}
-	return moment(timestamp).fromNow();
-});
-
-Template.registerHelper('isOwner', function(repo_owner_id) {
-	return repo_owner_id === Meteor.userId();
-});
-
-Template.registerHelper('subscribed', function(subscriber) {
-	console.log('sub', ~_.indexOf(subscriber, Meteor.userId()));
-	return ~_.indexOf(subscriber, Meteor.userId());
-});
-
 var tmpFilesinit = function() {
 	Session.set('tmp_files', []);
 	Session.set('nb_tmp_files', 0);
