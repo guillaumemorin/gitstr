@@ -3,6 +3,14 @@
 	{{#each repoList}}
 	<div class="column">
 		<div class="ui fluid card">
+		 	<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div>Unsubscribing from</div>
+						<div>{{user_name}} / # {{title}} ...</div>
+					</div>
+				</div>
+		 	</div>
 			<div class="content">
 				{{#unless isOwner user_id}}
 					<i data-id="{{_id}}" class="subscribe right floated star {{#if subscribed subscribers}}yellow{{/if}} icon"></i>
