@@ -1,34 +1,11 @@
-/* Global - SEMANTIC UI */
 
-#topbar.fix {
-	top: 0px;
-	left: 0px;
-	right: auto;
-	bottom: auto;
-	border-radius: 0px !important;
-	position: fixed;
-	z-index: 101;
-	border: none;
-	opacity: 0.99;
-	background-color: #FFFFFF;
-	border-bottom: 1px solid #d4d4d5 !important;
-	margin: 0em;
-	width: 100%;
-
-	/*padding-top: 1rem;
-	background-color: #F7F7F7;
-	border-bottom: 3px solid rgba(0, 0, 0, 0.1);*/	
-}
-
-
-
-a.grey:hover {
-	/*text-decoration: underline;*/
+/*a.grey:hover {
+	text-decoration: underline;
 	color: #565a5c !important;
-}
+}*/
 
 /***** Global *****/
-.site-size {
+/*.site-size {
 	font-size: 12px !important;
 }
 
@@ -46,10 +23,10 @@ a.grey:hover {
 
 .red {
 	color: rgb(217, 92, 92) !important;
-}
+}*/
 
 /***** Addon *****/ 
-.grey {
+/*.grey {
 	color: #82888a !important;
 }
 
@@ -67,46 +44,15 @@ a.grey:hover {
 
 .teal-light {
 	color: #79cccd !important;
-}
+}*/
 
 /***** change *****/
-#loading-segment {
+/*#loading-segment {
 	height: 500px;
-}
+}*/
 
 /* Audio player */
-.playing {
+/*.playing {
 	display: none;
 	padding-right: 5px;
-}
-
-/* CSS declarations go here */
-#login {
-	background-size: cover;
-	background-image: url('/14868090544_d8a7b613fb_k.jpg');
-	background-repeat: no-repeat;
-	background-position: 0 -250px;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-
-#sign-in {
-	margin-top: 20px;
-}
-
-#title {
-	font-size: 70px;
-	font-family: 'Source Sans Pro';
-	color: #DDD;
-	margin: 50px 10px 100px;
-}
-
-.button-container {
-	display: inline-block;
-	margin: 10px;
-}
-
-#sign-in .button-container button {
-	border: 0px;
-}
+}*/
