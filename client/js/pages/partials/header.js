@@ -24,8 +24,6 @@ var fixed_topbar;
 var scroll_position;
 
 $(window).scroll(function() {
-
-	console.log('scroll', $(window).scrollTop());
 	
 	scroll_position = $(window).scrollTop();
 

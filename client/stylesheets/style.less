@@ -10,13 +10,11 @@
 @red              : #D95C5C;
 @teal             : #00B5AD;
 @yellow           : #F2C61F;
-@grey             : #82888A;
 
 @black            : #1B1C1D;
 @white            : #FFFFFF;
 
-@lightGrey        : #D3D3D3;
-@lightBlack:      : #CCCCCC;
+@lightBlack       : #CCCCCC;
 @lightBlue        : #54C8FF;
 @lightGreen       : #2ECC40;
 @lightOrange      : #FF851B;
@@ -25,6 +23,15 @@
 @lightRed         : #FF695E;
 @lightTeal        : #6DFFFF;
 @lightYellow      : #FFE21F;
+
+/*-------------------
+    Custom site Colors
+--------------------*/
+
+@grey             : #82888A;
+
+@lightGrey        : #D3D3D3;
+@lightTealCustom  : #79CCCD;
 
 @extraLightGrey   : #AAA;
 
@@ -43,10 +50,10 @@
 
 
 /*-------------------
-      Declarations
+    Global declarations
 --------------------*/
 .teal {
-	color: @teal 
+	color: @teal @important;
 }
 
 .grey {
@@ -54,17 +61,34 @@
 }
 
 .grey-light {
-	color: @lightGrey;
+	color: @lightGrey @important;
 }
 
 .grey-extra-light {
-	color: @extraLightGrey;
+	color: @extraLightGrey @important;
 }
 
 .grey-dark {
-	color: @darkGrey;
+	color: @darkGrey @important;
 }
 
-/*.teal-light {
-	color: #79cccd;
-}*/
+.teal-light {
+	color: @lightTeal;
+}
+
+/*-------------------
+    Loader
+--------------------*/
+.ui.inverted.dimmer .ui.loader:after {
+	border-color: @lightTealCustom transparent transparent @important;
+}
+
+
+
+/*  background-image: url(upload/public/u/MEQPYZ5PdbsPJXstL/blurred.jpg);
+  width: 100%;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: -300px;*/
+
