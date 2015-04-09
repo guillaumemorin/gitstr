@@ -23,6 +23,29 @@ Router.map(function () {
 		}
 	});
 
+	this.route('profile', {
+		layoutTemplate: 'layout',
+		loadingTemplate: 'loading',
+		path: '/:username',
+		data: function () {
+
+			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username});
+			if (!user) {
+				if (!testing) {
+					testing = true;
+					return;
+				}
+				this.render('404');
+				return;
+			}
+
+			return user;
+		},
+		waitOn: function() {
+			return Meteor.subscribe('users');
+		}
+	});
+
 	this.route('repo', {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',

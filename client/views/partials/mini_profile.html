@@ -1,10 +1,31 @@
-<template name="mini-profile">
-	<div class="card">
+<template name="mini_profile">
+	<div class="ui card">
 		<div class="image">
-			<img src="/images/avatar/large/elliot.jpg">
+		<!-- <img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png"> -->
+		<img src="{{currentUser.profile.image}}">
 		</div>
 		<div class="content">
-			<a class="header">Elliot Fu</a>
+			<div class="header">{{currentUser.profile.name}}</div>
+			<div class="meta">
+			<span class="date">Joined in {{moment currentUser.createdAt}}</span>
+			</div>
+			<div class="description"></div>
+		</div>
+		<div class="extra content">
+			<div>
+				<i class="heartbeat green icon"></i>
+				<a id="feed_list" href="#">Feed</a>
+			</div>		
+			<div>
+				<i class="flag orange icon"></i>
+				<a id="repo_list" href="#">Repositories</a>
+				<span class="right floated">{{#if currentUser.nb_repo}} {{currentUser.nb_repo}} {{else}} 0 {{/if}}</span>
+			</div>		
+			<div>
+				<i class="star yellow icon"></i>
+				<a id="sub_list" href="#">Subscriptions</a>
+				<span class="right floated">{{#if currentUser.nb_subscription}} {{currentUser.nb_subscription}} {{else}} 0 {{/if}}</span>
+			</div>
 		</div>
 	</div>
 </template>
