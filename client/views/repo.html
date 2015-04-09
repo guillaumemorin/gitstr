@@ -208,7 +208,7 @@
 						</div>
 						{{/if}}
 					</div>
-					<table class="ui small table grey-dark">
+					<table id="file-list" class="ui small table grey-dark">
 						<thead></thead>
 	  					<tbody>
 	  						<tr class="disabled">
@@ -271,7 +271,7 @@
 								<tr>
 									<td colspan="3" style="border-top: 0px; text-align: center">
 										<a class="cover" href="{{url}}">
-											<img src="{{url}}" style="width: 60%" />
+											<img src="{{url}}" />
 										</a>
 										<div class="ui hidden divider"></div>
 									</td>
@@ -288,7 +288,7 @@
 								<tr>
 									<td colspan="3" style="border-top: 0px; text-align: center">
 										<a class="cover-video" href="{{url}}">
-											<img src="{{cover_url}}" style="width: 60%" />
+											<img src="{{cover_url}}" />
 											<video style="display:none" width="450" height="240" controls>
 												<source src="{{url}}" type="video/mp4">
 												Your browser does not support the video tag.
