@@ -37,17 +37,27 @@
 					</div>
 					{{/if}}
 				</h2>
+
+				{{#if equal display "repositories"}}
 				<form>
-					<div class="ui right floated labeled action small input">
-						<div class="ui label">#</div>
-						<input type="text" name="repo_input" placeholder="New repository">
-						<input type="submit" class="ui positive button" value="Submit" />
-						<!-- <button class="ui positive button">
-							<i class="check icon"></i>
-						</button> -->
+					<div class="ui form">
+						<div class="inline fields">
+							<i class="add square grey icon"></i>
+							<span class="grey">New repository: </span>
+							<div class="field {{#if errorMessage}}error{{/if}}">
+								<label>
+									<span class="grey-light">{{currentUser.profile.screen_name}} / </span>
+									<span class="teal">#</span>
+								</label>
+								<input type="text" name="repo_input" placeholder="Name">
+								<input type="submit" class="ui positive button" value="Add" />
+							</div>
+						</div>
 					</div>
 				</form>
-				<div class="ui divider"></div>
+				{{/if}}
+
+				<div class="ui clearing divider"></div>
 				{{#if equal display "feed"}}
 					{{> feed}}
 				{{else}}

@@ -230,6 +230,10 @@ Template.repo.rendered = function () {
 	Session.set('repo_id', data.repo._id);
 	tmpFilesinit();
 
+	window.setTimeout(function() {
+		$('#page_loader').dimmer('hide');	
+	}, 1000);
+
 	//Init
 	$('.dropdown').dropdown('set selected', (Session.get('filter') || 'Filter'));
 	document.title = data.repo.url;

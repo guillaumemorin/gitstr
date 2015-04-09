@@ -1,4 +1,5 @@
 <template name="repo">
+	{{> loader}}
 	{{> header}}
 	<div class="ui page vertically padded grid">
 		<div class="centered row">
@@ -8,7 +9,7 @@
 						<div class="row">
 							<div class="left aligned eight wide column">
 								<h2 class="ui header">
-									<a class="profile-link transition" href="/{{user.profile.screen_name}}">
+									<a class="profile-link" href="/{{user.profile.screen_name}}">
 										<span>{{user.profile.screen_name}}</span>
 									</a>
 									<span class="grey-light"> / </span>
@@ -36,7 +37,7 @@
 									</div>
 									{{/unless}}
 									<div class="ui basic icon button">
-										<i class="share icon"></i>
+										<i class="share alternate icon"></i>
 									</div>
 								</div>
 							</div>
