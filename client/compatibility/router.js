@@ -29,7 +29,7 @@ Router.map(function () {
 		path: '/:username',
 		data: function () {
 
-			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username});
+			var user = Meteor.users.findOne({'profile.screen_name': this.params.username});
 			if (!user) {
 				if (!testing) {
 					testing = true;
@@ -52,7 +52,7 @@ Router.map(function () {
 		path: '/:username/:repo/:filter_type?',
 		data: function () {
 
-			var user = Meteor.users.findOne({'services.twitter.screenName': this.params.username});
+			var user = Meteor.users.findOne({'profile.screen_name': this.params.username});
 			if (!user) {
 				if (!testing) {
 					testing = true;
