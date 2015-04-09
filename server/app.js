@@ -42,7 +42,7 @@ Meteor.startup(function () {
 Accounts.onCreateUser(function(options, user) {
 
 	var exec = Npm.require('child_process').exec, http = Npm.require('http'), fs = Npm.require('fs');
-	var child, profile_image_url, profile_image, profile_image_mini;
+	var child, profile_image_url, profile_image, profile_image_mini, profile_screen_name;
 	var user_image_path = PROFILE_IMAGE_PATH + '/' + user._id;
 	var update_user_image = Meteor.bindEnvironment(function(err) {
 		
@@ -66,6 +66,7 @@ Accounts.onCreateUser(function(options, user) {
 		profile_image_url = user.services.twitter.profile_image_url;
 		profile_image = profile_image_url.replace('_normal', '_400x400');
 		profile_image_mini = profile_image_url.replace('_normal', '_mini');
+		profile_screen_name = user.services.twitter.screenName;
 	}
 
 	if (user.services.facebook) {
@@ -105,6 +106,7 @@ Accounts.onCreateUser(function(options, user) {
 		user.profile = options.profile;	
 		user.profile.image = profile_image;
 		user.profile.image_blur = 'upload/public/u/' + user._id + '/blurred.jpg';
+		user.profile.screen_name = profile_screen_name;
 		// user.profile.image_url_mini = profile_image_mini;
 	}
 

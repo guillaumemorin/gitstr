@@ -8,7 +8,10 @@
 						<div class="row">
 							<div class="left aligned eight wide column">
 								<h2 class="ui header">
-									<span class="grey-light">{{user.services.twitter.screenName}} / </span>
+									<a class="profile-link transition" href="/{{user.profile.screen_name}}">
+										<span>{{user.profile.screen_name}}</span>
+									</a>
+									<span class="grey-light"> / </span>
 									<span class="teal">#</span> {{repo.title}}
 									<div class="sub header">
 										{{#if repo.last_updtae}}

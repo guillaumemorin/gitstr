@@ -8,7 +8,10 @@
 					</a>
 					<div class="item">
 						{{#if repo}}
-						<span class="grey-light">{{user.services.twitter.screenName}} / </span>
+						<a class="profile-link" href="/{{user.profile.screen_name}}">
+							<span>{{user.profile.screen_name}}</span>
+						</a>
+						<span class="grey-light"> / </span>
 						<span class="teal">#</span> {{repo.title}} 
 						{{else}}
 							{{#if equal display "feed"}}
