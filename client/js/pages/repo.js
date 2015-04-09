@@ -180,6 +180,7 @@ Template.repo.events({
 			$('#signin')
 			.modal('setting', 'transition', 'fade up')
 			.modal('show');
+			return;
 		}
 
 		var repo_id = Session.get('repo_id');
