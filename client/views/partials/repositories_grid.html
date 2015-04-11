@@ -15,21 +15,21 @@
 				{{#unless isOwner user_id}}
 					<i data-id="{{_id}}" class="subscribe right floated star {{#if subscribed subscribers}}yellow{{/if}} icon"></i>
 				{{/unless}}
-				<div class="header"><span class="teal">#</span> <a href="{{url}}" class="grey">{{title}}</a></div>
+				<div class="header"><span class="teal">#</span> <a href="{{url}}" class="link-dark">{{title}}</a></div>
 				<div class="meta">	
 					<span class="time">
-					{{#if last_updtate}}
+					{{#if last_update}}
 						Updated {{setLastUpdate last_update}}
 					{{else}}
 						Created {{setLastUpdate created_at}}
 					{{/if}}
 					</span>
 					<div class="ui divider"></div>
-					{{#unless nb_files}}	
+					<!-- {{#unless nb_files}}	
 						 <i class="teal frown icon"></i>
 						<span class="category">Empty</span>
-					{{else}}
-						{{#if nb_image}}
+					{{else}} -->
+						<!-- {{#if nb_image}}
 						<div>
 							<i class="blue camera icon"></i> 
 							<a class="grey site-size" href="{{url}}/image">
@@ -60,8 +60,39 @@
 								{{nb_application}} Other
 							</a>
 						</div>
-						{{/if}}
-					{{/unless}}
+						{{/if}} -->
+
+						<div class="ui mini statistics">
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small blue camera grey-light circular inverted icon"></i>
+								</div>
+								<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+								<span class="label">Image</span>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small red record grey-light circular inverted icon"></i>
+								</div>
+								<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+								<span class="label">Video</span>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small yellow unmute grey-light circular inverted icon"></i>
+								</div>
+								<span class="yellow">{{#if nb_audio}} {{nb_audio}} {{else}} 0 {{/if}}</span>
+								<span class="label">Audio</span>
+							</div>
+							<div class="statistic">
+								<div class="value">
+									<i class="ui small file outline grey-light circular icon"></i>
+								</div>
+								<span class="grey-light">{{#if nb_application}} {{nb_application}} {{else}} 0 {{/if}}</span>
+								<span class="label">Other</span>
+							</div>
+						</div>
+					<!-- {{/unless}} -->
 					<div class="ui divider"></div>
 					<div>
 						<i class="star outline icon"></i>{{#if nb_subscribers}} {{nb_subscribers}} {{else}} 0 {{/if}} Subscribers

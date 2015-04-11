@@ -1,3 +1,29 @@
 <template name="profile">
-	<div class="ui page vertically padded grid">PROFILE</div>
+<!-- 	<div id="profile" class="ui page vertically padded grid" c>
+		
+
+		<h2 class="ui icon center aligned header">
+			<img class="ui small circular image" src="{{profile.image}}">
+			<div class="content">
+				{{profile.screen_name}}
+				<div class="sub header">Manage your account settings and set e-mail preferences.</div>
+			</div>
+		</h2>
+
+
+	</div> -->
+	<div id="profile-header" class="ui inverted teal vertical segment">
+		<div class="ui page grid">
+			<div class="column">
+				{{> header padded="false" pointing="false"}}
+				<h2 class="ui icon center aligned header">
+					<img class="ui small circular image" src="/{{profile.image}}">
+					<div class="content">
+						{{profile.screen_name}}
+						<div class="sub header">Manage your account settings and set e-mail preferences.</div>
+					</div>
+				</h2>
+			</div>
+		</div>
+	</div>
 </template>

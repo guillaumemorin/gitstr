@@ -5,7 +5,7 @@
 		<img src="{{currentUser.profile.image}}">
 		</div>
 		<div class="content">
-			<div class="header">{{currentUser.profile.name}}</div>
+			<div class="header"><a class="link-dark" href="{{currentUser.profile.screen_name}}">{{currentUser.profile.name}}</a></div>
 			<div class="meta">
 			<span class="date">Joined in {{moment currentUser.createdAt}}</span>
 			</div>
@@ -14,7 +14,7 @@
 		<div class="extra content">
 			<div>
 				<i class="heartbeat green icon"></i>
-				<a id="feed_list" href="#">Feed</a>
+				<a id="feed_list" href="#">Activity</a>
 			</div>		
 			<div>
 				<i class="flag orange icon"></i>

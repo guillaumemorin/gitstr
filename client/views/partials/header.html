@@ -1,5 +1,5 @@
 <template name="header">
-	<div class="ui page vertically padded grid">
+	<div class="ui {{#unless padded}}page{{/unless}} vertically padded grid">
 		<div class="centered row">
 			<div class="column">
 				<div id="fixed_topbar" class="ui primary fixed menu" style="display: none">
@@ -8,7 +8,7 @@
 					</a>
 					<div class="item">
 						{{#if repo}}
-						<a class="profile-link" href="/{{user.profile.screen_name}}">
+						<a class="link-light" href="/{{user.profile.screen_name}}">
 							<span>{{user.profile.screen_name}}</span>
 						</a>
 						<span class="grey-light"> / </span>
@@ -55,7 +55,7 @@
 						{{/if}}
 					</div>
 				</div>
-				<div id="topbar" class="ui secondary pointing menu">
+				<div id="topbar" class="ui secondary {{#unless pointing}}pointing{{/unless}} menu">
 					<a class="item" href="/">
 						<i class="fork large icon"></i>
 					</a>

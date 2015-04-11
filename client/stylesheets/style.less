@@ -42,6 +42,12 @@
 --------------------*/
 /* Exact pixel values @ 14px em */
 
+/*-------------------
+   Transitions
+--------------------*/
+@transition         : @transitionDuration @transitionEasing;
+@transitionDuration : 0.2s;
+@transitionEasing   : ease;
 
 /*-------------------
       Properties
@@ -76,22 +82,35 @@
 	color: @lightTeal;
 }
 
-.profile-link {
-	color: @lightGrey @important;
+.link {
 	text-decoration: none;
-	transition: @transitionDuration @transitionEasing;
+	transition: @transition;
 }
 
-.profile-link:hover {
+.link-light {
+	color: @lightGrey @important;
+	.link;
+}
+
+.link-light:hover {
 	color: @grey @important;
 }
 
-/*-------------------
-   Transitions
---------------------*/
+.link-dark {
+	color: @darkGrey @important;
+	.link;
+}
 
-@transitionDuration : 0.2s;
-@transitionEasing   : ease;
+.link-dark:hover {
+	color: @black @important;
+}
+
+/*-------------------
+    Messages
+--------------------*/
+.negative.message {
+	display: none;
+}
 
 /*-------------------
     Loader
@@ -108,12 +127,24 @@
 	border-radius: 5px;
 }
 
+/*-------------------
+    profile page
+--------------------*/
+#profile-header {
+	height: 50%;
+	background-image: url(swirl_pattern.png);
+}
 
+/*-------------------
+    login page
+--------------------*/
+#login-header {
+	height: 50%;
+	background-image: url(congruent_pentagon.png);
+}
 
-/*  background-image: url(upload/public/u/MEQPYZ5PdbsPJXstL/blurred.jpg);
-  width: 100%;
-  height: 300px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: -300px;*/
-
+#login-segment {
+	.button {
+		margin-bottom: 0.75em;
+	}
+}
