@@ -1,5 +1,6 @@
 var fs = Npm.require('fs');
 var thumbgen = Npm.require(THUMBGEN_PATH);
+var fluent_ffmpeg = Npm.require(FLUENT_FFMPEG_PATH);
 
 // _addFolder = function (userInfo, file) {
 
