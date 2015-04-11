@@ -66,7 +66,7 @@ Meteor.methods({
 				created_at: new Date().getTime(),
 				user_id: Meteor.userId(),
 				user_name: Meteor.user().profile.name,
-				user_profile_image: 'upload/public/u/' + Meteor.userId() + '/avatar.jpg',//Meteor.user().profile.image_url_mini,
+				user_profile_image: '/upload/public/u/' + Meteor.userId() + '/avatar.jpg',//Meteor.user().profile.image_url_mini,
 				url: '/' + repo_path,
 				description: 'By ' + Meteor.user().profile.name,
 				permalink: service_url + repo_path,

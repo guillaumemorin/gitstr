@@ -52,7 +52,12 @@ Accounts.onCreateUser(function(options, user) {
 
 		Meteor.users.update(
 			{_id: user._id},
-			{$set: {'profile.image': 'upload/public/u/' + user._id + '/avatar.jpg'}}
+			{
+				$set: {
+					'profile.image': '/upload/public/u/' + user._id + '/avatar.jpg',
+					'profile.image_blur': '/upload/public/u/' + user._id + '/blurred.jpg'
+				}
+			}
 		);
 	});
 
@@ -105,7 +110,6 @@ Accounts.onCreateUser(function(options, user) {
 	if (options.profile) {
 		user.profile = options.profile;	
 		user.profile.image = profile_image;
-		user.profile.image_blur = 'upload/public/u/' + user._id + '/blurred.jpg';
 		user.profile.screen_name = profile_screen_name;
 		// user.profile.image_url_mini = profile_image_mini;
 	}
