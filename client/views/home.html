@@ -41,6 +41,11 @@
 				{{#if equal display "repositories"}}
 				<form>
 					<div class="ui form">
+						<div id="repo_input_error" class="ui negative message">
+							<div class="header">
+								{{errorMessage}}
+							</div>
+						</div>
 						<div class="inline fields">
 							<i class="add square grey icon"></i>
 							<span class="grey">New repository: </span>

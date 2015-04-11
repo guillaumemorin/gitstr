@@ -24,14 +24,22 @@ Template.home.events({
 	'submit form': function (event, template) {
 		var input_val = event.target.repo_input.value;
 		if (!input_val) {
-			return false;
+			return;
 		}
 		Meteor.call('createRepo', input_val, function (error, result) {
 			if (error) {
 				Session.set("submit_error_Message", error.reason);
+				template.$('#repo_input_error').transition('fade left');
+				return;
 			}
+			input_val.value = '';
 		});
-		return false
+		return false;
+	},
+	'keydown input': function (event, template) {
+		if (template.$('#repo_input_error').is(':visible')) {
+			template.$('#repo_input_error').transition('fade left');
+		}
 	}
 });
 
