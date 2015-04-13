@@ -1,7 +1,13 @@
+Template.header.helpers({
+	displayStatus: function () {
+		return Session.get('display_status');
+	}
+});
+
 Template.header.events({
-	'keypress #search': function (event, template) {
+	'keypress .search': function (event, template) {
 		Meteor.call('search', event.target.value, function(error, result) {
-			$('#search')
+			$('.search')
 			.search({
 				source: result,
 				searchFields: ['title']
@@ -11,12 +17,20 @@ Template.header.events({
 	'click #logout': function (event, template) {
 		Meteor.logout();
 		Router.go('/');
+	},
+	'click .table-collapse' : function (event, template) {
+		template.$(event.currentTarget).toggleClass('act');
+		// $('.extra-content').transition('fade');
+		$('.extra-content').toggle();
+		var status = Session.get('display_status') === 'list' ? 'attach' : 'list';
+		Session.set('display_status', status);
 	}
 });
 
 Template.header.rendered = function() {
 	opacity_value = 1;
 	fixed_topbar = false;
+	Session.set('display_status', 'list');
 }
 
 var opacity_value;

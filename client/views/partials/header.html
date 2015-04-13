@@ -30,9 +30,14 @@
 							{{/if}}
 						{{/if}}
 					</div>
+					{{#if repo}}
+					<a class="table-collapse item">
+						<i class="{{displayStatus}} link icon"></i>
+					</a>
+					{{/if}}
 					<div class="right menu">
 						<div class="item">
-							<div id="search" class="ui search">
+							<div class="ui search">
 								<div class="ui transparent left icon input">
 									<input class="prompt" type="text" placeholder="Search...">
 									<i class="search link icon"></i>
@@ -59,9 +64,14 @@
 					<a class="item" href="/">
 						<i class="fork large icon"></i>
 					</a>
+					{{#if repo}}
+					<div class="table-collapse item">
+						<i class="{{displayStatus}} link icon"></i>
+					</div>
+					{{/if}}
 					<div class="right menu">
 						<div class="item">
-							<div id="search" class="ui search">
+							<div class="ui search">
 								<div class="ui transparent left icon input">
 									<input class="prompt" type="text" placeholder="Search...">
 									<i class="search link icon"></i>
