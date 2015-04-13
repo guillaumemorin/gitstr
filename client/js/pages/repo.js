@@ -90,11 +90,13 @@ Template.repo.events({
 	'click .cover-video' : function (event, template) {
 		event.preventDefault();
 
-		var cover = template.$(event.target);
-		var video_player = cover.next();
-		cover.hide();
-		video_player.show();
-		// video_player.play();
+		var $cover = template.$(event.target);
+		var $video_player = $cover.next();
+		var href = $(event.currentTarget).attr('href');
+		$('source', $video_player).attr('src', href);
+		$cover.hide();
+		$video_player.load();
+		$video_player.show();
 	},
 	'click .play-audio': function (event, template) {
 		event.preventDefault();

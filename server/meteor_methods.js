@@ -26,11 +26,8 @@ Meteor.methods({
 			throw new Meteor.Error("bad-files-info", "Something went wrong :(");
 		}
 
-		_.map(files, function(file) {
-			_writeFiles(userInfo, file);
-		});
-
-		_insertFilesInfo(userInfo.repo_id, files);
+		var files = new uploaded_files(userInfo, files);
+		files.save();
 
 		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
 		repo.commit(files.length, Meteor.user().profile)

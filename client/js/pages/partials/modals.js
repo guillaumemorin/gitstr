@@ -1,26 +1,15 @@
 Template.upload_modal.helpers({
 	uploadCallback: function() {
 		return {
-			finished: function(index, fileInfo, context) {
-				console.log('fileinfo', fileInfo);
+			finished: function(index, file, context) {
 
 				var tmp = Session.get('tmp_files') || [];
-				var type = fileInfo.type.split('/') || [];
+				var type = file.type.split('/') || [];
 				var subtype = type[0] || '';
 				var ext = type[1] || '';
 				var type_info = {subtype: subtype, ext: ext}
 
-				var path = fileInfo.path.split('/');
-
-				var cover_url = '/upload/' + path[0] + '/cover/' + path[1];
-				if (subtype === 'video') {
-					var name = fileInfo.name.split('.');
-					cover_url = '/upload/' + path[0] + '/' + name[0] + '/thumbnails.png';
-				}
-				
-				var url = '/upload/' + path[0] + '/' + path[1];
-
-				tmp.push({title: fileInfo.name, size: fileInfo.size, timestamp: new Date().getTime(), url: url, cover_url: cover_url, type: type_info});
+				tmp.push({title: file.name, size: file.size, path: file.path, timestamp: new Date().getTime(), type: type_info});
 				Session.set('tmp_files', tmp);
 				Session.set('nb_tmp_files', Session.get('nb_tmp_files') + 1);
 			}
