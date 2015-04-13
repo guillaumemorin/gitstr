@@ -31,8 +31,19 @@
 										<i class="copy icon"></i>
 									</div>
 									{{#unless isOwner repoOwnerId}}
-									<div id="subscribe" class="ui basic icon button">
-										<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
+									<div id="subscribe" class="ui basic vertical animated button">
+										<div class="hidden content">
+											<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
+										</div>
+										<div class="visible content">
+											<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
+											<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
+										</div>
+									</div>
+									{{else}}
+									<div class="ui basic icon button">
+										<i class="star icon"></i>
+										<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
 									</div>
 									{{/unless}}
 									<div class="ui basic icon button">
@@ -41,6 +52,16 @@
 								</div>
 							</div>
 						</div>
+<!-- <div class="row">
+<div class="ui facebook icon button">
+<i class="facebook icon"></i>
+</div>
+<a href="http://twitter.com/intent/tweet">
+	<div class="ui twitter icon button">
+	<i class="twitter icon"></i>
+	</div>
+</a>
+</div> -->
 						<div class="row">
 							<div class="left aligned eight wide column">
 								<div class="ui mini statistics">
@@ -131,8 +152,8 @@
 						</div>
 						<div class="right aligned eight wide column">
 							{{#if tmpFiles}}
-							<div class="ui large teal label">
-								{{#if nbTmpFiles}}{{nbTmpFiles}} new files{{/if}}
+							<div class="ui teal label">
+								{{#if nbTmpFiles}}{{nbTmpFiles}} new uploaded files{{/if}}
 							</div>
 							<div id="commit_cancel" class="ui basic compact icon red button">
 								<i class="delete icon"></i>
@@ -242,7 +263,7 @@
 									<td class="right aligned">{{setSize size}}</td>
 									<td class="right aligned">{{setDate timestamp}}</td>
 								</tr>
-								<tr>
+								<tr class="extra-content">
 									<td colspan="3" style="border-top: 0px">
 										<div class="ui tertiary raised yellow segment">
 											<div class="ui grid">
@@ -271,7 +292,7 @@
 									<td class="right aligned">{{setSize size}}</td>
 									<td class="right aligned">{{setDate timestamp}}</td>
 								</tr>
-								<tr>
+								<tr class="extra-content">
 									<td colspan="3" style="border-top: 0px; text-align: center">
 										<a class="cover" href="{{url}}">
 											<img src="{{url}}" />
@@ -288,15 +309,22 @@
 									<td class="right aligned">{{setSize size}}</td>
 									<td class="right aligned">{{setDate timestamp}}</td>
 								</tr>
-								<tr>
+								<tr class="extra-content">
 									<td colspan="3" style="border-top: 0px; text-align: center">
-										<a class="cover-video" href="{{url}}">
-											<img src="{{cover_url}}" />
-											<video style="display:none" width="450" height="240" controls>
-												<source src="{{url}}" type="video/mp4">
-												Your browser does not support the video tag.
-											</video>
-										</a>
+										<div class="ui basic segment">
+											{{#if equal cover_url "/image_small.jpg"}}
+											<div class="ui active inverted dimmer">
+												<div class="ui large text loader">Generating thumbnail</div>
+											</div>
+											{{/if}}
+											<a class="cover-video" href="{{url}}">
+												<img src="{{cover_url}}" />
+												<video controls>
+													<source src="" type="video/mp4">
+													Your browser does not support the video tag.
+												</video>
+											</a>
+										</div>
 										<div class="ui hidden divider"></div>
 									</td>
 								</tr>
