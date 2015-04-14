@@ -1,22 +1,3 @@
-Template.repositories_grid.helpers({
-	repoList: function () {
-		
-		var repos = [];
-		var display = Session.get('display');
-		if (display === 'repositories') {
-			repos = Repos.find({user_id: Meteor.userId()});
-		}
-
-		if (display === 'subscription') {
-			_.map(Meteor.user().subscription, function(id){
-				repos.push(Repos.findOne({_id: id}));
-			});
-		}
-		
-		return repos;
-	}
-});
-
 Template.repositories_grid.events({
 	'click .subscribe': function (event, template) {
 
