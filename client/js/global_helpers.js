@@ -3,6 +3,10 @@ Template.registerHelper('equal', function(a, b) {
 	return a === b;
 });
 
+Template.registerHelper('greater', function(a, b) {
+	return a > b;
+});
+
 Template.registerHelper('setLastUpdate', function(timestamp) {
 	if (!timestamp) {
 		return '';
