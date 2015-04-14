@@ -1,5 +1,5 @@
 <template name="repo">
-	{{> header}}
+	{{> header page="repository"}}
 	<div class="ui page vertically padded grid">
 		<div class="centered row">
 			<div class="fourteen wide column">
@@ -8,7 +8,7 @@
 						<div class="row">
 							<div class="left aligned eight wide column">
 								<h2 class="ui header">
-									<a class="link-light" href="/{{user.profile.screen_name}}">
+									<a class="link-light" href="/{{user.profile.screen_name}}/rep">
 										<span>{{user.profile.screen_name}}</span>
 									</a>
 									<span class="grey-light"> / </span>
@@ -24,46 +24,86 @@
 							</div>
 							<div class="right aligned eight wide column">
 								<div class="right aligned bottom aligned eight wide column">
-									<div class="ui basic icon button">
+									<!-- <div class="ui basic icon button">
 										<i class="download icon"></i>
 									</div>
 									<div class="ui basic icon button">
 										<i class="copy icon"></i>
-									</div>
-									{{#unless isOwner repoOwnerId}}
-									<div id="subscribe" class="ui basic vertical animated button">
+									</div> -->
+									<a href="http://twitter.com/intent/tweet" class="ui basic vertical animated button stackable">
 										<div class="hidden content">
-											<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
+											<i class="facebook-color share alternate icon"></i>
+										</div>
+										<div class="visible content">
+											<i class="facebook facebook-color icon"></i>
+										</div>
+									</a>
+									<a href="http://twitter.com/intent/tweet" class="ui basic vertical animated button stackable">
+										<div class="hidden content">
+											<i class="twitter-color share alternate icon"></i>
+										</div>
+										<div class="visible content">
+											<i class="twitter twitter-color icon"></i>
+										</div>
+									</a>
+									{{#if isOwner repoOwnerId}}
+									<div id="subscribe" class="ui basic button">
+										<i class="star icon"></i>
+										<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
+									</div>
+									{{else}}
+									<div id="subscribe" class="ui basic vertical animated button stackable">
+										<div class="hidden content">
+											<i class="{{#if isOwner repoOwnerId}}empty{{/if}} star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
 										</div>
 										<div class="visible content">
 											<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
 											<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
 										</div>
 									</div>
-									{{else}}
-									<div class="ui basic icon button">
-										<i class="star icon"></i>
-										<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
-									</div>
-									{{/unless}}
-									<div class="ui basic icon button">
-										<i class="share alternate icon"></i>
+									{{/if}}
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="ui grid">
+								<div class="left aligned eight wide column">
+									<div class="ui mini statistics">
+										<div class="statistic">
+											<div class="value">
+												<i class="ui small blue camera grey-light circular inverted icon"></i>
+											</div>
+											<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
+											<span class="label">Image</span>
+										</div>
+										<div class="statistic">
+											<div class="value">
+												<i class="ui small red record grey-light circular inverted icon"></i>
+											</div>
+											<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
+											<span class="label">Video</span>
+										</div>
+										<div class="statistic">
+											<div class="value">
+												<i class="ui small yellow unmute grey-light circular inverted icon"></i>
+											</div>
+											<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
+											<span class="label">Audio</span>
+										</div>
+										<div class="statistic">
+											<div class="value">
+												<i class="ui small file outline grey-light circular icon"></i>
+											</div>
+											<span class="grey-light">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
+											<span class="label">Other</span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-<!-- <div class="row">
-<div class="ui facebook icon button">
-<i class="facebook icon"></i>
-</div>
-<a href="http://twitter.com/intent/tweet">
-	<div class="ui twitter icon button">
-	<i class="twitter icon"></i>
-	</div>
-</a>
-</div> -->
-						<div class="row">
-							<div class="left aligned eight wide column">
+
+
+							<!-- <div class="left aligned eight wide column">
 								<div class="ui mini statistics">
 									<div class="statistic">
 										<div class="value">
@@ -87,8 +127,8 @@
 										<span class="label">Files</span>
 									</div>
 								</div>
-							</div>
-						</div>
+							</div> -->
+						<!-- </div> -->
 					</div>
 				</div>
 
@@ -118,57 +158,9 @@
 
 				<div class="ui segment">
 					<div class="ui grid">
-						<div class="left aligned eight wide column">
-							<div class="ui mini statistics">
-								<div class="statistic">
-									<div class="value">
-										<i class="ui small blue camera grey-light circular inverted icon"></i>
-									</div>
-									<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
-									<span class="label">Image</span>
-								</div>
-								<div class="statistic">
-									<div class="value">
-										<i class="ui small red record grey-light circular inverted icon"></i>
-									</div>
-									<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
-									<span class="label">Video</span>
-								</div>
-								<div class="statistic">
-									<div class="value">
-										<i class="ui small yellow unmute grey-light circular inverted icon"></i>
-									</div>
-									<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
-									<span class="label">Audio</span>
-								</div>
-								<div class="statistic">
-									<div class="value">
-										<i class="ui small file outline grey-light circular icon"></i>
-									</div>
-									<span class="grey-light">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
-									<span class="label">Other</span>
-								</div>
-							</div>
-						</div>
-						<div class="right aligned eight wide column">
-							{{#if tmpFiles}}
-							<div class="ui teal label">
-								{{#if nbTmpFiles}}{{nbTmpFiles}} new uploaded files{{/if}}
-							</div>
-							<div id="commit_cancel" class="ui basic compact icon red button">
-								<i class="delete icon"></i>
-							</div>
-							<div  id="commit" class="ui basic compact icon green button">
-								<i class="check icon"></i>
-								Publish
-							</div>
-							{{/if}}
-						</div>
-					</div>
-					<div class="ui grid">
-						<div class="left aligned eight wide column">
+						<div class="left aligned ten wide column">
 							<div class="ui buttons">
-								<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button">
+								<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button stackable">
 									<span class="text">History</span>
 									<i class="history icon"></i>
 									<div class="menu">
@@ -180,7 +172,7 @@
 								</div>
 							</div>
 							<div class="ui buttons">
-								<div id="filter_dropdown" class="ui floating small basic blue labeled dropdown icon button">
+								<div id="filter_dropdown" class="ui floating small basic blue labeled dropdown icon button stackable">
 									<span class="text">Filter</span>
 									<i class="filter icon"></i>
 									<div class="menu">
@@ -207,30 +199,39 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						{{#if isOwner repoOwnerId}}
-						<div class="right aligned eight wide column">
-							<div class="ui buttons right floated">
-								<div id="add" class="ui basic teal small button">
+							{{#if isOwner repoOwnerId}}
+							<div class="ui buttons">
+								<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
+									<span class="text">Add Files</span>
 									<i class="add icon"></i>
-									Add
-								</div>
-								<div id="add_dropdown" class="ui combo floating dropdown icon button">
-									<i class="dropdown small icon"></i>
-									<div class="menu">
+									<!-- <div class="menu">
 										<div class="item">
 											<i id="upload_button" class="file icon"></i>
 											Add File(s)
 										</div>
-										<!-- <div class="item">
+										<div class="item">
 											<i class="linkify icon"></i>
 											Add Link(s)
-										</div> -->
-									</div>
+										</div>
+									</div> -->
 								</div>
 							</div>
+							{{/if}}
 						</div>
-						{{/if}}
+						<div class="right aligned six wide column">
+							{{#if tmpFiles}}
+							<div class="ui teal label">
+								{{#if nbTmpFiles}}{{nbTmpFiles}} new uploaded files{{/if}}
+							</div>
+							<div id="commit_cancel" class="ui basic compact icon red button">
+								<i class="delete icon"></i>
+							</div>
+							<div  id="commit" class="ui basic compact icon green button">
+								<i class="check icon"></i>
+								Publish
+							</div>
+							{{/if}}
+						</div>
 					</div>
 					<table id="file-list" class="ui small table grey-dark">
 						<thead></thead>

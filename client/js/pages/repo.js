@@ -149,11 +149,14 @@ Template.repo.events({
 		}
 	},
 	'click #add_dropdown': function (event, template) {
-		$('#add_dropdown')
-		.dropdown({
-			action: 'combo',
-			transition: 'horizontal flip'
-		});
+		// $('#add_dropdown')
+		// .dropdown({
+		// 	action: 'combo',
+		// 	transition: 'horizontal flip'
+		// });
+		$('#upload_modal')
+			.modal('setting', 'transition', 'fade up')
+			.modal('show');
 	},
 	'click #filter_dropdown': function (event, template) {
 		$('#filter_dropdown')
@@ -172,11 +175,11 @@ Template.repo.events({
 			transition: 'fade up'
 		});
 	},
-	'click #add:first-child:has(#upload_button)': function (event, template) {
-		$('#upload_modal')
-			.modal('setting', 'transition', 'fade up')
-			.modal('show');
-	},
+	// 'click #add_dropdown:first-child:has(#upload_button)': function (event, template) {
+	// 	$('#upload_modal')
+	// 		.modal('setting', 'transition', 'fade up')
+	// 		.modal('show');
+	// },
 	'click #subscribe': function (event, template) {
 		if (!Meteor.user()) {
 			$('#signin')
