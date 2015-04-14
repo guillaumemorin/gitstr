@@ -18,6 +18,6 @@ Template.registerHelper('subscribed', function(subscriber) {
 	return ~_.indexOf(subscriber, Meteor.userId());
 });
 
-Template.registerHelper('display', function(subscriber) {
-	return Session.get('display') || 'feed';
+Template.registerHelper('moment', function(date) {
+	return moment(date).format('MMMM YYYY');
 });
