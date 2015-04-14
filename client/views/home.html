@@ -1,5 +1,5 @@
 <template name="home">
-	{{> header}}
+	{{> header page="home"}}
 	<div class="ui page vertically padded grid">
 		<div class="centered row">
 			<div class="four wide computer tablet only column">
@@ -17,7 +17,7 @@
 					</div>
 					{{/if}}
 
-					{{#if equal display "repositories"}}
+					{{#if equal display "rep"}}
 					<i class="orange flag icon"></i>
 					<div class="content">
 						Your repositories
@@ -27,7 +27,7 @@
 					</div>
 					{{/if}}
 
-					{{#if equal display "subscription"}}
+					{{#if equal display "sub"}}
 					<i class="yellow star icon"></i>
 					<div class="content">
 						Your subscriptions
@@ -38,7 +38,7 @@
 					{{/if}}
 				</h2>
 
-				{{#if equal display "repositories"}}
+				{{#if equal display "rep"}}
 				<form>
 					<div class="ui form">
 						<div id="repo_input_error" class="ui negative message">
@@ -66,7 +66,9 @@
 				{{#if equal display "feed"}}
 					{{> feed}}
 				{{else}}
+					<div class="ui three column grid">
 					{{> repositories_grid}}
+					</div>
 				{{/if}}
 			</div>
 		</div>

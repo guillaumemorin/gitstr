@@ -1,9 +1,6 @@
 Template.home.helpers({
 	errorMessage: function () {
 		return Session.get('submit_error_Message');
-	},
-	display: function () {
-		return Session.get('display') || 'feed';
 	}
 	// repoList: function () {
 	// 	var repos = Repos.find({user_id: Meteor.userId()}, {sort: {created_at : -1}});
