@@ -1,41 +1,65 @@
 <template name="header">
-	<div class="ui {{#unless padded}}page{{/unless}} vertically padded grid">
+	<div class="ui {{#unless padded}}page vertically padded{{/unless}} grid">
 		<div class="centered row">
 			<div class="column">
 				<div id="fixed_topbar" class="ui primary fixed menu" style="display: none">
 					<a class="item" href="/">
-						<i class="fork large icon"></i>
+						Gitstr.
 					</a>
+					{{#if equal page "repository"}}
 					<div class="item">
-						{{#if repo}}
-						<a class="link-light" href="/{{user.profile.screen_name}}">
-							<span>{{user.profile.screen_name}}</span>
+						<a class="link-light" href="/{{../user.profile.screen_name}}">
+							<span>{{../user.profile.screen_name}}</span>
 						</a>
+						{{#if ../repo.title}} 
 						<span class="grey-light"> / </span>
-						<span class="teal">#</span> {{repo.title}} 
-						{{else}}
-							{{#if equal display "feed"}}
-							<i class="green heartbeat icon"></i>
-							<span class="grey-light"> Activity</span>
-							{{/if}}
-
-							{{#if equal display "repositories"}}
-							<i class="orange flag icon"></i>
-							<span class="grey-light"> Your repositories</span>
-							{{/if}}
-
-							{{#if equal display "subscription"}}
-							<i class="yellow star icon"></i>
-							<span class="grey-light"> Your subscriptions</span>
-							{{/if}}
-						{{/if}}
+						<span class="teal">#</span> {{../repo.title}} 
+						{{/if}} 
 					</div>
-					{{#if repo}}
+					{{/if}}
+
+					{{#if equal ../display "feed"}}
+					<div class="item">
+						<i class="green heartbeat icon"></i>
+						<span class="grey-light"> Activity</span>
+					</div>
+					{{/if}}
+
+					{{#if equal ../display "rep"}}
+					<div class="item">
+						<i class="orange flag icon"></i>
+						<span class="grey-light">
+							{{#if equal page "home"}}
+								Your
+							{{else}}
+								{{#if equal currentUser._id ../user._id}}Your{{else}}{{../user.profile.screen_name}}'s{{/if}}
+							{{/if}}
+							repositories
+						</span>
+					</div>
+					{{/if}}
+
+					{{#if equal ../display "sub"}}
+					<div class="item">
+						<i class="yellow star icon"></i>
+						<span class="grey-light">
+						{{#if equal page "home"}}
+								Your
+							{{else}}
+								{{#if equal currentUser._id ../user._id}}Your{{else}}{{../user.profile.screen_name}}'s{{/if}}
+							{{/if}}
+							subscriptions
+						</span>
+					</div>
+					{{/if}}
+
+					{{#if equal page "repository"}}
 					<a class="table-collapse item">
 						<i class="{{displayStatus}} link icon"></i>
 					</a>
 					{{/if}}
-					<div class="right menu">
+
+					<div class="four wide computer tablet only column right menu">
 						<div class="item">
 							<div class="ui search">
 								<div class="ui transparent left icon input">
@@ -48,10 +72,7 @@
 						{{#if currentUser}}
 						<div class="item">
 							<a class="ui mini rounded image" href="/">
-								<img src="http://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF_normal.png">
-							</a>
-							<a class="grey site-size" href="/">
-								{{currentUser.profile.name}}
+								<img src="{{currentUser.profile.image}}">
 							</a>
 						</div>
 						<a id="logout" class="ui item">
@@ -62,9 +83,9 @@
 				</div>
 				<div id="topbar" class="ui secondary {{#unless pointing}}pointing{{/unless}} menu">
 					<a class="item" href="/">
-						<i class="fork large icon"></i>
+						Gitstr.
 					</a>
-					{{#if repo}}
+					{{#if equal page "repository"}}
 					<div class="table-collapse item">
 						<i class="{{displayStatus}} link icon"></i>
 					</div>
@@ -80,12 +101,9 @@
 							</div>
 						</div>
 						{{#if currentUser}}
-						<div class="item">
+						<div class="item computer tablet only">
 							<a class="ui mini rounded image" href="/">
-								<img src="http://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF_normal.png">
-							</a>
-							<a class="grey site-size" href="/">
-								{{currentUser.profile.name}}
+								<img src="{{currentUser.profile.image}}">
 							</a>
 						</div>
 						<a id="logout" class="ui item">
