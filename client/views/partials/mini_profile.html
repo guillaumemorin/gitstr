@@ -5,7 +5,7 @@
 		<img src="{{currentUser.profile.image}}">
 		</div>
 		<div class="content">
-			<div class="header"><a class="link-dark" href="{{currentUser.profile.screen_name}}">{{currentUser.profile.name}}</a></div>
+			<div class="header"><a class="link-dark" href="/{{currentUser.profile.screen_name}}/rep">{{currentUser.profile.name}}</a></div>
 			<div class="meta">
 			<span class="date">Joined in {{moment currentUser.createdAt}}</span>
 			</div>
@@ -14,16 +14,16 @@
 		<div class="extra content">
 			<div>
 				<i class="heartbeat green icon"></i>
-				<a id="feed_list" href="#">Activity</a>
+				<a id="feed_list" href="/">Activity</a>
 			</div>		
 			<div>
 				<i class="flag orange icon"></i>
-				<a id="repo_list" href="#">Repositories</a>
+				<a id="repo_list" href="/rep">Repositories</a>
 				<span class="right floated">{{#if currentUser.nb_repo}} {{currentUser.nb_repo}} {{else}} 0 {{/if}}</span>
 			</div>		
 			<div>
 				<i class="star yellow icon"></i>
-				<a id="sub_list" href="#">Subscriptions</a>
+				<a id="sub_list" href="/sub">Subscriptions</a>
 				<span class="right floated">{{#if currentUser.nb_subscription}} {{currentUser.nb_subscription}} {{else}} 0 {{/if}}</span>
 			</div>
 		</div>
