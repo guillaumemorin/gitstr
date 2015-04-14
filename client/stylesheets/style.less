@@ -24,6 +24,9 @@
 @lightTeal        : #6DFFFF;
 @lightYellow      : #FFE21F;
 
+@twitter          : #4c99cf;
+@facebook         : #3b579d;
+
 /*-------------------
     Custom site Colors
 --------------------*/
@@ -54,10 +57,26 @@
 --------------------*/
 @important: !important;
 
+/*-------------------
+      Font
+--------------------*/
+@import url(//fonts.googleapis.com/css?family=Lobster+Two);
+
+.lobster {
+	font-family: 'Lobster Two';
+}
 
 /*-------------------
     Global declarations
 --------------------*/
+.twitter-color {
+	color: @twitter @important;
+}
+
+.facebook-color {
+	color: @facebook @important;
+}
+
 .teal {
 	color: @teal @important;
 }
@@ -93,7 +112,7 @@
 }
 
 .link-light:hover {
-	color: @grey @important;
+	color: @black @important;
 }
 
 .link-dark {
@@ -160,8 +179,8 @@ video {
 	background-image: url(congruent_pentagon.png);
 }
 
-#login-segment {
-	.button {
-		margin-bottom: 0.75em;
+.button {
+	&.stackable {
+		margin-bottom: 0.75em @important;
 	}
 }
