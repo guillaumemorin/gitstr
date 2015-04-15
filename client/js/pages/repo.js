@@ -14,6 +14,14 @@ Template.repo.helpers({
 		}
 		return cover_supported_type[type];
 	},
+	twitterShareParams: function () {
+		var data = UI.getData();
+		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr!';
+		if (data.repo.last_update) {
+			text = 'I have updated my @gitstr "' + data.repo.title + '" repository!';
+		}
+		return '?text=' + encodeURI(text);
+	},
 	filter: function (files) {
 
 		var filter = Session.get('filter');
@@ -89,10 +97,9 @@ Template.repo.events({
 	},
 	'click #fb_share': function (event, template) {
 		event.preventDefault();
-
 		FB.ui({
 			method: 'share',
-			href: 'http://google.fr'
+			href: 'http://gitstr.com:3000'//encodeURI(UI.getData().repo.permalink),
 		}, function(response){});
 	},
 	'click .cover-video' : function (event, template) {
