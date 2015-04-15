@@ -1,17 +1,30 @@
 <template name="login">
 	<div id="login-header" class="ui inverted teal vertical segment">
 		<div class="ui page grid">
-			<div class="column">
-				<div class="ui inverted large vertical animated button">
-					<div class="hidden content">
-						Gitstr.
+			<div class="row">
+				<div class="column">
+					<div class="ui inverted large vertical animated button">
+						<div class="hidden content">
+							Gitstr.
+						</div>
+						<div class="visible content">
+							Gitstr.
+						</div>
 					</div>
-					<div class="visible content">
-						Gitstr.
+					<h2 class="ui inverted header">Full Width Background</h2>
+					<p>First section of content</p>
+				</div>
+			</div>
+			<div class="five wide centered column grid">
+				<div class="column">
+					<div id="search_repo" class="ui fluid search">
+						<div class="ui left icon massive inverted input">
+							<input class="prompt" type="text" placeholder="Search for repository ... ">
+							<i class="search link icon"></i>
+						</div>
+						<div class="results"></div>
 					</div>
 				</div>
-				<h2 class="ui inverted header">Full Width Background</h2>
-				<p>First section of content</p>
 			</div>
 		</div>
 	</div>
@@ -39,14 +52,7 @@
 		</div>
 	</div>
 	<div id="login-extra" class="ui basic segment">
-		<div class="ui page grid">	
-			<div class="centered row">
-				<div class="ui action left icon input">
-					<i class="search icon"></i>
-					<input type="text" placeholder="Search...">
-					<div class="ui button">Search</div>
-				</div>
-			</div>
+		<div class="ui page grid">
 			<div class="three column centered row">
 				<div class="center aligned column">
 					<div class="ui button">Search</div>

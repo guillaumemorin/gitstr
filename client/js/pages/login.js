@@ -7,6 +7,17 @@ Template.login.events({
 	},
 	'click #facebook_signin': function () {
 		Meteor.loginWithFacebook({}, function() {});
+	},
+	'keypress #search_repo': function (event, template) {
+		console.log('call');
+		Meteor.call('search', event.target.value, function(error, result) {
+			console.log('call', result);
+			$('#search_repo')
+			.search({
+				source: result,
+				searchFields: ['title']
+			})
+		})
 	}
 });
 
