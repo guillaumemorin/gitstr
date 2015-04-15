@@ -73,7 +73,35 @@
 	</div>
 </div> -->
 <template name="repositories_grid">
-{{#each repo}}
+
+{{#unless repo.count}}
+<div class="ui vertically padded grid">
+	<div class="center aligned column">
+		<div class="ui yellow floating message">
+			<div class="header">
+				Wow, seems empty here!
+			</div>
+			{{#if equal display "rep"}}
+				Try to create a repository and you will be able to sharing it with the world
+				<div>
+					<i class="ui massive world icon"></i>
+				</div>
+				<div class="ui hidden divider"></div>
+			{{/if}}
+
+			{{#if equal display "sub"}}
+				Explore some popular repositories and subscribe to it!
+				<div>
+					<i class="ui huge pointing down icon"></i>
+				</div>
+				<div class="ui hidden divider"></div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/unless}}
+
+{{#each repoList}}
 <div class="column">
 	<div class="ui fluid card">
 	 	<div class="ui dimmer">
@@ -97,55 +125,45 @@
 					Created {{setLastUpdate created_at}}
 				{{/if}}
 				</span>
-				<div class="ui divider"></div>
 			</div>
-			<div class="ui four column grid">
-				<div class="column">
-					<div class="ui center aligned">
-						<div>
-							<i class="ui large link camera grey-light circular icon"></i>	
-						</div>
-						<div>
-							<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
-							<!-- <span class="label">Image{{#if greater nb_image 0}}s{{/if}}</span> -->
-						</div>
+			<div class="ui stackable four column padded grid">
+				<div class="center aligned column">	
+					<div>
+						<i class="ui large link camera grey-light circular icon"></i>	
+					</div>
+					<div>
+						<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+						<!-- <span class="label">Image{{#if greater nb_image 0}}s{{/if}}</span> -->
 					</div>
 				</div>
-				<div class="column">
-					<div class="ui center aligned">
-						<div>
-							<i class="ui large link record grey-light circular icon"></i>
-						</div>
-						<div>
-							<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
-							<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
-						</div>
+				<div class="center aligned column">
+					<div>
+						<i class="ui large link record grey-light circular icon"></i>
+					</div>
+					<div>
+						<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+						<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
 					</div>
 				</div>
-				<div class="column">
-					<div class="ui center aligned">
-						<div>
-							<i class="ui large link unmute grey-light circular icon"></i>
-						</div>
-						<div>
-							<span class="yellow">{{#if nb_audio}} {{nb_audio}} {{else}} 0 {{/if}}</span>
-							<!-- <span class="label">Audio{{#if greater nb_audio 0}}s{{/if}}</span> -->
-						</div>
+				<div class="center aligned column">
+					<div>
+						<i class="ui large link unmute grey-light circular icon"></i>
+					</div>
+					<div>
+						<span class="yellow">{{#if nb_audio}} {{nb_audio}} {{else}} 0 {{/if}}</span>
+						<!-- <span class="label">Audio{{#if greater nb_audio 0}}s{{/if}}</span> -->
 					</div>
 				</div>
-				<div class="column">
-					<div class="ui center aligned">
-						<div>
-							<i class="ui large link file outline grey-light circular icon"></i>
-						</div>
-						<div>
-							<span class="grey-light">{{#if nb_application}} {{nb_application}} {{else}} 0 {{/if}}</span>
-							<!-- <span class="label">Other{{#if greater nb_application 0}}s{{/if}}</span> -->
-						</div>
+				<div class="center aligned column">
+					<div>
+						<i class="ui large link file outline grey-light circular icon"></i>
+					</div>
+					<div>
+						<span class="grey-light">{{#if nb_application}} {{nb_application}} {{else}} 0 {{/if}}</span>
+						<!-- <span class="label">Other{{#if greater nb_application 0}}s{{/if}}</span> -->
 					</div>
 				</div>
 			</div>
-			<div class="ui divider"></div>
 			<div class="meta">
 				<i class="star outline icon"></i>{{#if nb_subscribers}} {{nb_subscribers}} {{else}} 0 {{/if}} Subscribers
 			</div>
@@ -153,7 +171,7 @@
 		{{#unless isOwner user_id}}
 		<div class="extra content">
 			<div class="author">
-				<img class="ui avatar image" src="{{user_profile_image}}"> {{user_name}}
+				<img class="ui avatar image" src="{{user_profile_image}}"> <a href="/{{user_screen_name}}">{{user_name}}</a>
 			</div>
 		</div>
 		{{/unless}}
