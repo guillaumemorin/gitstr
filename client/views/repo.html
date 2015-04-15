@@ -30,27 +30,18 @@
 									<div class="ui basic icon button">
 										<i class="copy icon"></i>
 									</div> -->
-									<a id="fb_share" href="{{repo.permalink}}" class="ui basic vertical animated button stackable">
-										<div class="hidden content">
-											<i class="facebook-color share alternate icon"></i>
-										</div>
-										<div class="visible content">
-											<i class="facebook facebook-color icon"></i>
-										</div>
+									<a id="fb_share" href="{{repo.permalink}}" class="ui basic icon button stackable">
+										<i class="facebook facebook-color icon"></i>
 									</a>
-									<a href="http://twitter.com/intent/tweet" class="ui basic vertical animated button stackable">
-										<div class="hidden content">
-											<i class="twitter-color share alternate icon"></i>
-										</div>
-										<div class="visible content">
-											<i class="twitter twitter-color icon"></i>
-										</div>
+									<a href="http://twitter.com/intent/tweet" class="ui basic icon button stackable">
+										<i class="twitter twitter-color icon"></i>
 									</a>
-									{{#if isOwner repoOwnerId}}
-									<div id="subscribe" class="ui basic button">
-										<i class="star icon"></i>
+									<div id="subscribe" class="ui basic {{#if isOwner repoOwnerId}}yellow disabled{{/if}} button">
+										<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
 										<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
 									</div>
+<!-- 									{{#if isOwner repoOwnerId}}
+
 									{{else}}
 									<div id="subscribe" class="ui basic vertical animated button stackable">
 										<div class="hidden content">
@@ -61,7 +52,7 @@
 											<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
 										</div>
 									</div>
-									{{/if}}
+									{{/if}} -->
 								</div>
 							</div>
 						</div>
@@ -199,23 +190,25 @@
 									</div>
 								</div>
 							</div>
-							{{#if isOwner repoOwnerId}}
-							<div class="ui buttons">
-								<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
-									<span class="text">Add Files</span>
-									<i class="add icon"></i>
-									<!-- <div class="menu">
-										<div class="item">
-											<i id="upload_button" class="file icon"></i>
-											Add File(s)
-										</div>
-										<div class="item">
-											<i class="linkify icon"></i>
-											Add Link(s)
-										</div>
-									</div> -->
+							{{#if repo.file_structure}}
+								{{#if isOwner repoOwnerId}}
+								<div class="ui buttons">
+									<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
+										<span class="text">Add Files</span>
+										<i class="add icon"></i>
+										<!-- <div class="menu">
+											<div class="item">
+												<i id="upload_button" class="file icon"></i>
+												Add File(s)
+											</div>
+											<div class="item">
+												<i class="linkify icon"></i>
+												Add Link(s)
+											</div>
+										</div> -->
+									</div>
 								</div>
-							</div>
+								{{/if}}
 							{{/if}}
 						</div>
 						<div class="right aligned six wide column">
@@ -343,12 +336,46 @@
 						{{/each}}
 						</tbody>
 					</table>
+					
 					{{#unless repo.file_structure}}
-					<div class="ui page vertically padded grid">
-						<div class="one column centered row">
-							<div class="center aligned column">
-								<div class="ui button">Search</div>
+					<div class="ui vertically padded grid">
+						<div class="center aligned column">
+							{{#if isOwner repoOwnerId}}
+							<div class="ui yellow floating message">
+								<div class="header">
+									Wow, seems empty here!
+								</div>
+								Try to add some files to this repository before sharing it!
+								<div class="ui hidden divider"></div>
+								<div class="ui buttons">
+									<div id="add_dropdown" class="ui floating yellow labeled dropdown icon button stackable">
+										<span class="text">Add Files</span>
+										<i class="add icon"></i>
+										<!-- <div class="menu">
+											<div class="item">
+												<i id="upload_button" class="file icon"></i>
+												Add File(s)
+											</div>
+											<div class="item">
+												<i class="linkify icon"></i>
+												Add Link(s)
+											</div>
+										</div> -->
+									</div>
+								</div>
 							</div>
+							{{else}}
+							<div class="ui floating message">
+								<div class="red header">
+									Empty repository
+									<i class="frown big icon"></i>
+								</div>
+								<div>
+									<i class="file red massive icon"></i>
+								</div>
+								<div class="ui hidden divider"></div>
+							</div>
+							{{/if}}
 						</div>
 					</div>
 					{{/unless}}
@@ -356,7 +383,6 @@
 			</div>
 		</div>
 	</div>
-
 	
 	{{#if errorMessage}}
 		<div class="ui negative small message">
