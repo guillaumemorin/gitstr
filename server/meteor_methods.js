@@ -57,7 +57,7 @@ Meteor.methods({
 		// };
 		
 		// var done_callback = Meteor.bindEnvironment(function(err) {
-			var repo_path = Meteor.user().services.twitter.screenName + '/' + name
+			var repo_path = Meteor.user().profile.screen_name + '/' + name
 			var insert_id = Repos.insert({
 				title: name,
 				created_at: new Date().getTime(),
