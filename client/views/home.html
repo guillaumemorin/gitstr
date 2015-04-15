@@ -67,7 +67,35 @@
 					{{> feed}}
 				{{else}}
 					<div class="ui two column grid">
-					{{> repositories_grid}}
+
+						{{#unless repo.count}}
+						<div class="ui vertically padded grid">
+							<div class="center aligned column">
+								<div class="ui yellow floating message">
+									<div class="header">
+										Wow, seems empty here!
+									</div>
+									{{#if equal display "rep"}}
+										Try to create a repository and you will be able to sharing it with the world.
+										<div>
+											<i class="ui massive world icon"></i>
+										</div>
+										<div class="ui hidden divider"></div>
+									{{/if}}
+
+									{{#if equal display "sub"}}
+										Explore some popular repositories and subscribe to it!
+										<div>
+											<i class="ui huge pointing down icon"></i>
+										</div>
+										<div class="ui hidden divider"></div>
+									{{/if}}
+								</div>
+							</div>
+						</div>
+						{{/unless}}
+
+						{{> repositories_grid}}
 					</div>
 				{{/if}}
 			</div>
