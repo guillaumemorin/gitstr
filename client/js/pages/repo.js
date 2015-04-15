@@ -16,11 +16,12 @@ Template.repo.helpers({
 	},
 	twitterShareParams: function () {
 		var data = UI.getData();
-		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr!';
+		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr! Have a look right here';
+		var url = data.repo.permalink;
 		if (data.repo.last_update) {
-			text = 'I have updated my @gitstr "' + data.repo.title + '" repository!';
+			text = 'I have updated my @gitstr "' + data.repo.title + '" repository! Have a look right here';
 		}
-		return '?text=' + encodeURI(text);
+		return '?text=' + encodeURI(text) + '&url=' + encodeURI(url);
 	},
 	filter: function (files) {
 
