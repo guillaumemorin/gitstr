@@ -87,6 +87,14 @@ Template.repo.events({
 			// .modal('setting', 'transition', 'fade up')
 			.modal('show');
 	},
+	'click #fb_share': function (event, template) {
+		event.preventDefault();
+
+		FB.ui({
+			method: 'share',
+			href: 'http://google.fr'
+		}, function(response){});
+	},
 	'click .cover-video' : function (event, template) {
 		event.preventDefault();
 
