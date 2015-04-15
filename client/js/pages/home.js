@@ -20,8 +20,8 @@ Template.home.helpers({
 Template.home.events({
 	'submit form': function (event, template) {
 		var input_val = event.target.repo_input.value;
-		if (!input_val) {
-			return;
+		if (input_val === '') {
+			return false;
 		}
 		Meteor.call('createRepo', input_val, function (error, result) {
 			if (error) {
@@ -29,7 +29,7 @@ Template.home.events({
 				template.$('#repo_input_error').transition('fade left');
 				return;
 			}
-			input_val.value = '';
+			event.target.repo_input.value = '';
 		});
 		return false;
 	},
