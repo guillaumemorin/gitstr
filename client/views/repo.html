@@ -30,7 +30,7 @@
 									<div class="ui basic icon button">
 										<i class="copy icon"></i>
 									</div> -->
-									<a href="http://twitter.com/intent/tweet" class="ui basic vertical animated button stackable">
+									<a id="fb_share" href="{{repo.permalink}}" class="ui basic vertical animated button stackable">
 										<div class="hidden content">
 											<i class="facebook-color share alternate icon"></i>
 										</div>
@@ -74,28 +74,28 @@
 												<i class="ui small blue camera grey-light circular inverted icon"></i>
 											</div>
 											<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
-											<span class="label">Image</span>
+											<!-- <span class="label">Image</span> -->
 										</div>
 										<div class="statistic">
 											<div class="value">
 												<i class="ui small red record grey-light circular inverted icon"></i>
 											</div>
 											<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
-											<span class="label">Video</span>
+											<!-- <span class="label">Video</span> -->
 										</div>
 										<div class="statistic">
 											<div class="value">
 												<i class="ui small yellow unmute grey-light circular inverted icon"></i>
 											</div>
 											<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
-											<span class="label">Audio</span>
+											<!-- <span class="label">Audio</span> -->
 										</div>
 										<div class="statistic">
 											<div class="value">
 												<i class="ui small file outline grey-light circular icon"></i>
 											</div>
 											<span class="grey-light">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
-											<span class="label">Other</span>
+											<!-- <span class="label">Other</span> -->
 										</div>
 									</div>
 								</div>
@@ -343,6 +343,15 @@
 						{{/each}}
 						</tbody>
 					</table>
+					{{#unless repo.file_structure}}
+					<div class="ui page vertically padded grid">
+						<div class="one column centered row">
+							<div class="center aligned column">
+								<div class="ui button">Search</div>
+							</div>
+						</div>
+					</div>
+					{{/unless}}
 				</div>
 			</div>
 		</div>
