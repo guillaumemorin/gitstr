@@ -25,7 +25,7 @@ Router.map(function () {
             }
 
 			var allowed_path = ['feed', 'rep', 'sub'];
-			var repos = [];
+			var repos;
 
 			var user = Meteor.users.findOne({'profile.screen_name': this.params.home_path_or_username});
 			if (!user) {
@@ -37,13 +37,12 @@ Router.map(function () {
 				}
 
 				if (type === 'rep') {
-					repos = Repos.find({user_id: Meteor.userId()});
+					repos = Repos.find({user_id: Meteor.userId()}, {sort:{created_at: -1}});
 				}
 
 				if (type === 'sub') {
-					_.map(Meteor.user().subscription, function(id){
-						repos.push(Repos.findOne({_id: id}));
-					});
+					var subscriptions = Meteor.user().subscription || [];
+					repos = Repos.find({_id: {$all: subscriptions}});
 				}
 
 				return {repo: repos, display: type};
@@ -79,7 +78,7 @@ Router.map(function () {
 			if (!repo) {
 
 				if (username_subpath === 'rep') {
-					repos = Repos.find({user_id: user._id});
+					repos = Repos.find({user_id: user._id}, {sort:{created_at: -1}});
 					console.log({repo: repos, user: user, display: username_subpath});
 					this.render('profile', {data: {repo: repos, user: user, display: username_subpath}});
 					return;
