@@ -1,11 +1,7 @@
-var testing = false; //Bad tricks to prevent the user undefined on direct access to /:username/:repo
-var testing_repo = false;
-
 Router.map(function () {
 
 	Router.configure({
 		notFoundTemplate: '404'
-		// waitOn: function() { return Meteor.subscribe('users'); }
 	});
 
 	this.route('home', {
@@ -24,16 +20,16 @@ Router.map(function () {
 		},
 		data: function () {
 
-			var allowed_path = ['feed', 'rep', 'sub'];
-			var user = Meteor.users.findOne({'profile.screen_name': this.params.home_path_or_username});
-			var repos = [];
-			
-			if (!user) {
-				if (!testing) {
-					testing = true;
-					return;
-				}
+			if(!this.ready()){
+				return;
+            }
 
+			var allowed_path = ['feed', 'rep', 'sub'];
+			var repos = [];
+
+			var user = Meteor.users.findOne({'profile.screen_name': this.params.home_path_or_username});
+			if (!user) {
+			
 				var type = this.params.home_path_or_username || 'feed';
 				if (!~allowed_path.indexOf(type)) {
 					this.render('404');
@@ -54,87 +50,33 @@ Router.map(function () {
 			}
 
 			this.redirect('/' + user.profile.screen_name + '/rep');
-		
-		},
+		}
 	});
-
-	// this.route('profile', {
-	// 	layoutTemplate: 'layout',
-	// 	loadingTemplate: 'loading',
-	// 	path: '/:username/:home_path_or_username?',
-	// 	data: function () {
-
-	// 		var type = this.params.home_path_or_username || 'rep';
-	// 		var user = Meteor.users.findOne({'profile.screen_name': this.params.username});
-	// 		var repos = [];
-
-	// 		if (!user) {
-	// 			if (!testing) {
-	// 				testing = true;
-	// 				return;
-	// 			}
-	// 			this.render('404');
-	// 			return;
-	// 		}
-
-	// 		var repo = Repos.findOne({user_id: user._id, title: this.params.repo});
-
-	// 		if (!repo) {
-	// 			if (!testing_repo) {
-	// 				testing_repo = true;
-	// 				return;
-	// 			}
-
-	// 			if (type === 'rep') {
-	// 				repos = Repos.find({user_id: Meteor.userId()});
-	// 				return {repo: repos, user: user, display: type};
-	// 			}
-
-	// 			if (type === 'sub') {
-	// 				_.map(user.subscription, function(id){
-	// 					repos.push(Repos.findOne({_id: id}));
-	// 				});
-	// 				return {repo: repos, user: user, display: type};
-	// 			}
-
-	// 			this.render('404');
-	// 			return;
-	// 		}
-
-	// 		Router.go('/' + this.params.username + '/' + repo);
-	// 		return;
-
-	// 	},
-
-	// 	waitOn: function() {
-	// 		return Meteor.subscribe('users');
-	// 	}
-	// });
 
 	this.route('repo', {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',
 		path: '/:username/:repo_name_or_user_section/:filter_type?',
+		waitOn: function() {
+			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history')];
+		},
 		data: function () {
 
+			if(!this.ready()){
+				return;
+            }
+
 			var username_subpath = this.params.repo_name_or_user_section;
-			var user = Meteor.users.findOne({'profile.screen_name': this.params.username});
 			var repos = [];
 
+			var user = Meteor.users.findOne({'profile.screen_name': this.params.username});
 			if (!user) {
-				if (!testing) {
-					testing = true;
-					return;
-				}
-				this.render('404');
+				this.render('404', {data: {error: 'no_user'}});
 				return;
 			}
+
 			var repo = Repos.findOne({user_id: user._id, title: username_subpath});
 			if (!repo) {
-				if (!testing_repo) {
-					testing_repo = true;
-					return;
-				}
 
 				if (username_subpath === 'rep') {
 					repos = Repos.find({user_id: user._id});
@@ -151,8 +93,8 @@ Router.map(function () {
 					return;
 				}
 
-				this.render('404');
-				return;	
+				this.render('404', {data: {error: 'no_repo'}});
+				return;
 			}
 
 			var history;
@@ -164,9 +106,6 @@ Router.map(function () {
 			// }
 
 			return {repo: repo, user: user, repo_history: history, filter_type: this.params.filter_type}
-		},
-		waitOn: function() {
-			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history')];
 		}
 	});
 });
