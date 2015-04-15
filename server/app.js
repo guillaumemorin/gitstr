@@ -37,6 +37,28 @@ Meteor.startup(function () {
 			}
 		}
 	);
+
+	ServiceConfiguration.configurations.upsert(
+		{ service: "github" },
+		{
+			$set: {
+				clientId: "f695a723f3c105d52c0c",
+				loginStyle: "popup",
+				secret: "60cd182803d9be5ac30152f3fc153a6ecd2a1baf"
+			}
+		}
+	);
+
+	ServiceConfiguration.configurations.upsert(
+		{ service: "facebook" },
+		{
+			$set: {
+				appId: "1089309854428755",
+				loginStyle: "popup",
+				secret: "8c5742c753ac3deeb1086d613df0d1d7"
+			}
+		}
+	);
 });
 
 Accounts.onCreateUser(function(options, user) {
@@ -75,9 +97,15 @@ Accounts.onCreateUser(function(options, user) {
 	}
 
 	if (user.services.facebook) {
+		profile_image = image_default;
+		profile_screen_name = user.services.facebook.name;
+		var profile_name = profile_screen_name;
 	}
 
 	if (user.services.github) {
+		profile_image = image_default;
+		profile_screen_name = user.services.github.username;
+		var profile_name = profile_screen_name;
 	}
 
 	if (profile_image) {
@@ -111,6 +139,10 @@ Accounts.onCreateUser(function(options, user) {
 		user.profile = options.profile;	
 		user.profile.image = profile_image;
 		user.profile.screen_name = profile_screen_name;
+		
+		if (profile_name) {
+			user.profile.name = profile_name;
+		}
 		// user.profile.image_url_mini = profile_image_mini;
 	}
 
