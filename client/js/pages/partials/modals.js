@@ -28,7 +28,20 @@ Template.image_modal.helpers({
 		console.log('modal_info', Session.get('modal_info'));
 		return Session.get('modal_info');
 	}
-})
+});
+
+Template.signin_modal.events({
+	'click #twitter_signin': function () {
+		console.log('tw');
+		Meteor.loginWithTwitter({}, function() {});
+	},
+	'click #github_signin': function () {
+		Meteor.loginWithGithub({}, function() {});
+	},
+	'click #facebook_signin': function () {
+		Meteor.loginWithFacebook({}, function() {});
+	}
+});
 
 Template.image_modal.rendered = function () {
 	//Init
