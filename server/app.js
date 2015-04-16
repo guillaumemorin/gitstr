@@ -11,6 +11,10 @@ Meteor.publish('repos_history', function () {
 	return Repos_history.find({});
 });
 
+Meteor.publish('repos_files', function () {
+	return Repos_files.find({});
+});
+
 // Startup //
 Meteor.startup(function () {
 	
@@ -97,13 +101,13 @@ Accounts.onCreateUser(function(options, user) {
 	}
 
 	if (user.services.facebook) {
-		profile_image = image_default;
+		profile_image = 'https://graph.facebook.com/' + user.services.id + '/picture?width=640&height=640';
 		profile_screen_name = user.services.facebook.name;
 		var profile_name = profile_screen_name;
 	}
 
 	if (user.services.github) {
-		profile_image = image_default;
+		profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.id;
 		profile_screen_name = user.services.github.username;
 		var profile_name = profile_screen_name;
 	}
@@ -145,6 +149,8 @@ Accounts.onCreateUser(function(options, user) {
 		}
 		// user.profile.image_url_mini = profile_image_mini;
 	}
+
+	user.subscription = [];
 
 	return user;
 });
