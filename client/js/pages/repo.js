@@ -16,12 +16,12 @@ Template.repo.helpers({
 	},
 	twitterShareParams: function () {
 		var data = UI.getData();
-		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr! Have a look right here';
+		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr! Subscribe to it right here';
 		var url = data.repo.permalink;
 		if (data.repo.last_update) {
-			text = 'I have updated my @gitstr "' + data.repo.title + '" repository! Have a look right here';
+			text = 'I have updated my @gitstr "' + data.repo.title + '" repository! Subscribe to it right here';
 		}
-		return '?text=' + encodeURI(text) + '&url=' + encodeURI(url);
+		return '?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
 	},
 	filter: function (files) {
 
@@ -36,7 +36,7 @@ Template.repo.helpers({
 		}
 
 		var files_ret = [];
-		_.map(files, function(file) {
+		files.forEach(function(file) {
 			if (filter === file.type.subtype) {
 				files_ret.push(file);	
 			}
@@ -88,8 +88,6 @@ Template.repo.events({
 			$('#image_fail_dimmer').dimmer('show');
 			return;
 		}
-
-		console.log(event.currentTarget.href);
 
 		Session.set('modal_info', {type: 'image', url: url});
 		$('#image_modal')
@@ -196,6 +194,16 @@ Template.repo.events({
 	// 		.modal('setting', 'transition', 'fade up')
 	// 		.modal('show');
 	// },
+	'click #git_input_button, click #git_input_close': function (event, template) {
+		template.$('#git_input').transition('fade left');
+	},
+	'click #git_input input': function (event, template) {
+		event.target.select();
+	},
+
+
+
+
 	'click #subscribe': function (event, template) {
 		if (!Meteor.user()) {
 			$('#signin')

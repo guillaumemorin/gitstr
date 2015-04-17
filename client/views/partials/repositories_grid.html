@@ -99,23 +99,102 @@
 				{{/if}}
 				</span>
 			</div>
-			<div class="ui stackable four column padded grid">
-				<div class="center aligned column">	
-					<div>
-						<i class="ui large link camera grey-light circular icon"></i>	
+			<div class="media-grid ui stackable middle aligned two column padded grid">
+					<div class="column">
+						{{#if samples.image}}
+						<div class="ui slide down instant reveal">
+							<div class="visible content">
+								<img src="{{samples.image}}" class="ui small rounded bordered image">
+							</div>
+							<div class="hidden content">
+								<div class="center aligned column">
+									<div>
+										<a href="{{url}}/image"><i class="ui big link blue camera icon"></i></a>
+										<div class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{else}}
+							<div class="center aligned column">
+								<div class="ui segment">
+									<a href="{{url}}/image"><i class="ui big link blue camera icon"></i></a>
+									<div class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</div>
+								</div>
+							</div>
+						{{/if}}	
 					</div>
-					<div>
-						<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
-						<!-- <span class="label">Image{{#if greater nb_image 0}}s{{/if}}</span> -->
+					<div class="column">
+						{{#if samples.video}}
+						<div class="ui slide down instant reveal">
+							<div class="visible content">
+								<img src="{{samples.video}}" class="ui small rounded bordered image">
+							</div>
+							<div class="hidden content">
+								<div class="center aligned column">
+									<div>
+										<a href="{{url}}/video"><i class="ui big link red record icon"></i></a>
+										<div class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{else}}
+							<div class="center aligned column">
+								<div class="ui segment">
+									<a href="{{url}}/video"><i class="ui big link red record icon"></i></a>
+									<div class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</div>
+								</div>
+							</div>
+						{{/if}}
+					</div>
+
+					<div class="column">
+										<div class="ui slide down instant reveal">
+					<div class="visible content">
+						<img src="/upload/Btq7ovMNoAX3xTAte/IMG_20150111_160747.jpg" class="ui small bordered image">
+					</div>
+					<div class="hidden content">
+						<div class="center aligned column">
+							<div>
+								<i class="ui large link record grey-light circular icon"></i>
+							</div>
+							<div>
+								<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+								<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="center aligned column">
+					</div>
+					<div class="column">
+										<div class="ui slide down instant reveal">
+					<div class="visible content">
+						<img src="/upload/Btq7ovMNoAX3xTAte/IMG_20150111_160747.jpg" class="ui small bordered image">
+					</div>
+					<div class="hidden content">
+						<div class="center aligned column">
+							<div>
+								<i class="ui large link record grey-light circular icon"></i>
+							</div>
+							<div>
+								<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+								<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
+							</div>
+						</div>
+					</div>
+				</div>
+					</div>
+			</div>
+
+
+<!-- 				<div class="center aligned column">
 					<div>
 						<i class="ui large link record grey-light circular icon"></i>
 					</div>
 					<div>
 						<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
-						<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
+						
 					</div>
 				</div>
 				<div class="center aligned column">
@@ -124,7 +203,7 @@
 					</div>
 					<div>
 						<span class="yellow">{{#if nb_audio}} {{nb_audio}} {{else}} 0 {{/if}}</span>
-						<!-- <span class="label">Audio{{#if greater nb_audio 0}}s{{/if}}</span> -->
+						
 					</div>
 				</div>
 				<div class="center aligned column">
@@ -133,10 +212,11 @@
 					</div>
 					<div>
 						<span class="grey-light">{{#if nb_application}} {{nb_application}} {{else}} 0 {{/if}}</span>
-						<!-- <span class="label">Other{{#if greater nb_application 0}}s{{/if}}</span> -->
+					
 					</div>
-				</div>
-			</div>
+				</div> -->
+
+
 			<div class="meta">
 				<i class="star outline icon"></i>{{#if nb_subscribers}} {{nb_subscribers}} {{else}} 0 {{/if}} Subscribers
 			</div>

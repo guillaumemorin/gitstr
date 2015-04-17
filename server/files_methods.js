@@ -43,7 +43,7 @@ uploaded_files = function (userInfo, files) {
 
 	_writeFiles = function () {
 
-		_.map(files, function(file, index) {
+		_.map(files, function(file) {
 
 			var source = source_path + file.title;
 			var stats = fs.lstatSync(source);
@@ -73,20 +73,36 @@ uploaded_files = function (userInfo, files) {
 			nb_files: files.length
 		}
 
-		_.map(files, function(file, index) {
-			// NEDD TO MODIFY FILES DIRECTLY
+		var files_ids_array = [];
+		var samples = {};
+		var set_obj = {
+			last_update: new Date().getTime()
+		};
+
+		_.map(files, function(file) {
 
 			var path = file.path.split('/');
 			var url = '/upload/' + file.path;
 			var cover_url = '/upload/' + path[0] + '/cover/' + path[1];
-			
+
+			file.url = url;
+			file.cover_url = cover_url;
+
+			var file_id = Repos_files.insert(file);
+			files_ids_array.push(file_id);
+
 			if (file.type.subtype === 'video') {
 				url = cover_url = image_default;
-				_preparingVideo(file);
+				_preparingVideo(file, file_id);
 			}
 
-			files[index].url = url;
-			files[index].cover_url = cover_url;
+			if (file.type.subtype === 'image') {
+				set_obj['samples.image'] = cover_url;
+			}
+
+			// if (file.type.subtype === 'audio') {
+			// 	samples.audio = cover_url;
+			// }
 
 			if (typeof inc_obj['nb_' + file.type.subtype] !== 'undefined') {
 				inc_obj['nb_' + file.type.subtype]++;
@@ -98,17 +114,20 @@ uploaded_files = function (userInfo, files) {
 			{
 				$push: {
 					file_structure: {
-						$each: files,
-						$sort: {timestamp: -1, title: 1},
+						$each: files_ids_array
 					}
 				},
-				$set: {last_update: new Date().getTime()},
+				$set: set_obj,
 				$inc: inc_obj
 			}
 		);
 	}
 
-	_preparingVideo = function (file) {
+	_preparingVideo = function (file, file_id) {
+
+		if (file.type.ext !== 'mp4') {
+			console.log('need to convert', file.type);
+		}
 
 		// Converting to mp4
 		// ffmpeg('/path/to/file.avi')
@@ -123,36 +142,35 @@ uploaded_files = function (userInfo, files) {
 		var source = source_path + file.title;
 		thumbgen(source, {
 			output: thumbgen_output,
-			size: {width: 480},
+			assetsDirectory: file_id,
+			size: {width: 450, height: 300},
 			numThumbnails: 1,
 			spritesheet: true
 		}, function(error, metadata) {
 			if (error) {
 				throw new Meteor.Error("preparingVideo-fail", error);
 			}
-			_updatingVideoInfo(file); 
+			_updatingVideoInfo(file, file_id); 
 		});
 	}
 
-	_updatingVideoInfo = Meteor.bindEnvironment(function (file) {
+	_updatingVideoInfo = Meteor.bindEnvironment(function (file, file_id) {
 
-			var repo = Repos.findOne(
-				{"_id": userInfo.repo_id},
-				{fields: {file_structure: 1}}
+			var cover_url = '/upload/' + userInfo.id + '/' + file_id + '/thumbnails.png';
+
+			Repos_files.update(
+				{_id: file_id},
+				{
+					$set: {
+						url: '/upload/' + file.path,
+						cover_url: cover_url
+					}
+				}
 			);
 
-			repo.file_structure.forEach(function(file_info, index) {
-				if (file.title === file_info.title && file.timestamp === file_info.timestamp) {
-					var name = file_info.title.split('.');
-					repo.file_structure[index].cover_url = '/upload/' + userInfo.id + '/' + name[0] + '/thumbnails.png';
-					repo.file_structure[index].url = '/upload/' + file_info.path;
-					console.log('updated');
-				}
-			});
-
 			Repos.update(
-				{_id: userInfo.repo_id},
-				{$set: {file_structure: repo.file_structure}}
+				{"_id": userInfo.repo_id},
+				{$set: {'samples.video': cover_url}}
 			);
 		}
 	)

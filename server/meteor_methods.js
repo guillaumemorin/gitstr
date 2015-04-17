@@ -47,7 +47,7 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in", "Must be logged in to post a comment.");
 		}
 
-		var repo_name = Repos.findOne({title: name});
+		var repo_name = Repos.findOne({title: name, user_id: Meteor.userId()});
 		if (repo_name) {
 			throw new Meteor.Error("repo-already-exists", "This name already exists");
 		}
@@ -57,7 +57,7 @@ Meteor.methods({
 		// };
 		
 		// var done_callback = Meteor.bindEnvironment(function(err) {
-			var repo_path = Meteor.user().profile.screen_name + '/' + name
+			var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name)
 			var insert_id = Repos.insert({
 				title: name,
 				created_at: new Date().getTime(),
@@ -69,7 +69,8 @@ Meteor.methods({
 				description: 'By ' + Meteor.user().profile.name,
 				permalink: service_url + repo_path,
 				permaGit: service_git + repo_path,
-				file_structure: []
+				file_structure: [],
+				samples: {image: null, video: null, audio: null}
 			});
 		// })
 

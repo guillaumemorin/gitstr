@@ -41,8 +41,7 @@ Router.map(function () {
 				}
 
 				if (type === 'sub') {
-					var subscriptions = Meteor.user().subscription || [];
-					repos = Repos.find({_id: {$all: subscriptions}});
+					repos = Repos.find({_id: {$in: Meteor.user().subscription}});
 				}
 
 				return {repo: repos, display: type};
@@ -57,7 +56,7 @@ Router.map(function () {
 		loadingTemplate: 'loading',
 		path: '/:username/:repo_name_or_user_section/:filter_type?',
 		waitOn: function() {
-			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history')];
+			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history'), Meteor.subscribe('repos_files')];
 		},
 		data: function () {
 
@@ -66,7 +65,7 @@ Router.map(function () {
             }
 
 			var username_subpath = this.params.repo_name_or_user_section;
-			var repos = [];
+			var repos;
 
 			var user = Meteor.users.findOne({'profile.screen_name': this.params.username});
 			if (!user) {
@@ -79,15 +78,12 @@ Router.map(function () {
 
 				if (username_subpath === 'rep') {
 					repos = Repos.find({user_id: user._id}, {sort:{created_at: -1}});
-					console.log({repo: repos, user: user, display: username_subpath});
 					this.render('profile', {data: {repo: repos, user: user, display: username_subpath}});
 					return;
 				}
 
 				if (username_subpath === 'sub') {
-					_.map(user.subscription, function(id){
-						repos.push(Repos.findOne({_id: id}));
-					});
+					repos = Repos.find({_id: {$in: Meteor.user().subscription}});
 					this.render('profile', {data: {repo: repos, user: user, display: username_subpath}});
 					return;
 				}
@@ -95,6 +91,10 @@ Router.map(function () {
 				this.render('404', {data: {error: 'no_repo'}});
 				return;
 			}
+
+			var files = Repos_files.find(
+				{_id: {$in: repo.file_structure}}
+			);
 
 			var history;
 			//  = Repos_history.findOne({user_id: user._id});
@@ -104,7 +104,7 @@ Router.map(function () {
 			// 	return;	
 			// }
 
-			return {repo: repo, user: user, repo_history: history, filter_type: this.params.filter_type}
+			return {repo: repo, user: user, history: history, files: files, filter_type: this.params.filter_type}
 		}
 	});
 });

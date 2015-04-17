@@ -5,7 +5,7 @@
 			<div class="fourteen wide column">
 				<div class="ui basic segment">
 					<div class="ui grid">
-						<div class="row">
+						<div class="ui stackable grid">
 							<div class="left aligned eight wide column">
 								<h2 class="ui header">
 									<a class="link-light" href="/{{user.profile.screen_name}}/rep">
@@ -36,9 +36,18 @@
 									<a href="http://twitter.com/intent/tweet{{twitterShareParams}}" class="ui basic icon button stackable">
 										<i class="twitter twitter-color icon"></i>
 									</a>
+									<div id="git_input_button" class="ui basic icon button stackable">
+										<i class="git black icon"></i>
+									</div>
 									<div id="subscribe" class="ui basic {{#if isOwner repoOwnerId}}yellow disabled{{/if}} button">
-										<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}} icon"></i>
+										<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}}{{#if isOwner repoOwnerId}}yellow{{/if}} icon"></i>
 										<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
+									</div>
+									<div id="git_input" class="ui corner labeled input" style="display:none">
+										<input type="text" placeholder="git clone url" value="{{repo.permaGit}}">
+										<div id="git_input_close" class="ui corner label">
+											<i class="close icon"></i>
+										</div>
 									</div>
 <!-- 									{{#if isOwner repoOwnerId}}
 
@@ -190,7 +199,7 @@
 									</div>
 								</div>
 							</div>
-							{{#if repo.file_structure}}
+							{{#if files.count}}
 								{{#if isOwner repoOwnerId}}
 								<div class="ui buttons">
 									<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
@@ -213,20 +222,20 @@
 						</div>
 						<div class="right aligned six wide column">
 							{{#if tmpFiles}}
-							<div class="ui teal label">
+							<div class="ui tag orange label stackable">
 								{{#if nbTmpFiles}}{{nbTmpFiles}} new uploaded files{{/if}}
 							</div>
-							<div id="commit_cancel" class="ui basic compact icon red button">
+							<div id="commit_cancel" class="ui compact icon button stackable">
 								<i class="delete icon"></i>
 							</div>
-							<div  id="commit" class="ui basic compact icon green button">
+							<div  id="commit" class="ui compact icon green button stackable">
 								<i class="check icon"></i>
 								Publish
 							</div>
 							{{/if}}
 						</div>
 					</div>
-					<table id="file-list" class="ui small table grey-dark">
+					<table id="file-list" class="ui small unstackable table grey-dark">
 						<thead></thead>
 	  					<tbody>
 	  						<tr class="disabled">
@@ -244,7 +253,7 @@
 								<td class="right aligned">-</td>
 							</tr>
 						{{/each}}
-						{{#each filter repo.file_structure}}
+						{{#each filter files}}
 
 									<!-- <i class="{{setIcon type.subtype}} icon"></i> -->
 	<!-- 								<div class="ui mini yellow label">
@@ -337,7 +346,7 @@
 						</tbody>
 					</table>
 					
-					{{#unless repo.file_structure}}
+					{{#unless files.count}}
 					<div class="ui vertically padded grid">
 						<div class="center aligned column">
 							{{#if isOwner repoOwnerId}}

@@ -8,6 +8,7 @@ image_default_white = '/white-image.png';
 // Db
 Repos = new Mongo.Collection("repo");
 Repos_history = new Mongo.Collection("repo_history");
+Repos_files = new Mongo.Collection("repo_files");
 
 // DB Update allowed
 Meteor.users.allow({

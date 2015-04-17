@@ -204,11 +204,15 @@ video {
 /*-------------------
     repository grid
 --------------------*/
-.camera {
-	&.grey-light {
-		&.icon:hover {
-			color: red;
-		}
+.media-grid {
+	padding-top: 0.5rem !important;
+  	padding-bottom: 0.5rem !important;
+	.icon {
+		margin: 0;
+	}
+	
+	> .column {
+		padding: 0.2rem @important;
 	}
 }
 
@@ -221,6 +225,12 @@ video {
 }
 
 .button {
+	&.stackable {
+		margin-bottom: 0.75em @important;
+	}
+}
+
+.label {
 	&.stackable {
 		margin-bottom: 0.75em @important;
 	}
