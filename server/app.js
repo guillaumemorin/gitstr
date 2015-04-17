@@ -67,9 +67,10 @@ Meteor.startup(function () {
 
 Accounts.onCreateUser(function(options, user) {
 
-	var exec = Npm.require('child_process').exec, http = Npm.require('http'), fs = Npm.require('fs');
+	var exec = Npm.require('child_process').exec, https = Npm.require('https'), fs = Npm.require('fs');
 	var child, profile_image_url, profile_image, profile_image_mini, profile_screen_name;
 	var user_image_path = PROFILE_IMAGE_PATH + '/' + user._id;
+	
 	var update_user_image = Meteor.bindEnvironment(function(err) {
 		
 		if (err) {
@@ -87,34 +88,8 @@ Accounts.onCreateUser(function(options, user) {
 		);
 	});
 
-	try {
-		fs.mkdirSync(user_image_path);
-	} catch(e) {
-		throw new Meteor.Error("onCreateUser-fail", "Something went wrong :(");
-	}
-
-	if (user.services.twitter) {
-		profile_image_url = user.services.twitter.profile_image_url;
-		profile_image = profile_image_url.replace('_normal', '_400x400');
-		profile_image_mini = profile_image_url.replace('_normal', '_mini');
-		profile_screen_name = user.services.twitter.screenName;
-	}
-
-	if (user.services.facebook) {
-		profile_image = 'https://graph.facebook.com/' + user.services.id + '/picture?width=640&height=640';
-		profile_screen_name = user.services.facebook.name;
-		var profile_name = profile_screen_name;
-	}
-
-	if (user.services.github) {
-		profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.id;
-		profile_screen_name = user.services.github.username;
-		var profile_name = profile_screen_name;
-	}
-
-	if (profile_image) {
-
-		var request = http.get(profile_image, function(res) {
+	var get_user_image = function(url) {
+		https.get(url, function(res) {
 			var imagedata = ''
 			res.setEncoding('binary')
 
@@ -137,6 +112,49 @@ Accounts.onCreateUser(function(options, user) {
 				console.log('exec error: ' + error);
 			}
 		});
+	}
+
+	var get_redirect_url = function(url) {
+		return new Promise(function(resolve, reject) {
+			https.get(url, function(res) {
+				res.on('end', function() {
+					if (res.statusCode >= 300 && res.statusCode < 400 && res.headers && res.headers.location) {
+						resolve(res.headers.location);
+					}
+				})
+			})
+		});
+	}
+
+	try {
+		fs.mkdirSync(user_image_path);
+	} catch(e) {
+		throw new Meteor.Error("onCreateUser-fail", "Something went wrong :(");
+	}
+
+	if (user.services.twitter) {
+		profile_image_url = user.services.twitter.profile_image_url_https;
+		profile_image = profile_image_url.replace('_normal', '_400x400');
+		profile_image_mini = profile_image_url.replace('_normal', '_mini');
+		profile_screen_name = user.services.twitter.screenName;
+	}
+
+	if (user.services.facebook) {
+		profile_image = 'https://graph.facebook.com/' + user.services.facebook.id + '/picture?width=640&height=640';
+		profile_screen_name = user.services.facebook.name;
+		var profile_name = profile_screen_name;
+
+		get_redirect_url(profile_image)
+		.then(function(redirect_url) {
+			get_user_image(redirect_url);
+		})
+
+	}
+
+	if (user.services.github) {
+		profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.github.id;
+		profile_screen_name = user.services.github.username;
+		var profile_name = profile_screen_name;
 	}
 
 	if (options.profile) {
