@@ -1,6 +1,4 @@
 var fs = Npm.require('fs');
-var thumbgen = Npm.require(THUMBGEN_PATH);
-var fluent_ffmpeg = Npm.require(FLUENT_FFMPEG_PATH);
 
 // _addFolder = function (userInfo, file) {
 
@@ -39,7 +37,6 @@ uploaded_files = function (userInfo, files) {
 
 	var source_path = UPLOAD_PATH + '/' + userInfo.id + '/';
 	var dest_path = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id + '/';
-	var thumbgen_output = UPLOAD_PATH + '/' + userInfo.id + '/thumbgen.vtt';
 
 	_writeFiles = function () {
 
@@ -82,8 +79,8 @@ uploaded_files = function (userInfo, files) {
 		_.map(files, function(file) {
 
 			var path = file.path.split('/');
-			var url = '/upload/' + file.path;
-			var cover_url = '/upload/' + path[0] + '/cover/' + path[1];
+			var url = (file.type.subtype === 'video') ? image_default : '/upload/' + file.path;
+			var cover_url = (file.type.subtype === 'video') ? image_default : '/upload/' + path[0] + '/cover/' + path[1];
 
 			file.url = url;
 			file.cover_url = cover_url;
@@ -92,8 +89,8 @@ uploaded_files = function (userInfo, files) {
 			files_ids_array.push(file_id);
 
 			if (file.type.subtype === 'video') {
-				url = cover_url = image_default;
-				_preparingVideo(file, file_id);
+				var video = new uploaded_video(userInfo, file, file_id);
+				video.processing();
 			}
 
 			if (file.type.subtype === 'image') {
@@ -122,58 +119,6 @@ uploaded_files = function (userInfo, files) {
 			}
 		);
 	}
-
-	_preparingVideo = function (file, file_id) {
-
-		if (file.type.ext !== 'mp4') {
-			console.log('need to convert', file.type);
-		}
-
-		// Converting to mp4
-		// ffmpeg('/path/to/file.avi')
-		//   .output('outputfile.mp4')
-		//   .output(stream)
-		//   .on('end', function() {
-		//     console.log('Finished processing');
-		//   })
-		//   .run();
-
-		// Generating thumbnail
-		var source = source_path + file.title;
-		thumbgen(source, {
-			output: thumbgen_output,
-			assetsDirectory: file_id,
-			size: {width: 450, height: 300},
-			numThumbnails: 1,
-			spritesheet: true
-		}, function(error, metadata) {
-			if (error) {
-				throw new Meteor.Error("preparingVideo-fail", error);
-			}
-			_updatingVideoInfo(file, file_id); 
-		});
-	}
-
-	_updatingVideoInfo = Meteor.bindEnvironment(function (file, file_id) {
-
-			var cover_url = '/upload/' + userInfo.id + '/' + file_id + '/thumbnails.png';
-
-			Repos_files.update(
-				{_id: file_id},
-				{
-					$set: {
-						url: '/upload/' + file.path,
-						cover_url: cover_url
-					}
-				}
-			);
-
-			Repos.update(
-				{"_id": userInfo.repo_id},
-				{$set: {'samples.video': cover_url}}
-			);
-		}
-	)
 
 	this.save = function() {
 		_writeFiles();
