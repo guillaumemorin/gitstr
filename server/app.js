@@ -31,37 +31,22 @@ Meteor.startup(function () {
 	})
 
 	// Services
+	
+	var platform = (process.env.PLATFORM) ? process.env.PLATFORM : 'PROD';
+console.log(process.env.PLATFORM, tokens.twitter[platform]);
 	ServiceConfiguration.configurations.upsert(
 		{ service: "twitter" },
-		{
-			$set: {
-				consumerKey: "2J7MBzXbDY6peCccGWLGnHNPD",
-				loginStyle: "popup",
-				secret: "7dR10ruKdqyw95s9gzANrBXGZowZd80njhJJQ7L3Xy989Npzzd"
-			}
-		}
+		tokens.twitter[platform]
 	);
 
 	ServiceConfiguration.configurations.upsert(
 		{ service: "github" },
-		{
-			$set: {
-				clientId: "f695a723f3c105d52c0c",
-				loginStyle: "popup",
-				secret: "60cd182803d9be5ac30152f3fc153a6ecd2a1baf"
-			}
-		}
+		tokens.github[platform]
 	);
 
 	ServiceConfiguration.configurations.upsert(
 		{ service: "facebook" },
-		{
-			$set: {
-				appId: "1089309854428755",
-				loginStyle: "popup",
-				secret: "8c5742c753ac3deeb1086d613df0d1d7"
-			}
-		}
+		tokens.facebook[platform]
 	);
 });
 
