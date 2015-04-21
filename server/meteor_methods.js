@@ -43,6 +43,15 @@ Meteor.methods({
 	// check(comment, String);
 	// check(postId, String);
 
+		var getDefaultRadient = function() {
+			var deg = Math.floor((Math.random() * 200) + 1);
+			var percent1 = Math.floor((Math.random() * 100) + 1);
+			var percent2 = 100 - percent1;
+
+			return {gradient: {percent1: percent1, percent2: percent2, deg: deg}};
+		}
+
+
 		if (!this.userId) {
 			throw new Meteor.Error("not-logged-in", "Must be logged in to post a comment.");
 		}
@@ -70,7 +79,11 @@ Meteor.methods({
 				permalink: service_url + repo_path,
 				permaGit: service_git + repo_path,
 				file_structure: [],
-				samples: {image: null, video: null, audio: null}
+				samples: {
+					image: getDefaultRadient(),
+					video: getDefaultRadient(),
+					audio: getDefaultRadient()
+				}
 			});
 		// })
 
