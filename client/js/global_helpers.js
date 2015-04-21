@@ -25,3 +25,13 @@ Template.registerHelper('subscribed', function(subscriber) {
 Template.registerHelper('moment', function(date) {
 	return moment(date).format('MMMM YYYY');
 });
+
+Template.registerHelper('defaultImage', function(date) {
+
+	var deg = Math.floor((Math.random() * 200) + 1);
+	var percent = Math.floor((Math.random() * 100) + 1);
+	var percent2 = 100 - percent;
+
+	return 'linear-gradient(' + deg + 'deg, #f4a8a8, #94e5e1)';
+});
+

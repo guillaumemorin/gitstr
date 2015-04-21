@@ -12,9 +12,10 @@
 
 
 	</div> -->
-	<div id="profile-header" class="ui vertical stacked segment">
+	<div id="profile_header" class="ui vertical stacked segment">
+		<span class="img-overlay profile" style="background: {{defaultImage}};"></span>
 		<div class="ui page grid">
-			<div class="column">
+			<div class="column">		
 				{{> header padded="false" pointing="false"}}
 				<h2 class="ui icon center aligned header">
 					<img class="ui small circular image" src="{{user.profile.image}}">

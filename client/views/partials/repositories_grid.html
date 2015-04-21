@@ -104,7 +104,7 @@
 						{{#if samples.image.gradient}}
 							<a href="/{{user_screen_name}}/{{title}}/image">
 								<span class="img-overlay default"></span>
-								<span class="ui small rounded image default-image" style="background: linear-gradient({{samples.image.gradient.deg}}deg, #f4a8a8 {{samples.image.gradient.percent1}}%, #94e5e1 {{samples.image.gradient.percent2}}%); width: 100%;height: 10rem; opacity: 0.5"></span>
+								<span class="ui small rounded image default-image {{../default_image_size}}" style="background: linear-gradient({{samples.image.gradient.deg}}deg, #f4a8a8 {{samples.image.gradient.percent1}}%, #94e5e1 {{samples.image.gradient.percent2}}%);"></span>
 								<div class="repo-grid-counter default">
 									<i class="camera blue icon"></i>
 									<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
@@ -125,7 +125,7 @@
 						{{#if samples.video.gradient}}
 							<a href="/{{user_screen_name}}/{{title}}/video">
 								<span class="img-overlay default"></span>
-								<span class="ui small rounded image default-image" style="background: linear-gradient({{samples.video.gradient.deg}}deg, #f4a8a8 {{samples.video.gradient.percent1}}%, #94e5e1 {{samples.video.gradient.percent2}}%); width: 100%;height: 10rem; opacity: 0.5"></span>
+								<span class="ui small rounded image default-image {{../default_image_size}}" style="background: linear-gradient({{samples.video.gradient.deg}}deg, #f4a8a8 {{samples.video.gradient.percent1}}%, #94e5e1 {{samples.video.gradient.percent2}}%);"></span>
 								<div class="repo-grid-counter default">
 									<i class="record red icon"></i>
 									<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>

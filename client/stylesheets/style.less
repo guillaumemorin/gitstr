@@ -204,9 +204,9 @@ video {
 /*-------------------
     profile page
 --------------------*/
-#profile-header {
+#profile_header {
 	height: 375px;
-	background-image: url(swirl_pattern.png);
+	/*background-image: url(swirl_pattern.png);*/
 }
 
 /*-------------------
@@ -262,6 +262,11 @@ video {
 	&.default {
 		background: rgba(255, 255, 255, 0.2);
 	}
+
+	&.profile {
+		opacity: 0.8;
+		z-index: 0;
+	}
 }
 
 .img-overlay:hover {
@@ -269,8 +274,14 @@ video {
 }
 
 .default-image {
-	height: 10rem;
-	background: linear-gradient(150deg, #F4A8A8, #94E5E1);
+	width: 100% @important;
+	height: 10rem @important;
+	opacity: 0.5 @important;
+
+	&.default-small {
+		height: 5rem @important;
+	}
+	/*background: linear-gradient(150deg, #F4A8A8, #94E5E1);*/
 }
 
 /*background: linear-gradient(150deg,#F08C8C,#48C5BF)*/

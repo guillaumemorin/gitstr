@@ -78,13 +78,13 @@ Router.map(function () {
 
 				if (username_subpath === 'rep') {
 					repos = Repos.find({user_id: user._id}, {sort:{created_at: -1}});
-					this.render('profile', {data: {repo: repos, user: user, display: username_subpath}});
+					this.render('profile', {data: {repo: repos, user: user, display: username_subpath, default_image_size: 'default-small'}});
 					return;
 				}
 
 				if (username_subpath === 'sub') {
 					repos = Repos.find({_id: {$in: Meteor.user().subscription}});
-					this.render('profile', {data: {repo: repos, user: user, display: username_subpath}});
+					this.render('profile', {data: {repo: repos, user: user, display: username_subpath, default_image_size: 'default-small'}});
 					return;
 				}
 

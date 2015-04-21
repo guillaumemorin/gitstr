@@ -1,6 +1,9 @@
 Template.repositories_grid.helpers({
 	repoList: function () {
 		var data = UI.getData();
+		if (!data) {
+			return;
+		}
 		var list = data.repo;
 		var display = data.display;
 
