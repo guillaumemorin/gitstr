@@ -18,6 +18,9 @@ Template.header.events({
 		Meteor.logout();
 		Router.go('/');
 	},
+	'click #header_subscribe': function (event, template) {
+		_subscribe();	
+	},
 	'click .table-collapse' : function (event, template) {
 		template.$(event.currentTarget).toggleClass('act');
 		// $('.extra-content').transition('fade');
@@ -51,6 +54,10 @@ $(window).scroll(function() {
 		if (!fixed_topbar) {
 			fixed_topbar = true;
 			$('#fixed_topbar').transition('scale');
+			window.setTimeout(function() {
+				$('#topbar_repo_info').transition('fade down');	
+			}, 200);
+			
 		}
 		return;
 	}
@@ -60,6 +67,7 @@ $(window).scroll(function() {
 
 	if (fixed_topbar) {
 		fixed_topbar = false;
+		$('#topbar_repo_info').transition('fade up');
 		$('#fixed_topbar').transition('scale');
 	}
 });

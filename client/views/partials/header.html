@@ -1,24 +1,47 @@
 <template name="header">
-	<div class="ui {{#unless padded}}page vertically padded{{/unless}} grid">
+
+	<div id="topbar_repo_info" class="ui page grid">
+		{{#if equal page "repository"}}
+		<div class="column">
+			<div class="ui basic segment">
+				<div class="ui items">
+					<div class="item">
+						<a class="ui mini circular image">
+							<img src="{{../user.profile.image}}" />
+						</a>
+						<div class="middle aligned content">
+							<div class="header">
+								<a class="link-light" href="/{{../user.profile.screen_name}}">
+									{{../user.profile.screen_name}}
+								</a>
+								{{#if ../repo.title}} 
+								<span class="grey-light"> / </span>
+								<span class="teal">#</span> {{../repo.title}}
+								<i id="header_subscribe" class="favorite icon {{#if subscribed ../repo.subscribers}}yellow{{/if}}"></i>
+								{{/if}}
+								<div class="ui right floated">
+									<a class="table-collapse item">
+										<i class="{{displayStatus}} link icon"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+	</div>
+
+	<div class="{{#unless padded}}ui page vertically padded grid{{/unless}}">
 		<div class="centered row">
 			<div class="column">
-				<div id="fixed_topbar" class="ui primary large fixed menu" style="display: none">
+				<div id="fixed_topbar" class="ui primary borderless large fixed menu" style="display: none">
 					<a class="item" href="/">
 						<!-- Gitstr. -->
 						<span class="ui label large teal circular oxygen">G</span>
+						itstr.
 					</a>
-					{{#if equal page "repository"}}
-					<div class="item">
-						<a class="link-light" href="/{{../user.profile.screen_name}}">
-							<span>{{../user.profile.screen_name}}</span>
-						</a>
-						{{#if ../repo.title}} 
-						<span class="grey-light"> / </span>
-						<span class="teal">#</span> {{../repo.title}} 
-						{{/if}} 
-					</div>
-					{{/if}}
-
 					{{#if equal ../display "feed"}}
 					<div class="item">
 						<i class="green heartbeat icon"></i>
@@ -53,34 +76,6 @@
 						</span>
 					</div>
 					{{/if}}
-
-					{{#if equal page "repository"}}
-					<a class="table-collapse item">
-						<i class="{{displayStatus}} link icon"></i>
-					</a>
-					{{/if}}
-
-					<div class="four wide computer tablet only column right menu">
-						<div class="item">
-							<div class="ui search">
-								<div class="ui transparent left icon input">
-									<input class="prompt" type="text" placeholder="Search...">
-									<i class="search link icon"></i>
-								</div>
-								<div class="results"></div>
-							</div>
-						</div>
-						{{#if currentUser}}
-						<div class="item">
-							<a class="ui mini rounded image" href="/">
-								<img src="{{currentUser.profile.image}}">
-							</a>
-						</div>
-						<a id="logout" class="ui item">
-							<i class="sign out icon"></i>
-						</a>
-						{{/if}}
-					</div>
 				</div>
 				<div id="topbar" class="ui secondary {{#unless pointing}}pointing{{/unless}} menu">
 					<a class="item" href="/">

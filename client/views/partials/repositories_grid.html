@@ -99,9 +99,52 @@
 				{{/if}}
 				</span>
 			</div>
-			<div class="media-grid ui stackable middle aligned two column padded grid">
+			<div class="repo-grid ui stackable two column padded grid">
 					<div class="column">
-						{{#if samples.image}}
+						{{#if samples.image.gradient}}
+							<a href="/{{user_screen_name}}/{{title}}/image">
+								<span class="img-overlay default"></span>
+								<span class="ui small rounded image default-image" style="background: linear-gradient({{samples.image.gradient.deg}}deg, #f4a8a8 {{samples.image.gradient.percent1}}%, #94e5e1 {{samples.image.gradient.percent2}}%); width: 100%;height: 10rem; opacity: 0.5"></span>
+								<div class="repo-grid-counter default">
+									<i class="camera blue icon"></i>
+									<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						{{else}}
+							<a href="/{{user_screen_name}}/{{title}}/image">
+								<span class="img-overlay"></span>
+								<img src="{{samples.image}}" class="ui small rounded bordered image">
+								<div class="repo-grid-counter">
+									<i class="camera blue icon"></i>
+									<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						{{/if}}
+					</div> 
+					<div class="column">
+						{{#if samples.video.gradient}}
+							<a href="/{{user_screen_name}}/{{title}}/video">
+								<span class="img-overlay default"></span>
+								<span class="ui small rounded image default-image" style="background: linear-gradient({{samples.video.gradient.deg}}deg, #f4a8a8 {{samples.video.gradient.percent1}}%, #94e5e1 {{samples.video.gradient.percent2}}%); width: 100%;height: 10rem; opacity: 0.5"></span>
+								<div class="repo-grid-counter default">
+									<i class="record red icon"></i>
+									<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						{{else}}
+							<a href="/{{user_screen_name}}/{{title}}/video">
+								<span class="img-overlay"></span>
+								<img src="{{samples.video}}" class="ui small rounded bordered image">
+								<div class="repo-grid-counter">
+									<i class="record red icon"></i>
+									<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						{{/if}}
+					</div>
+
+
+						<!-- {{#if samples.image}}
 						<div class="ui slide down instant reveal">
 							<div class="visible content">
 								<img src="{{samples.image}}" class="ui small rounded bordered image">
@@ -122,9 +165,9 @@
 									<div class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</div>
 								</div>
 							</div>
-						{{/if}}	
-					</div>
-					<div class="column">
+						{{/if}}	 -->
+
+<!-- 					<div class="column">
 						{{#if samples.video}}
 						<div class="ui slide down instant reveal">
 							<div class="visible content">
@@ -147,7 +190,7 @@
 								</div>
 							</div>
 						{{/if}}
-					</div>
+					</div> -->
 
 					<div class="column">
 										<div class="ui slide down instant reveal">
