@@ -132,13 +132,6 @@ Accounts.onCreateUser(function(options, user) {
 		throw new Meteor.Error("onCreateUser-fail", "Something went wrong :(");
 	}
 
-	if (user.services.twitter) {
-		profile_image_url = user.services.twitter.profile_image_url_https;
-		profile_image = profile_image_url.replace('_normal', '_400x400');
-		profile_image_mini = profile_image_url.replace('_normal', '_mini');
-		profile_screen_name = user.services.twitter.screenName;
-	}
-
 	if (user.services.facebook) {
 		profile_image = 'https://graph.facebook.com/' + user.services.facebook.id + '/picture?width=640&height=640';
 		profile_screen_name = user.services.facebook.name;
@@ -148,13 +141,23 @@ Accounts.onCreateUser(function(options, user) {
 		.then(function(redirect_url) {
 			get_user_image(redirect_url);
 		})
+	} else {
 
-	}
+		if (user.services.twitter) {
+			profile_image_url = user.services.twitter.profile_image_url_https;
+			profile_image = profile_image_url.replace('_normal', '_400x400');
+			profile_image_mini = profile_image_url.replace('_normal', '_mini');
+			profile_screen_name = user.services.twitter.screenName;
+		}
 
-	if (user.services.github) {
-		profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.github.id;
-		profile_screen_name = user.services.github.username;
-		var profile_name = profile_screen_name;
+		if (user.services.github) {
+			profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.github.id;
+			profile_screen_name = user.services.github.username;
+			var profile_name = profile_screen_name;
+		}
+
+		get_user_image(profile_image);
+
 	}
 
 	if (options.profile) {
