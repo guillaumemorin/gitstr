@@ -58,9 +58,14 @@
 @important: !important;
 
 /*-------------------
+     Gradient
+--------------------*/
+@gradientBackground: linear-gradient(135deg, #f4a8a8, #94e5e1);
+
+/*-------------------
       Font
 --------------------*/
-@import url(//fonts.googleapis.com/css?family=Oxygen:700);
+@import url(//fonts.googleapis.com/css?family=Oxygen);
 
 .oxygen {
 	font-family: 'Oxygen';
@@ -71,6 +76,10 @@
 --------------------*/
 body {
 	background-image: url(pw_maze_white.png);
+}
+
+.gradient-background {
+	background: @gradientBackground @important;
 }
 
 .twitter-color {
