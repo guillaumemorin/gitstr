@@ -31,9 +31,7 @@ Meteor.startup(function () {
 	})
 
 	// Services
-	
 	var platform = (process.env.PLATFORM) ? process.env.PLATFORM : 'PROD';
-console.log(process.env.PLATFORM, tokens.twitter[platform]);
 	ServiceConfiguration.configurations.upsert(
 		{ service: "twitter" },
 		tokens.twitter[platform]
