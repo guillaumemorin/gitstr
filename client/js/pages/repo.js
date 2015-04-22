@@ -23,6 +23,31 @@ Template.repo.helpers({
 		}
 		return '?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
 	},
+	getFilterIcon: function(files) {
+		var icons = {image: 'camera', video: 'record', audio: 'unmute', application: 'file', all: 'file'}
+		var filter = Session.get('filter') ? Session.get('filter') : 'all';
+		return icons[filter];
+	},
+	emptyMessage: function () {
+		var filter = Session.get('filter') ? Session.get('filter') : 'all';
+		return (filter !== 'all' ? 'No ' + Session.get('filter') + ' files for now...' : 'Empty repository')
+	},
+	length: function (files) {
+
+		var filter = Session.get('filter');
+		if (!filter || filter === 'all') {
+			return files.count();
+		}
+
+		var files_ret = [];
+		files.forEach(function(file) {
+			if (filter === file.type.subtype) {
+				files_ret.push(file);	
+			}
+		});
+
+		return files_ret.length;
+	},
 	filter: function (files) {
 
 		var filter = Session.get('filter');
@@ -32,6 +57,7 @@ Template.repo.helpers({
 		}
 
 		if (!filter || filter === 'all') {
+			console.log('all', files);
 			return files;
 		}
 
