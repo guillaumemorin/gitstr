@@ -1,16 +1,18 @@
 var path = Npm.require('path');
 
-FILES_PATH = path.resolve(process.env.PWD + '/../gitstr_files/');
+GITSTR_PATH = (process.env.PLATFORM === 'PROD') ?  '/home/git/gitstr' : process.env.PWD;
+GITSTR_PATH = (process.env.PLATFORM === 'DEV') ?  '/Users/guillaume/gitstr' : process.env.PWD;
+
+FILES_PATH = path.resolve(GITSTR_PATH + '/../gitstr_files/');
 REPOSITORY_PATH = FILES_PATH + '/repos/';
 UPLOAD_PATH = FILES_PATH + '/uploads/';
 
-NPM_PACKAGES_PATH = path.resolve(process.env.PWD + '/../gitstr_npm_packages/');
+NPM_PACKAGES_PATH = path.resolve(GITSTR_PATH + '/../gitstr_npm_packages/');
 NODEGIT_PATH = NPM_PACKAGES_PATH + '/nodegit';
 THUMBGEN_PATH = NPM_PACKAGES_PATH + '/thumbnails-webvtt';
 FLUENT_FFMPEG_PATH = NPM_PACKAGES_PATH + '/fluent-ffmpeg';
 
 PROFILE_IMAGE_PATH = UPLOAD_PATH + '/public/u';
-
 
 // Services config
 tokens = {
@@ -49,9 +51,9 @@ tokens = {
 	facebook: {
 		DEV: {
 			$set: {
-				appId: "1089309854428755",
+				appId: "1094705553889185",
 				loginStyle: "popup",
-				secret: "8c5742c753ac3deeb1086d613df0d1d7"
+				secret: "64808805ab1be29d43178c3a8cf28b88"
 			}
 		},
 		PROD: {
