@@ -16,7 +16,7 @@ uploaded_video = function (userInfo, file, file_id) {
 
 		return new Promise(function(resolve, reject) {
 			if (file.type.ext === 'mp4') {
-				resolve();
+				return resolve();
 			}
 
 			var mp4_output = source.replace('.' + file.type.ext, '.mp4');
