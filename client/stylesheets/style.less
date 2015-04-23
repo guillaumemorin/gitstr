@@ -100,6 +100,10 @@ body {
 
 .yellow {
 	color: @yellow;
+
+	&.inverted {
+		color: @lightYellow;
+	}
 }
 
 .blue {
@@ -246,22 +250,24 @@ video {
 --------------------*/
 
 .repo-grid-counter {
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.3);
 	padding: 0.1rem 0.3rem 0;
 	position: absolute;
-	bottom: 0.6rem;
-	left: 0.6rem;
+	bottom: 0.5rem;
+	left: 0.5rem;
 	border-radius: 0.2rem;
 	&.default {
-		background-color: rgba(0, 0, 0, 0.08);
+		background-color: rgba(255, 255, 255, 0.3);
 	}
 }
 
 .repo-grid {
 	padding-top: 0.5rem !important;
   	padding-bottom: 0.5rem !important;
-	
-	> .column {
+}
+
+.column {
+	&.thin {
 		padding: 0.2rem @important;
 	}
 }
@@ -293,6 +299,14 @@ video {
 	width: 100% @important;
 	height: 10rem @important;
 	opacity: 0.5 @important;
+
+	&.default-audio {
+		height: 3rem @important;
+	}
+
+	&.default-application {
+		height: 3rem @important;
+	}
 
 	&.default-small {
 		height: 5rem @important;

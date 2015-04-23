@@ -100,14 +100,103 @@
 				</span>
 			</div>
 			<div class="repo-grid ui stackable two column padded grid">
+					<div class="column thin">
+						{{#if samples.image.gradient}}
+							<a href="/{{user_screen_name}}/{{title}}/image">
+<!-- 								<span class="ui small rounded image default-image {{../default_image_size}}" style="background: linear-gradient({{samples.image.gradient.deg}}deg, #f4a8a8 {{samples.image.gradient.percent1}}%, #94e5e1 {{samples.image.gradient.percent2}}%);"></span> -->
+								<span class="ui small rounded image default-image {{../default_image_size}}" style="background: {{samples.image.gradient}}"></span>
+								<div class="repo-grid-counter default">
+									<i class="camera white icon"></i>
+									<span class="white">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						{{else}}
+							<a href="/{{user_screen_name}}/{{title}}/image">
+								<span class="img-overlay"></span>
+								<img src="{{samples.image}}" class="ui small rounded bordered image">
+								<div class="repo-grid-counter">
+									<i class="camera white icon"></i>
+									<span class="white">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						{{/if}}
+					</div> 
+					<div class="column">
+						<div class="ui two column grid">
+							<div class="column thin">
+								<a href="/{{user_screen_name}}/{{title}}/audio">
+<!-- 									<span class="ui small rounded image default-image default-audio {{../default_image_size}}" style="background: linear-gradient({{samples.audio.gradient.deg}}deg, #f4a8a8 {{samples.audio.gradient.percent1}}%, #94e5e1 {{samples.audio.gradient.percent2}}%);"></span> -->
+									<span class="ui small rounded image default-image default-audio" style="background: {{samples.audio.gradient}}"></span>
+									<div class="repo-grid-counter {{#unless nb_audio}}default{{/unless}}">
+										<i class="unmute white icon"></i>
+										<span class="white">{{#if nb_audio}} {{nb_audio}} {{else}} 0 {{/if}}</span>
+									</div>
+								</a>
+							</div>
+							<div class="column thin">
+								<a href="/{{user_screen_name}}/{{title}}/audio">
+<!-- 									<span class="ui small rounded image default-image default-audio {{../default_image_size}}" style="background: linear-gradient({{samples.application.gradient.deg}}deg, #f4a8a8 {{samples.application.gradient.percent1}}%, #94e5e1 {{samples.application.gradient.percent2}}%);"></span> -->
+									<span class="ui small rounded image default-image default-audio" style="background: {{samples.application.gradient}}"></span>
+									<div class="repo-grid-counter {{#unless nb_application}}default{{/unless}}">
+										<i class="file outline white icon"></i>
+										<span class="white">{{#if nb_application}} {{nb_application}} {{else}} 0 {{/if}}</span>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="ui one column grid">
+							<div class="column thin">
+								{{#if samples.video.gradient}}
+									<a href="/{{user_screen_name}}/{{title}}/video">
+										<!-- <span class="ui small rounded image default-image {{../default_image_size}}" style="background: linear-gradient({{samples.video.gradient.deg}}deg, #f4a8a8 {{samples.video.gradient.percent1}}%, #94e5e1 {{samples.video.gradient.percent2}}%);"></span> -->
+										<span class="ui small rounded image default-image {{../default_image_size}}" style="background: {{samples.video.gradient}}"></span>
+										<div class="repo-grid-counter default">
+											<i class="record white icon"></i>
+											<span class="white">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+										</div>
+									</a>
+								{{else}}
+									<a href="/{{user_screen_name}}/{{title}}/video">
+										<span class="img-overlay"></span>
+										<img src="{{samples.video}}" class="ui small rounded bordered image">
+										<div class="repo-grid-counter">
+											<i class="record white icon"></i>
+											<span class="white">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+										</div>
+									</a>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+<!-- 					<div class="four column row">
+						<div class="column"></div>
+						<div class="column"></div>
+						<div class="column">
+							<a href="/{{user_screen_name}}/{{title}}/audio">
+								<span class="ui small rounded image default-image default-audio {{../default_image_size}}" style="background: linear-gradient({{samples.audio.gradient.deg}}deg, #f4a8a8 {{samples.audio.gradient.percent1}}%, #94e5e1 {{samples.audio.gradient.percent2}}%);"></span>
+								<div class="repo-grid-counter default">
+									<i class="unmute white icon"></i>
+									<span class="white">{{#if nb_audio}} {{nb_audio}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						</div>
+						<div class="column">
+							<a href="/{{user_screen_name}}/{{title}}/audio">
+								<span class="ui small rounded image default-image default-audio {{../default_image_size}}" style="background: linear-gradient({{samples.application.gradient.deg}}deg, #f4a8a8 {{samples.application.gradient.percent1}}%, #94e5e1 {{samples.application.gradient.percent2}}%);"></span>
+								<div class="repo-grid-counter default">
+									<i class="file outline white icon"></i>
+									<span class="white">{{#if nb_application}} {{nb_application}} {{else}} 0 {{/if}}</span>
+								</div>
+							</a>
+						</div>
+					</div>
 					<div class="column">
 						{{#if samples.image.gradient}}
 							<a href="/{{user_screen_name}}/{{title}}/image">
-								<span class="img-overlay default"></span>
 								<span class="ui small rounded image default-image {{../default_image_size}}" style="background: linear-gradient({{samples.image.gradient.deg}}deg, #f4a8a8 {{samples.image.gradient.percent1}}%, #94e5e1 {{samples.image.gradient.percent2}}%);"></span>
 								<div class="repo-grid-counter default">
-									<i class="camera blue icon"></i>
-									<span class="blue">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
+									<i class="camera white icon"></i>
+									<span class="white">{{#if nb_image}} {{nb_image}} {{else}} 0 {{/if}}</span>
 								</div>
 							</a>
 						{{else}}
@@ -124,11 +213,10 @@
 					<div class="column">
 						{{#if samples.video.gradient}}
 							<a href="/{{user_screen_name}}/{{title}}/video">
-								<span class="img-overlay default"></span>
 								<span class="ui small rounded image default-image {{../default_image_size}}" style="background: linear-gradient({{samples.video.gradient.deg}}deg, #f4a8a8 {{samples.video.gradient.percent1}}%, #94e5e1 {{samples.video.gradient.percent2}}%);"></span>
 								<div class="repo-grid-counter default">
-									<i class="record red icon"></i>
-									<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
+									<i class="record white icon"></i>
+									<span class="white">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
 								</div>
 							</a>
 						{{else}}
@@ -141,8 +229,7 @@
 								</div>
 							</a>
 						{{/if}}
-					</div>
-
+					</div> -->
 
 						<!-- {{#if samples.image}}
 						<div class="ui slide down instant reveal">
@@ -192,42 +279,7 @@
 						{{/if}}
 					</div> -->
 
-					<div class="column">
-										<div class="ui slide down instant reveal">
-					<div class="visible content">
-						<img src="/upload/Btq7ovMNoAX3xTAte/IMG_20150111_160747.jpg" class="ui small bordered image">
-					</div>
-					<div class="hidden content">
-						<div class="center aligned column">
-							<div>
-								<i class="ui large link record grey-light circular icon"></i>
-							</div>
-							<div>
-								<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
-								<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
-							</div>
-						</div>
-					</div>
-				</div>
-					</div>
-					<div class="column">
-										<div class="ui slide down instant reveal">
-					<div class="visible content">
-						<img src="/upload/Btq7ovMNoAX3xTAte/IMG_20150111_160747.jpg" class="ui small bordered image">
-					</div>
-					<div class="hidden content">
-						<div class="center aligned column">
-							<div>
-								<i class="ui large link record grey-light circular icon"></i>
-							</div>
-							<div>
-								<span class="red">{{#if nb_video}} {{nb_video}} {{else}} 0 {{/if}}</span>
-								<!-- <span class="label">Video{{#if greater nb_video 0}}s{{/if}}</span> -->
-							</div>
-						</div>
-					</div>
-				</div>
-					</div>
+<!--  -->
 			</div>
 
 

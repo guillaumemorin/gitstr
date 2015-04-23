@@ -48,6 +48,8 @@ Meteor.methods({
 			var percent1 = Math.floor((Math.random() * 100) + 1);
 			var percent2 = 100 - percent1;
 
+			var colors = ['#94e5e1', ' #f4a8a8'];
+			return {gradient: colors[Math.floor(Math.random()*colors.length)]}
 			return {gradient: {percent1: percent1, percent2: percent2, deg: deg}};
 		}
 
@@ -66,7 +68,8 @@ Meteor.methods({
 		// };
 		
 		// var done_callback = Meteor.bindEnvironment(function(err) {
-			var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name)
+			var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name);
+			var gradient =  getDefaultRadient();
 			var insert_id = Repos.insert({
 				title: name,
 				created_at: new Date().getTime(),
@@ -80,9 +83,10 @@ Meteor.methods({
 				permaGit: service_git + repo_path,
 				file_structure: [],
 				samples: {
-					image: getDefaultRadient(),
+					image:getDefaultRadient(),
 					video: getDefaultRadient(),
-					audio: getDefaultRadient()
+					audio: getDefaultRadient(),
+					application: getDefaultRadient()
 				}
 			});
 		// })
