@@ -72,7 +72,7 @@
 							<div class="center aligned column">
 								<div class="ui yellow floating message">
 									<div class="header">
-										Wow, seems empty here!
+										That looks pretty empty...
 									</div>
 									{{#if equal display "rep"}}
 										Try to create a repository and you will be able to sharing it with the world.
@@ -83,11 +83,16 @@
 									{{/if}}
 
 									{{#if equal display "sub"}}
-										Explore some popular repositories and subscribe to it!
-										<div>
-											<i class="ui huge pointing down icon"></i>
-										</div>
+										Explore some recently created repositories and subscribe to it!
 										<div class="ui hidden divider"></div>
+										<div>
+											<a href="/explore">
+												<div class="ui orange massive button">
+												  <i class="icon rocket"></i>
+												  Explore
+												</div>
+											</a>
+										</div>
 									{{/if}}
 								</div>
 							</div>

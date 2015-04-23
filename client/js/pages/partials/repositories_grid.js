@@ -8,8 +8,9 @@ Template.repositories_grid.helpers({
 		var display = data.display;
 
 		if (!data.repo.count() && display === 'sub') {
-			list = Repos.find({user_id: { $not: Meteor.userId()}}, {limit: 50});
+			list = null
 		}
+		
 		return list;
 	}
 });

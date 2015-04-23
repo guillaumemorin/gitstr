@@ -41,6 +41,14 @@
 						<!-- Gitstr. -->
 						<span class="oxygen">gitstr.</span>
 					</a>
+
+					{{#if equal ../display "explore"}}
+					<div class="item">
+						<i class="orange rocket icon"></i>
+						<span class="grey-light"> Explore</span>
+					</div>
+					{{/if}}
+
 					{{#if equal ../display "feed"}}
 					<div class="item">
 						<i class="green heartbeat icon"></i>
@@ -79,6 +87,10 @@
 				<div id="topbar" class="ui secondary {{#unless pointing}}pointing{{/unless}} menu">
 					<a class="item" href="/">
 						gitstr.
+					</a>
+					<a class="item" href="/explore">
+						<i class="rocket orange icon"></i>
+						Explore
 					</a>
 					{{#if equal page "repository"}}
 					<div class="table-collapse item">

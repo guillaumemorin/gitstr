@@ -1,0 +1,21 @@
+<template name="explore">
+	{{> header}}
+	<div class="ui page vertically padded grid">
+		<div class="centered row">
+			<div class="sixteen wide column">
+				<h2 class="ui header">
+					<i class="orange massive rocket icon"></i>
+					<div class="content">
+						Explore
+					</div>
+				</h2>
+				<div class="ui divider"></div>
+				<div class="sixteen wide column">
+					<div class="ui three column grid">
+					{{> repositories_grid}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -4,6 +4,33 @@ Router.map(function () {
 		notFoundTemplate: '404'
 	});
 
+	this.route('explore', {
+		layoutTemplate: 'layout',
+		loadingTemplate: 'loading',
+		path: '/explore',
+		waitOn: function() {
+			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
+		},
+		data: function () {
+
+			if(!this.ready()){
+				return;
+            }
+
+            var selector_obj = {};
+            if (Meteor.user()) {
+            	selector_obj = {user_id: { $not: Meteor.userId()}};
+            }
+
+            var repos = Repos.find(
+            	selector_obj,
+            	{limit: 50}
+            );
+
+            return {repo: repos, display: 'explore'};
+		}
+	});
+
 	this.route('home', {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',
