@@ -17,7 +17,9 @@
 								{{#if ../repo.title}} 
 								<span class="grey-light"> / </span>
 								<span class="teal">#</span> {{../repo.title}}
+								{{#unless isOwner ../repo.user_id}}
 								<i id="header_subscribe" class="favorite icon {{#if subscribed ../repo.subscribers}}yellow{{/if}}"></i>
+								{{/unless}}
 								{{/if}}
 								<div class="ui right floated">
 									<a class="table-collapse item">

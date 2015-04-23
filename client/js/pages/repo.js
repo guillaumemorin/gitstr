@@ -73,9 +73,6 @@ Template.repo.helpers({
 	errorMessage: function () {
 		return Session.get('upload_error_message');
 	},
-	repoOwnerId: function () {
-		return UI.getData().repo.user_id;
-	},
 	setIcon: function (type) {
 		var type_map = {
 			image: 'camera',
