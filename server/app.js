@@ -48,6 +48,10 @@ Meteor.startup(function () {
 	);
 });
 
+Accounts.onLogin(function(options, user) {
+	loggly.log(options);
+});
+
 Accounts.onCreateUser(function(options, user) {
 
 	var exec = Npm.require('child_process').exec, https = Npm.require('https'), fs = Npm.require('fs');

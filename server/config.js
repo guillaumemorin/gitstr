@@ -11,8 +11,18 @@ NPM_PACKAGES_PATH = path.resolve(GITSTR_PATH + '/../gitstr_npm_packages/');
 NODEGIT_PATH = NPM_PACKAGES_PATH + '/nodegit';
 THUMBGEN_PATH = NPM_PACKAGES_PATH + '/thumbnails-webvtt';
 FLUENT_FFMPEG_PATH = NPM_PACKAGES_PATH + '/fluent-ffmpeg';
+LOGGLY_PATH = NPM_PACKAGES_PATH + '/loggly';
 
 PROFILE_IMAGE_PATH = UPLOAD_PATH + '/public/u';
+
+// Loggly
+var log_gly = Npm.require(LOGGLY_PATH); 
+loggly = log_gly.createClient({
+	token: "da05553d-8340-4eda-a6f6-206fd2ba47a3",
+	subdomain: "gitstr",
+	tags: ["NodeJS"],
+	json:true
+});
 
 // Services config
 tokens = {
