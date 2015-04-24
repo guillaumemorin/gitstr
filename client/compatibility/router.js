@@ -1,16 +1,21 @@
 Router.map(function () {
 
 	Router.configure({
-		notFoundTemplate: '404'
+		notFoundTemplate: '404',
+		waitOn: function() {
+			return [
+				Meteor.subscribe('users'),
+				Meteor.subscribe('repos'),
+				Meteor.subscribe('repos_history'),
+				Meteor.subscribe('repos_files')
+			];
+		}
 	});
 
 	this.route('explore', {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',
 		path: '/explore',
-		waitOn: function() {
-			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
-		},
 		data: function () {
 
 			if(!this.ready()){
@@ -35,9 +40,6 @@ Router.map(function () {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',
 		path: '/:home_path_or_username?',
-		waitOn: function() {
-			return [Meteor.subscribe('users'), Meteor.subscribe('repos')];
-		},
 		onBeforeAction: function () {
 			if (!Meteor.loggingIn() && !Meteor.user()) {
 				this.render('login');
@@ -52,7 +54,7 @@ Router.map(function () {
             }
 
 			var allowed_path = ['feed', 'rep', 'sub'];
-			var repos;
+			var repos, history;
 
 			var user = Meteor.users.findOne({'profile.screen_name': this.params.home_path_or_username});
 			if (!user) {
@@ -71,7 +73,14 @@ Router.map(function () {
 					repos = Repos.find({_id: {$in: Meteor.user().subscription}});
 				}
 
-				return {repo: repos, display: type};
+				if (type === 'feed') {
+					history = Repos_history.find(
+						{repo_id: {$in: Meteor.user().subscription}},
+						{sort: {timestamp: -1}}
+					);
+				}
+
+				return {repo: repos, display: type, history: history};
 			}
 
 			this.redirect('/' + user.profile.screen_name + '/rep');
@@ -82,9 +91,6 @@ Router.map(function () {
 		layoutTemplate: 'layout',
 		loadingTemplate: 'loading',
 		path: '/:username/:repo_name_or_user_section/:filter_type?',
-		waitOn: function() {
-			return [Meteor.subscribe('users'), Meteor.subscribe('repos'), Meteor.subscribe('repos_history'), Meteor.subscribe('repos_files')];
-		},
 		data: function () {
 
 			if(!this.ready()){
@@ -120,16 +126,17 @@ Router.map(function () {
 			}
 
 			var files = Repos_files.find(
-				{_id: {$in: repo.file_structure}}
+				{_id: {$in: repo.file_structure}},
+				{sort: {timestamp: -1}}
 			);
 
-			var history;
-			//  = Repos_history.findOne({user_id: user._id});
-			// if (!history) {
-			// 	console.log('render 404');
-			// 	this.render('404');
-			// 	return;	
-			// }
+			var history = Repos_history.find(
+				{
+					user_id: user._id,
+					repo_id: repo._id
+				},
+				{sort: {timestamp: -1}, limit: 5}
+			);
 
 			return {repo: repo, user: user, history: history, files: files, filter_type: this.params.filter_type}
 		}

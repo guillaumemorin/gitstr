@@ -1,3 +1,20 @@
+Template.feed.helpers({
+	getFilesList: function (files, type) {
+		var prop = [];
+		_.each(files, function(id) {
+			var file = Repos_files.findOne({_id: id});
+			if (file.type.subtype === type) {
+				prop.push({
+					title: file.title,
+					cover_url: file.cover_url
+				});	
+			}
+		});
+
+		return prop;
+	}
+});
+
 Template.home.helpers({
 	errorMessage: function () {
 		return Session.get('submit_error_Message');

@@ -56,8 +56,8 @@
 	  									<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
 	  								</div>
 	  								<div class="item">
-	  									<i class="ui grey-light file outline circular icon"></i>
-	  									<span class="grey-light">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
+	  									<i class="ui grey file outline circular icon"></i>
+	  									<span class="grey">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
 	  								</div>
 	  							</div>	
 							</div>
@@ -133,10 +133,15 @@
 									<span class="text">History</span>
 									<i class="history icon"></i>
 									<div class="menu">
-										<div class="item">
-											<i class="clock icon"></i>
-											Added 3 files, 1 folder one hour ago
-										</div>
+										{{#each history}}
+											<div class="item history" id="{{_id}}">
+												<i class="clock icon"></i>
+												Updated {{setLastUpdate timestamp}}
+												{{#if nb_video}} | {{nb_video}} Video {{/if}}
+												{{#if nb_image}} | {{nb_image}} Image {{/if}}
+												{{#if nb_audio}} | {{nb_audio}} Audio {{/if}}
+											</div>
+										{{/each}}
 									</div>
 								</div>
 							</div>
@@ -267,12 +272,12 @@
 										</div> -->
 								{{#if supported type.subtype}}
 									{{#if equal type.subtype "audio"}}
-									<tr>
+									<tr class="{{#if isInHistory _id}}warning{{/if}}">
 										<td><i class="{{setIcon type.subtype}} yellow icon"></i>{{title}}</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
-									<tr class="extra-content">
+									<tr class="extra-content {{#if isInHistory _id}}warning{{/if}}">
 										<td colspan="3" style="border-top: 0px">
 											<div class="ui tertiary raised yellow segment">
 												<div class="ui grid">
@@ -296,12 +301,12 @@
 									{{/if}}
 
 									{{#if equal type.subtype "image"}}
-									<tr>
+									<tr class="{{#if isInHistory _id}}warning{{/if}}">
 										<td><i class="{{setIcon type.subtype}} blue icon"></i>{{title}}</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
-									<tr class="extra-content">
+									<tr class="extra-content {{#if isInHistory _id}}warning{{/if}}">
 										<td colspan="3" style="border-top: 0px; text-align: center">
 											<a class="cover" href="{{url}}">
 												<img src="{{url}}" />
@@ -313,12 +318,12 @@
 
 
 									{{#if equal type.subtype "video"}}
-									<tr>
+									<tr class="{{#if isInHistory _id}}warning{{/if}}">
 										<td><i class="{{setIcon type.subtype}} red icon"></i>{{title}}</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
-									<tr class="extra-content">
+									<tr class="extra-content {{#if isInHistory _id}}warning{{/if}}">
 										<td colspan="3" style="border-top: 0px; text-align: center">
 											<div class="ui basic segment">
 												{{#if equal cover_url "/image_small.jpg"}}
@@ -339,7 +344,7 @@
 									</tr>
 									{{/if}}
 								{{else}}
-									<tr>
+									<tr class="{{#if isInHistory _id}}warning{{/if}}">
 										<td>
 											<i class="{{setIcon type.subtype}} icon"></i>
 											<a href="{{url}}" target="_blank" >{{title}}</a>

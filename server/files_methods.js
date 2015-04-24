@@ -66,7 +66,6 @@ uploaded_files = function (userInfo, files) {
 			nb_audio: 0,
 			nb_video: 0,
 			nb_application: 0,
-			nb_text: 0,
 			nb_files: files.length
 		}
 
@@ -105,6 +104,24 @@ uploaded_files = function (userInfo, files) {
 				inc_obj['nb_' + file.type.subtype]++;
 			}
 		});
+
+		Repos_history.insert(
+			{
+				repo_id: userInfo.repo_id,
+				repo_title:userInfo.repo_title,
+				timestamp: new Date().getTime(),
+				user_id: Meteor.userId(),
+				user_name: Meteor.user().profile.name,
+				user_screen_name: Meteor.user().profile.screen_name,
+				user_profile_image: Meteor.user().profile.image,
+				files: files_ids_array,
+				nb_files: inc_obj.nb_files,
+				nb_video: inc_obj.nb_video,
+				nb_image: inc_obj.nb_image,
+				nb_audio: inc_obj.nb_audio,
+				nb_application: inc_obj.nb_application
+			}
+		);
 
 		Repos.update(
 			{"_id": userInfo.repo_id},

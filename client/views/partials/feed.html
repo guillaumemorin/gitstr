@@ -1,130 +1,270 @@
 <template name="feed">
-<div class="ui feed">
-  <div class="event">
-    <div class="label">
-      <img src="/images/avatar/small/elliot.jpg">
-    </div>
-    <div class="content">
-      <div class="summary">
-        <a class="user">
-          Elliot Fu
-        </a> added you as a friend
-        <div class="date">
-          1 Hour Ago
-        </div>
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="like icon"></i> 4 Likes
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="event">
-    <div class="label">
-      <i class="pencil icon"></i>
-    </div>
-    <div class="content">
-      <div class="summary">
-        You submitted a new post to the page
-        <div class="date">
-          3 days ago
-        </div>
-      </div>
-      <div class="extra text">
-        I'm having a BBQ this weekend. Come by around 4pm if you can.
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="like icon"></i> 11 Likes
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="event">
-    <div class="label">
-      <img src="/images/avatar/small/helen.jpg">
-    </div>
-    <div class="content">
-      <div class="date">
-        4 days ago
-      </div>
-      <div class="summary">
-        <a>Helen Troy</a> added <a>2 new illustrations</a>
-      </div>
-      <div class="extra images">
-        <a><img src="/images/wireframe/image.png"></a>
-        <a><img src="/images/wireframe/image.png"></a>
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="like icon"></i> 1 Like
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="event">
-    <div class="label">
-      <img src="/images/avatar/small/jenny.jpg">
-    </div>
-    <div class="content">
-      <div class="summary">
-        <a class="user">
-          Jenny Hess
-        </a> added you as a friend
-        <div class="date">
-          2 Days Ago
-        </div>
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="like icon"></i> 8 Likes
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="event">
-    <div class="label">
-      <img src="/images/avatar/small/joe.jpg">
-    </div>
-    <div class="content">
-      <div class="summary">
-        <a>Joe Henderson</a> posted on his page
-        <div class="date">
-          3 days ago
-        </div>
-      </div>
-      <div class="extra text">
-        Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day, we surely will come back for more of the same another day soon.
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="like icon"></i> 5 Likes
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="event">
-    <div class="label">
-      <img src="/images/avatar/small/justen.jpg">
-    </div>
-    <div class="content">
-      <div class="date">
-        4 days ago
-      </div>
-      <div class="summary">
-        <a>Justen Kitsune</a> added <a>2 new photos</a> of you
-      </div>
-      <div class="extra images">
-        <a><img src="/images/wireframe/image.png"></a>
-        <a><img src="/images/wireframe/image.png"></a>
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="like icon"></i> 41 Likes
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+	{{#unless history.count}}
+	<div class="ui vertically padded transition grid">
+		<div class="center aligned column">
+			<div class="ui yellow floating message">
+				<div class="header">
+					Pretty empty...But you haven't subscribe to any repository for now...
+				</div>
+				Explore some recently created repositories and subscribe to it!
+				<div class="ui hidden divider"></div>
+				<div>
+					<a href="/explore">
+						<div class="ui orange massive button">
+						  <i class="icon rocket"></i>
+						  Explore
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/unless}}
+	<div class="ui feed">
+		{{#each history}}
+			<div class="event">
+				<div class="label">
+					<img src="{{user_profile_image}}">
+				</div>
+				<div class="content">
+					<div class="date">
+						{{setLastUpdate timestamp}}
+					</div>
+					<div class="summary">
+						<a class="user" href="/{{user_screen_name}}">{{user_screen_name}}</a> has updated his <a class="user" href="/{{user_screen_name}}/{{repo_title}}">{{repo_title}}</a> repository
+					</div>
+					<div class="meta">
+						Added {{nb_files}} file{{#if greater nb_files 1}}s{{/if}}
+					</div>
+				</div>
+			</div>
+
+			{{#if nb_image}}
+			<div class="event">
+				<div class="label">
+					<span class="ui blue circular label">{{nb_image}}</span>
+					<i class="camera blue icon"></i>
+				</div>
+				<div class="content">
+					<div class="ui three column grid">
+					{{#each getFilesList files "image"}}
+						<div class="column">
+							<a href="/{{../user_screen_name}}/{{../repo_title}}/image" class="ui card">
+								<div class="image">
+									<img src="{{cover_url}}">
+								</div>
+								<div class="content">
+									{{title}}
+								</div>
+							</a>
+						</div>
+					{{/each}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{#if nb_video}}
+			<div class="event">
+				<div class="label">
+					<span class="ui red circular label">{{nb_video}}</span>
+					<i class="record red icon"></i>
+				</div>
+				<div class="content">
+					<div class="ui three column grid">
+						{{#each getFilesList files "video"}}
+						<div class="column">
+							<a href="/{{../user_screen_name}}/{{../repo_title}}/video" class="ui card">
+								<div class="image">
+									<img src="{{cover_url}}">
+								</div>
+								<div class="content">
+									{{title}}
+								</div>
+							</a>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{#if nb_audio}}
+			<div class="event">
+				<div class="label">
+					<span class="ui yellow circular label">{{nb_audio}}</span>
+					<i class="unmute yellow icon"></i>
+				</div>
+				<div class="content">
+					<div class="extra text">
+						<div class="ui list">
+							{{#each getFilesList files "audio"}}
+								<div class="item">
+									<i class="right triangle icon"></i>
+          							<div class="content">
+          								<a href="/{{../user_screen_name}}/{{../repo_title}}/audio">{{title}}</a>
+          							</div>
+          						</div>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+	
+			{{#if nb_application}}
+			<div class="event">
+				<div class="label">
+					<span class="ui grey circular label">{{nb_application}}</span>
+					<i class="file outline grey icon"></i>
+				</div>
+				<div class="content">
+					<div class="extra text">
+						<div class="ui list">
+							{{#each getFilesList files "application"}}
+								<div class="item">
+									<i class="right triangle icon"></i>
+          							<div class="content">
+          								<a href="/{{../user_screen_name}}/{{../repo_title}}/application">{{title}}</a>
+          							</div>
+          						</div>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			<div class="ui divider"></div>
+		{{/each}}
+		
+	</div>
 </template>
+	<!--  <div class="ui feed">
+	<div class="event">
+	<div class="label">
+	<img src="/images/avatar/small/elliot.jpg">
+	</div>
+	<div class="content">
+	<div class="summary">
+	<a class="user">
+	Elliot Fu
+	</a> added you as a friend
+	<div class="date">
+	1 Hour Ago
+	</div>
+	</div>
+	<div class="meta">
+	<a class="like">
+	<i class="like icon"></i> 4 Likes
+	</a>
+	</div>
+	</div>
+	</div>
+	<div class="event">
+	<div class="label">
+	<i class="pencil icon"></i>
+	</div>
+	<div class="content">
+	<div class="summary">
+	You submitted a new post to the page
+	<div class="date">
+	3 days ago
+	</div>
+	</div>
+	<div class="extra text">
+	I'm having a BBQ this weekend. Come by around 4pm if you can.
+	</div>
+	<div class="meta">
+	<a class="like">
+	<i class="like icon"></i> 11 Likes
+	</a>
+	</div>
+	</div>
+	</div>
+	<div class="event">
+	<div class="label">
+	<img src="/images/avatar/small/helen.jpg">
+	</div>
+	<div class="content">
+	<div class="date">
+	4 days ago
+	</div>
+	<div class="summary">
+	<a>Helen Troy</a> added <a>2 new illustrations</a>
+	</div>
+	<div class="extra images">
+	<a><img src="/images/wireframe/image.png"></a>
+	<a><img src="/images/wireframe/image.png"></a>
+	</div>
+	<div class="meta">
+	<a class="like">
+	<i class="like icon"></i> 1 Like
+	</a>
+	</div>
+	</div>
+	</div>
+	<div class="event">
+	<div class="label">
+	<img src="/images/avatar/small/jenny.jpg">
+	</div>
+	<div class="content">
+	<div class="summary">
+	<a class="user">
+	Jenny Hess
+	</a> added you as a friend
+	<div class="date">
+	2 Days Ago
+	</div>
+	</div>
+	<div class="meta">
+	<a class="like">
+	<i class="like icon"></i> 8 Likes
+	</a>
+	</div>
+	</div>
+	</div>
+	<div class="event">
+	<div class="label">
+	<img src="/images/avatar/small/joe.jpg">
+	</div>
+	<div class="content">
+	<div class="summary">
+	<a>Joe Henderson</a> posted on his page
+	<div class="date">
+	3 days ago
+	</div>
+	</div>
+	<div class="extra text">
+	Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all over again. Even if we don't run extra laps that day, we surely will come back for more of the same another day soon.
+	</div>
+	<div class="meta">
+	<a class="like">
+	<i class="like icon"></i> 5 Likes
+	</a>
+	</div>
+	</div>
+	</div>
+	<div class="event">
+	<div class="label">
+	<img src="/images/avatar/small/justen.jpg">
+	</div>
+	<div class="content">
+	<div class="date">
+	4 days ago
+	</div>
+	<div class="summary">
+	<a>Justen Kitsune</a> added <a>2 new photos</a> of you
+	</div>
+	<div class="extra images">
+	<a><img src="/images/wireframe/image.png"></a>
+	<a><img src="/images/wireframe/image.png"></a>
+	</div>
+	<div class="meta">
+	<a class="like">
+	<i class="like icon"></i> 41 Likes
+	</a>
+	</div>
+	</div>
+	</div>
+	</div> -->

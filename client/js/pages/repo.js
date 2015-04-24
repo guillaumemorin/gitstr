@@ -57,7 +57,6 @@ Template.repo.helpers({
 		}
 
 		if (!filter || filter === 'all') {
-			console.log('all', files);
 			return files;
 		}
 
@@ -96,6 +95,10 @@ Template.repo.helpers({
 	},
 	tmpFiles: function() {
 		return Session.get('tmp_files');
+	},
+	isInHistory: function(id) {
+		var history_files = Session.get('history_files');
+		return ~_.indexOf(history_files, id);
 	},
 	nbTmpFiles: function() {
 		return Session.get('nb_tmp_files');
@@ -212,6 +215,10 @@ Template.repo.events({
 			transition: 'fade up'
 		});
 	},
+	'click .item.history': function (event, template) {
+		var history = Repos_history.findOne({_id: event.target.id});
+		Session.set('history_files', history.files);
+	},
 	// 'click #add_dropdown:first-child:has(#upload_button)': function (event, template) {
 	// 	$('#upload_modal')
 	// 		.modal('setting', 'transition', 'fade up')
@@ -231,7 +238,7 @@ Template.repo.events({
 	
 	},
 	'click #commit': function (event, template) {
-		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id')}, Session.get('tmp_files'), function(error, result) {
+		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id'), repo_title: UI.getData().repo.title}, Session.get('tmp_files'), function(error, result) {
 			if (error) {
 				console.log(error);
 				// error message to set
