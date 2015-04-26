@@ -39,56 +39,6 @@
 				</div>
 			</div>
 
-			{{#if nb_image}}
-			<div class="event">
-				<div class="label">
-					<span class="ui blue circular label">{{nb_image}}</span>
-					<i class="camera blue icon"></i>
-				</div>
-				<div class="content">
-					<div class="ui three column grid">
-					{{#each getFilesList files "image"}}
-						<div class="column">
-							<a href="/{{../user_screen_name}}/{{../repo_title}}/image" class="ui card">
-								<div class="image">
-									<img src="{{cover_url}}">
-								</div>
-								<div class="content">
-									{{title}}
-								</div>
-							</a>
-						</div>
-					{{/each}}
-					</div>
-				</div>
-			</div>
-			{{/if}}
-
-			{{#if nb_video}}
-			<div class="event">
-				<div class="label">
-					<span class="ui red circular label">{{nb_video}}</span>
-					<i class="record red icon"></i>
-				</div>
-				<div class="content">
-					<div class="ui three column grid">
-						{{#each getFilesList files "video"}}
-						<div class="column">
-							<a href="/{{../user_screen_name}}/{{../repo_title}}/video" class="ui card">
-								<div class="image">
-									<img src="{{cover_url}}">
-								</div>
-								<div class="content">
-									{{title}}
-								</div>
-							</a>
-						</div>
-						{{/each}}
-					</div>
-				</div>
-			</div>
-			{{/if}}
-
 			{{#if nb_audio}}
 			<div class="event">
 				<div class="label">
@@ -130,6 +80,66 @@
           						</div>
 							{{/each}}
 						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{#if nb_video}}
+			<div class="event">
+				<div class="label">
+					<span class="ui red circular label">{{nb_video}}</span>
+					<i class="record red icon"></i>
+				</div>
+				<div class="content">
+					<div class="ui three column grid">
+						{{#each getFilesList files "video"}}
+						<div class="column">
+							<a href="/{{../user_screen_name}}/{{../repo_title}}/video" class="ui card">
+								<div class="image">
+									<img src="{{cover_url}}">
+								</div>
+								<div class="content">
+									<div class="description">
+									 	{{title}}
+									</div>
+									<div class="meta">
+										<span class="date">{{setSize size}}</span>
+									</div>
+								</div>
+							</a>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{#if nb_image}}
+			<div class="event">
+				<div class="label">
+					<span class="ui blue circular label">{{nb_image}}</span>
+					<i class="camera blue icon"></i>
+				</div>
+				<div class="content">
+					<div class="ui three column grid">
+					{{#each getFilesList files "image"}}
+						<div class="column">
+							<a href="/{{../user_screen_name}}/{{../repo_title}}/image" class="ui card">
+								<div class="image">
+									<img src="{{cover_url}}">
+								</div>
+								<div class="content">
+									 <div class="description">
+									 	{{title}}
+									</div>
+									<div class="meta">
+										<span class="date">{{setSize size}}</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{{/each}}
 					</div>
 				</div>
 			</div>

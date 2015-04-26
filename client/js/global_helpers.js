@@ -31,6 +31,10 @@ Template.registerHelper('moment', function(date) {
 	return moment(date).format('MMMM YYYY');
 });
 
+Template.registerHelper('setSize', function(size) {
+	return filesize(size);
+});
+
 Template.registerHelper('defaultImage', function(date) {
 
 	var deg = Math.floor((Math.random() * 200) + 1);

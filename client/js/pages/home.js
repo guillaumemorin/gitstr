@@ -6,6 +6,7 @@ Template.feed.helpers({
 			if (file.type.subtype === type) {
 				prop.push({
 					title: file.title,
+					size: file.size,
 					cover_url: file.cover_url
 				});	
 			}

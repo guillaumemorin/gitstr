@@ -87,9 +87,6 @@ Template.repo.helpers({
 	setLink: function (type, href) {
 		return (type === 'application') ? href : '#';
 	},
-	setSize: function (size) {
-		return filesize(size);
-	},
 	setDate: function (timestamp) {
 		return moment(timestamp).fromNow();
 	},
