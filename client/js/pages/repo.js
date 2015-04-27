@@ -113,9 +113,7 @@ Template.repo.events({
 		}
 
 		Session.set('modal_info', {type: 'image', url: url});
-		$('#image_modal')
-			.modal('setting', 'transition', 'fade up')
-			.modal('show');
+		$('#image_modal').modal('show');
 	},
 	'click #fb_share': function (event, template) {
 		event.preventDefault();
@@ -217,14 +215,10 @@ Template.repo.events({
 		Session.set('history_files', history.files);
 	},
 	'click #upload_button': function (event, template) {
-		$('#upload_modal')
-			.modal('setting', 'transition', 'fade up')
-			.modal('show');
+		$('#upload_modal').modal('show');
 	},
 	'click #link_button': function (event, template) {
-		$('#link_modal')
-			.modal('setting', 'transition', 'fade up')
-			.modal('show');
+		$('#link_modal').modal('show');
 	},
 	'click #git_input_button, click #git_input_close': function (event, template) {
 		template.$('#git_input').transition('fade left');

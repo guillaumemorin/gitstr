@@ -8,68 +8,61 @@
 		<div class="content">
 			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
 		</div>
-		<!-- <div class="actions">
-		<div class="ui button">Cancel</div>
-		<div class="ui button">OK</div>
-		</div> -->
 	</div>
 </template>
 
 <template name="link_modal">
 	<div id="link_modal" class="ui modal">
+		<i class="close icon"></i>
 		<div class="header">
 			<i class="linkify icon"></i>
 			Add link to {{repo.title}} repository
 		</div>
 		<div class="content">
-			<div class="ui fluid action input">
-				<input type="text" placeholder="http://">
-				<div class="ui positive button">Add</div>
-			</div>
+			{{> link_modal_actions}}
 		</div>
 	</div>
 </template>
 
+<template name="link_modal_actions">
+	<div class="ui fluid action input">
+		<input type="text" placeholder="http://">				
+		<div id="add_link" class="ui button approve">Add</div>	
+	</div>
+</template>
+
 <template name="signin_modal">
-<!-- 	<div id="upload_modal" class="ui small modal">
-		<i class="close icon"></i>
-		<div class="header">
-			Upload Files on {{title}}
-		</div>
-		<div class="content">
-			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
-		</div>
-		<div class="actions">
-		<div class="ui button">Cancel</div>
-		<div class="ui button">OK</div>
-		</div> -->
-	<div id="signin" class="ui small modal">
+	<div id="signin_modal" class="ui small modal">
 		<div class="header">
 			<span class="oxygen">gitstr.</span>
 		</div>
 		<div class="content">
-			<div class="ui center aligned padded grid">
-				<div id="facebook_signin" class="ui big facebook button">
-					<i class="facebook icon"></i>
-					Sign in with Facebook
-				</div>
-				<div class="ui horizontal divider">or</div>
-				<div id="twitter_signin" class="twitter_signin ui big twitter button">
-					<i class="twitter icon"></i>
-					Sign in with Twitter
-				</div>
-				<div class="ui horizontal divider">or</div>
-				<div id="github_signin" class="ui big github button">
-					<i class="github icon"></i>
-					Sign in with Github
-				</div>
-			</div>
+			<div class="ui center aligned header">In order to subscribe to this repository, you need to signin first!</div>
+			{{> signin_modal_actions}}
+		</div>
+	</div>
+</template>
+
+<template name="signin_modal_actions">
+	<div class="ui center aligned padded grid">
+		<div id="facebook_signin" class="ui big fluid facebook button">
+			<i class="facebook icon"></i>
+			Sign in with Facebook
+		</div>
+		<div class="ui horizontal divider">or</div>
+		<div id="twitter_signin" class="twitter_signin ui big fluid twitter button">
+			<i class="twitter icon"></i>
+			Sign in with Twitter
+		</div>
+		<div class="ui horizontal divider">or</div>
+		<div id="github_signin" class="ui big fluid github button">
+			<i class="github icon"></i>
+			Sign in with Github
 		</div>
 	</div>
 </template>
 
 <template name="image_modal">
-	
 	<div id="image_modal" class="ui long basic modal">
 		<!-- <i class="close icon"></i> -->
 		{{#if equal modalInfo.type "video"}}

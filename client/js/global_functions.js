@@ -1,8 +1,6 @@
 _subscribe = function() { 
 	if (!Meteor.user()) {
-		$('#signin')
-		.modal('setting', 'transition', 'fade up')
-		.modal('show');
+		$('#signin_modal').modal('show');
 		return;
 	}
 

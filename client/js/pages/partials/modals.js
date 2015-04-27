@@ -25,29 +25,46 @@ Template.upload_modal.helpers({
 
 Template.image_modal.helpers({
 	modalInfo: function() {
-		console.log('modal_info', Session.get('modal_info'));
 		return Session.get('modal_info');
 	}
 });
 
-Template.signin_modal.events({
-	'click #twitter_signin': function () {
-		console.log('tw');
-		Meteor.loginWithTwitter({}, function() {});
-	},
-	'click #github_signin': function () {
-		Meteor.loginWithGithub({}, function() {});
-	},
-	'click #facebook_signin': function () {
-		Meteor.loginWithFacebook({}, function() {});
-	}
-});
-
-Template.image_modal.rendered = function () {
-	
-	//Init
-	$('#image_modal').modal('setting', 'transition', 'fade up');
+Template.upload_modal.rendered = function() {
 	$('#upload_modal').modal('setting', 'transition', 'fade up');
+};
+
+Template.signin_modal.rendered = function() {
+	$('#signin_modal').modal('setting', 'transition', 'fade up');
+};
+
+Template.image_modal.rendered = function() {
+	$('#image_modal').modal('setting', 'transition', 'fade up');
+};
+
+Template.link_modal.rendered = function() {
 	$('#link_modal').modal('setting', 'transition', 'fade up');
 };
 
+Template.link_modal_actions.events({
+	'click #add_link': function () {
+		console.log('add link');
+	}
+});
+
+Template.signin_modal_actions.events({
+	'click #twitter_signin': function () {
+		Meteor.loginWithTwitter({}, function() {
+			$('#signin_modal').modal('hide');
+		});
+	},
+	'click #github_signin': function () {
+		Meteor.loginWithGithub({}, function() {
+			$('#signin_modal').modal('hide');
+		});
+	},
+	'click #facebook_signin': function () {
+		Meteor.loginWithFacebook({}, function() {
+			$('#signin_modal').modal('hide');
+		});
+	}
+});
