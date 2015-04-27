@@ -2,7 +2,8 @@
 	<div id="upload_modal" class="ui modal">
 		<i class="close icon"></i>
 		<div class="header">
-			Add Files to {{repo.title}} repository
+			<i class="file icon"></i>
+			Add files to {{repo.title}} repository
 		</div>
 		<div class="content">
 			{{> upload_semanticUI multiple=true callbacks=uploadCallback formData=formData}}
@@ -11,6 +12,21 @@
 		<div class="ui button">Cancel</div>
 		<div class="ui button">OK</div>
 		</div> -->
+	</div>
+</template>
+
+<template name="link_modal">
+	<div id="link_modal" class="ui modal">
+		<div class="header">
+			<i class="linkify icon"></i>
+			Add link to {{repo.title}} repository
+		</div>
+		<div class="content">
+			<div class="ui fluid action input">
+				<input type="text" placeholder="http://">
+				<div class="ui positive button">Add</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -29,8 +45,7 @@
 		</div> -->
 	<div id="signin" class="ui small modal">
 		<div class="header">
-			<span class="ui label huge teal circular oxygen">G</span>
-			itstr.
+			<span class="oxygen">gitstr.</span>
 		</div>
 		<div class="content">
 			<div class="ui center aligned padded grid">

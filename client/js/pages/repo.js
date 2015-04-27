@@ -114,7 +114,7 @@ Template.repo.events({
 
 		Session.set('modal_info', {type: 'image', url: url});
 		$('#image_modal')
-			// .modal('setting', 'transition', 'fade up')
+			.modal('setting', 'transition', 'fade up')
 			.modal('show');
 	},
 	'click #fb_share': function (event, template) {
@@ -186,19 +186,19 @@ Template.repo.events({
 		}
 	},
 	'click #add_dropdown': function (event, template) {
-		// $('#add_dropdown')
-		// .dropdown({
-		// 	action: 'combo',
-		// 	transition: 'horizontal flip'
-		// });
-		$('#upload_modal')
-			.modal('setting', 'transition', 'fade up')
-			.modal('show');
+		$('#add_dropdown')
+		.dropdown({
+			action: 'combo',
+			transition: 'fade up'
+		});
+		// $('#upload_modal')
+		// 	.modal('setting', 'transition', 'fade up')
+		// 	.modal('show');
 	},
 	'click #filter_dropdown': function (event, template) {
 		$('#filter_dropdown')
 		.dropdown({
-			transition: 'horizontal flip'
+			transition: 'fade up'
 		});
 	},
 	'click #filter_image, click #filter_video, click #filter_audio, click #filter_application, click #filter_all': function (event, template) {
@@ -216,11 +216,16 @@ Template.repo.events({
 		var history = Repos_history.findOne({_id: event.target.id});
 		Session.set('history_files', history.files);
 	},
-	// 'click #add_dropdown:first-child:has(#upload_button)': function (event, template) {
-	// 	$('#upload_modal')
-	// 		.modal('setting', 'transition', 'fade up')
-	// 		.modal('show');
-	// },
+	'click #upload_button': function (event, template) {
+		$('#upload_modal')
+			.modal('setting', 'transition', 'fade up')
+			.modal('show');
+	},
+	'click #link_button': function (event, template) {
+		$('#link_modal')
+			.modal('setting', 'transition', 'fade up')
+			.modal('show');
+	},
 	'click #git_input_button, click #git_input_close': function (event, template) {
 		template.$('#git_input').transition('fade left');
 	},
@@ -255,6 +260,9 @@ Template.repo.rendered = function () {
 	}, 1000);
 
 	//Init
+	$('#add_dropdown').dropdown('setting', 'transition', 'fade up');
+	$('#history_dropdown').dropdown('setting', 'transition', 'fade up');
+	$('#filter_dropdown').dropdown('setting', 'transition', 'fade up');
 	$('.dropdown').dropdown('set selected', (Session.get('filter') || 'Filter'));
 	document.title = data.repo.url;
 };

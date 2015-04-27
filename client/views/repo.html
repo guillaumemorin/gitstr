@@ -179,16 +179,16 @@
 									<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
 										<span class="text">Add Files</span>
 										<i class="add icon"></i>
-										<!-- <div class="menu">
-											<div class="item">
-												<i id="upload_button" class="file icon"></i>
+										<div class="menu">
+											<div id="upload_button" class="item">
+												<i class="file icon"></i>
 												Add File(s)
 											</div>
-											<div class="item">
+											<div id="link_button" class="item">
 												<i class="linkify icon"></i>
 												Add Link(s)
 											</div>
-										</div> -->
+										</div>
 									</div>
 								</div>
 								{{/if}}
@@ -375,6 +375,7 @@
 	{{/if}}
 
 	{{> upload_modal}}
+	{{> link_modal}}
 	{{> image_modal}}
 	
 </template>

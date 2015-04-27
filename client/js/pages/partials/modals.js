@@ -44,7 +44,10 @@ Template.signin_modal.events({
 });
 
 Template.image_modal.rendered = function () {
+	
 	//Init
-	$('#image_modal').modal('setting', 'transition', 'fade up')
+	$('#image_modal').modal('setting', 'transition', 'fade up');
+	$('#upload_modal').modal('setting', 'transition', 'fade up');
+	$('#link_modal').modal('setting', 'transition', 'fade up');
 };
 
