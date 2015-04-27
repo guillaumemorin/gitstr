@@ -128,7 +128,7 @@
 
 				<div class="ui segment">
 					<div class="ui grid">
-						<div class="left aligned ten wide column">
+						<div class="left aligned sixteen wide column">
 							<div class="ui buttons">
 								<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button stackable">
 									<span class="text">History</span>
@@ -195,25 +195,7 @@
 								{{/if}}
 							{{/if}}
 						</div>
-						<div class="right aligned six wide column">
-							{{#if tmpFiles}}
-							<div class="ui tag orange label stackable">
-								{{#if nbTmpFiles}}{{nbTmpFiles}} new uploaded files{{/if}}
-							</div>
-							<div id="commit_cancel" class="ui compact icon button stackable">
-								<i class="delete icon"></i>
-							</div>
-							<div  id="commit" class="ui compact icon green button stackable">
-								<i class="check icon"></i>
-								Publish
-							</div>
-							{{/if}}
-						</div>
 					</div>
-
-
-
-
 
 					{{#unless length files}}
 					<div class="ui vertically padded grid">
@@ -247,30 +229,52 @@
 						</div>
 					</div>
 					{{else}}
+						{{#if tmpFiles}}
 						<table id="file-list" class="ui small very basic unstackable table grey-dark">
 							<thead></thead>
-		  					<tbody>
+							<tbody>
 		  						<tr class="disabled">
-									<td class="ten wide">Name</td>
+									<td class="ten wide">
+										<a class="ui orange ribbon label">{{nbTmpFiles}} new uploaded file{{#if greater nbTmpFiles 1}}s{{/if}}</a>
+									</td>
 									<td class="three wide right aligned">Size</td>
-									<td class="three wide right aligned">Updated</td>
+									<td class="three wide right aligned"></td>
 								</tr>
-							{{#each tmpFiles}}
+								{{#each tmpFiles}}
 								<tr class="positive">
 									<td>
 										<i class="{{setIcon type.subtype}} icon"></i>
 										<a href="#">{{title}}</a>
 									</td>
-									<td class="right aligned">{{#unless directory}}{{setSize size}}{{else}}-{{/unless}}</td>
-									<td class="right aligned">-</td>
+									<td class="right aligned">{{#unless directory}}{{setSize size}}{{/unless}}</td>
+									<td class="right aligned"></td>
 								</tr>
-							{{/each}}
+								{{/each}}
+								<tr>
+									<td colspan="3">
+										<div class="right aligned column">
+											<div id="commit_cancel" class="ui compact icon button stackable">
+												<i class="delete icon"></i>
+											</div>
+											<div  id="commit" class="ui compact icon green button stackable">
+												<i class="check icon"></i>
+												Publish
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						{{/if}}
+						<table id="file-list" class="ui small very basic unstackable table grey-dark">
+							<thead></thead>
+							<tbody>
+		  						<tr class="disabled">
+									<td class="ten wide">Name</td>
+									<td class="three wide right aligned">Size</td>
+									<td class="three wide right aligned">Updated</td>
+								</tr>
 							{{#each filter files}}
-
-										<!-- <i class="{{setIcon type.subtype}} icon"></i> -->
-		<!-- 								<div class="ui mini yellow label">
-											{{title}}
-										</div> -->
 								{{#if supported type.subtype}}
 									{{#if equal type.subtype "audio"}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
