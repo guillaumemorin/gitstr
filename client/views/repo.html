@@ -204,7 +204,7 @@
 						</tbody>
 					</table>
 					{{/if}}
-					
+
 					{{#unless length files}}
 					<div class="ui vertically padded grid">
 						<div class="center aligned column">
@@ -310,12 +310,12 @@
 													<div class="ui large text loader">Generating thumbnail</div>
 												</div>
 												{{/if}}
+												<video controls>
+													<source src="" type="video/mp4">
+													Your browser does not support the video tag.
+												</video>
 												<a class="cover-video" href="{{url}}">
 													<img src="{{cover_url}}" />
-													<video controls>
-														<source src="" type="video/mp4">
-														Your browser does not support the video tag.
-													</video>
 												</a>
 											</div>
 											<div class="ui hidden divider"></div>

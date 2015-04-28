@@ -132,11 +132,11 @@ Template.repo.events({
 		event.preventDefault();
 
 		var $cover = template.$(event.target);
-		var $video_player = $cover.next();
+		var $video_player = $cover.parent().prev();
 		var href = $(event.currentTarget).attr('href');
 		$('source', $video_player).attr('src', href);
-		$cover.hide();
 		$video_player.load();
+		$cover.hide();
 		$video_player.show();
 	},
 	'click .play-audio': function (event, template) {
