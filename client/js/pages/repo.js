@@ -190,14 +190,12 @@ Template.repo.events({
 		}
 	},
 	'click #add_dropdown': function (event, template) {
-		$('#add_dropdown')
-		.dropdown({
-			action: 'combo',
-			transition: 'fade up'
-		});
-		// $('#upload_modal')
-		// 	.modal('setting', 'transition', 'fade up')
-		// 	.modal('show');
+		// $('#add_dropdown')
+		// .dropdown({
+		// 	action: 'combo',
+		// 	transition: 'fade up'
+		// });
+		$('#upload_modal').modal('show');
 	},
 	'click #filter_dropdown': function (event, template) {
 		$('#filter_dropdown')
@@ -269,7 +267,7 @@ Template.repo.rendered = function () {
 	}, 1000);
 
 	//Init
-	$('#add_dropdown').dropdown('setting', 'transition', 'fade up');
+	// $('#add_dropdown').dropdown('setting', 'transition', 'fade up');
 	$('#history_dropdown').dropdown('setting', 'transition', 'fade up');
 	$('#filter_dropdown').dropdown('setting', 'transition', 'fade up');
 	$('.dropdown').dropdown('set selected', (Session.get('filter') || 'Filter'));
