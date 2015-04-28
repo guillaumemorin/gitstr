@@ -1,4 +1,5 @@
 var fs = Npm.require('fs');
+var crypto = Npm.require('crypto');
 
 // _addFolder = function (userInfo, file) {
 
@@ -35,23 +36,34 @@ uploaded_files = function (userInfo, files) {
 		throw new Meteor.Error("files-construct-fail", "Something went wrong :(");
 	}
 
-	var source_path = UPLOAD_PATH + '/' + userInfo.id + '/';
-	var dest_path = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id + '/';
+	var upload_path = UPLOAD_PATH + '/' + userInfo.id + '/';
+	var upload_cover_path = UPLOAD_PATH + '/' + userInfo.id + '/cover/';
+	var repository_dest_path = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id + '/';
 
 	_writeFiles = function () {
 
 		_.map(files, function(file) {
 
-			var source = source_path + file.title;
+			var file_md5 = crypto.createHash('md5').update(file.title).digest('hex');
+			var file_ext = '.' + file.type.ext;
+
+			var source = upload_path + file.title;
+			var source_cover = upload_cover_path + file.title;
 			var stats = fs.lstatSync(source);
 
 			if (!stats) {
 				throw new Meteor.Error("bad-path", "Something went wrong :(");
 			}
 
-			var dest = dest_path + file.title;
+			var dest = repository_dest_path + file.title;
+			var md5_dest = upload_path + file_md5 + file_ext;
+			var md5_dest_cover = upload_path + '/cover/' + file_md5 + file_ext;
 			try {
 				fs.writeFileSync(dest, fs.readFileSync(source));
+				fs.renameSync(source, md5_dest);
+				if (file.type.subtype === 'image') {
+					fs.renameSync(source_cover, md5_dest_cover);	
+				}
 			} catch(e) {
 				throw new Meteor.Error("addFiles-fail", "Something went wrong :(");
 			}
@@ -77,9 +89,11 @@ uploaded_files = function (userInfo, files) {
 
 		_.map(files, function(file) {
 
-			var path = file.path.split('/');
-			var url = (file.type.subtype === 'video') ? image_default : '/upload/' + file.path;
-			var cover_url = (file.type.subtype === 'video') ? image_default : '/upload/' + path[0] + '/cover/' + path[1];
+			var file_md5 = crypto.createHash('md5').update(file.title).digest('hex');
+			var file_ext = '.' + file.type.ext;
+
+			var url = (file.type.subtype === 'video') ? image_default : '/upload/' + userInfo.id + '/' + file_md5 + file_ext;
+			var cover_url = (file.type.subtype === 'video') ? image_default : '/upload/' + userInfo.id + '/cover/' + file_md5 + file_ext;
 
 			file.url = url;
 			file.cover_url = cover_url;
