@@ -1,6 +1,6 @@
 <template name="login">
-	<div id="login-header" class="ui inverted teal vertical segment">
-		<div class="ui page grid">
+	<div id="login-header" class="ui inverted teal horizontal segment">
+		<div class="ui vertically padded grid">
 			<div class="row">
 				<div class="column">
 					<div class="ui inverted large vertical animated button">
@@ -11,14 +11,14 @@
 							<span class="oxygen">gitstr.</span>
 						</div>
 					</div>
-					<h1 class="ui inverted header">Content that matters.</h1>
-					<p>Subscribe to repositories and be notified when content will be added to them</p>
 				</div>
 			</div>
-			<div class="ui hidden divider"></div>
 			<div class="row">
 				<div class="five wide centered column grid">
 					<div class="center aligned column">
+						<h1 class="ui inverted header">Content that matters.</h1>
+						<p>Subscribe to repositories and be notified when content will be added to them</p>
+						<div class="ui hidden divider"></div>
 						<div id="search_repo" class="ui left aligned fluid search">
 							<div class="ui left icon massive transparent input">
 								<input class="prompt" type="text" placeholder="Search for repository ... ">

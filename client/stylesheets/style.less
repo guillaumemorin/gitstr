@@ -192,7 +192,7 @@ body {
     Video player
 --------------------*/
 video {
-	width: 70%    !important;
+	width: 55%    !important;
 	height: auto   !important;
 	display: none;
 }
@@ -209,7 +209,7 @@ video {
     file list table
 --------------------*/
 #file-list img {
-	width: 70%;
+	width: 55%;
 	border-radius: 5px;
 }
 
@@ -218,36 +218,6 @@ video {
 --------------------*/
 .warning i {
 	margin: 0;
-}
-
-/*-------------------
-    profile page
---------------------*/
-#profile_header {
-	height: 375px;
-	/*background-image: url(swirl_pattern.png);*/
-}
-
-/*-------------------
-    repository page
---------------------*/
-#git_input {
-	display: none;
-}
-
-/*-------------------
-    home page
---------------------*/
-.event {
-	> .label {
-		text-align: center @important;
-	}
-
-	.card {
-		.content {
-			font-size: 0.8rem;
-		}
-	}
 }
 
 /*-------------------
@@ -353,6 +323,66 @@ video {
 /*background: linear-gradient(150deg,#F08C8C,#48C5BF)*/
 
 /*background: linear-gradient(135deg,#e6846e,#846170);*/
+
+/*-------------------
+    profile page
+--------------------*/
+#profile_header {
+	height: 375px;
+	/*background-image: url(swirl_pattern.png);*/
+}
+
+/*-------------------
+    repository page
+--------------------*/
+#git_input {
+	display: none;
+}
+
+/*-------------------
+    home page
+--------------------*/
+.event {
+
+	a {
+		/*color: #5DE4CA;*/
+		color: #939393;
+		transition: @transition;
+		font-weight: normal @important;
+		&:hover {
+			color: #494949;
+		}
+	}
+
+	> .label {
+		text-align: center @important;
+	}
+
+	.card {
+		.content {
+			font-size: 0.8rem;
+		}
+	}
+}
+
+#feed_list, #repo_list, #sub_list {
+	color: #939393;
+	transition: @transition;
+	font-weight: normal @important;
+	&:hover {
+		color: #494949;
+	}
+}
+
+/*-------------------
+    404 page
+--------------------*/
+#not_found {
+	background-image: url(cat.gif);
+	background-size: cover;
+	background-position: -30%; 
+	height: 100%;
+}
 
 /*-------------------
     login page
