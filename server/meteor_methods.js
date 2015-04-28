@@ -30,7 +30,7 @@ Meteor.methods({
 		files.save();
 
 		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
-		repo.commit(files.length, Meteor.user().profile)
+		repo.commit(length, Meteor.user().profile)
 		.then(function(commit_id) {
 			console.log('commit: ', commit_id);
 		});

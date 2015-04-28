@@ -101,8 +101,8 @@ repository = function(repo_path) {
 
 			.then(function(master_commit) {
 
-				var username = user.name || '';
-				var email = 'gm@gitstr.com';
+				var username = user.name || '#';
+				var email = '@';
 				var author = git.Signature.now(username, email);
 				var committer = git.Signature.now(username, email);
 
