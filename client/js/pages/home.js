@@ -34,13 +34,19 @@ Template.home.events({
 				template.$('#repo_input_error').transition('fade left');
 				return;
 			}
+			Session.set("submit_error_Message", null);
 			event.target.repo_input.value = '';
 		});
 		return false;
 	},
 	'keydown input': function (event, template) {
 		if (template.$('#repo_input_error').is(':visible')) {
-			template.$('#repo_input_error').transition('fade left');
+			template.$('#repo_input_error').transition({
+				transition: 'fade left',
+				onComplete : function() {
+					Session.set("submit_error_Message", null);
+				}
+			});
 		}
 	}
 });
