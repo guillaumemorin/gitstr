@@ -13,18 +13,17 @@ uploaded_video = function (userInfo, file, file_id) {
 		})
 	}
 
-	var source = UPLOAD_PATH + userInfo.id + '/' + file.title;
 	var file_md5 = crypto.createHash('md5').update(file.title).digest('hex');
+	var file_ext = '.' + file.type.ext;
+	var source = UPLOAD_PATH + userInfo.id + '/' + file_md5 + file_ext;
 
 	var convertToMp4 = function() {
 
 		return new Promise(function(resolve, reject) {
-			console.log('file', file_md5);
 			var mp4_output = UPLOAD_PATH + userInfo.id + '/' + file_md5 + '.mp4';
 			if (file.type.ext === 'mp4') {
-				console.log('here');
 				try{
-					fs.writeFileSync(mp4_output, fs.readFileSync(source));	
+					fs.renameSync(source, mp4_output);	
 				} catch (e) {
 					console.log(e)
 				}
