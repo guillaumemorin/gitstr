@@ -25,10 +25,12 @@
 </template>
 
 <template name="link_modal_actions">
-	<div class="ui fluid action input">
-		<input type="text" placeholder="http://">				
-		<div id="add_link" class="ui button approve">Add</div>	
-	</div>
+	<form>
+		<div class="ui fluid action input">
+			<input type="text" id="link_input" placeholder="http://">
+			<input type="submit" class="ui positive button" value="Add" />
+		</div>
+	</form>
 </template>
 
 <template name="signin_modal">

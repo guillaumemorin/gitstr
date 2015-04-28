@@ -19,6 +19,7 @@ Meteor.users.allow({
 
 Repos.allow({
 	update: function (userId, repo, fields, modifier) {
+
 		if (~_.indexOf(fields, 'subscribers')) {
 			var user = Meteor.users.findOne({_id: userId}, {fields: {subscription: 1}})
 			
@@ -35,6 +36,22 @@ Repos.allow({
 			return true;
 		}
 
+		if (~_.indexOf(fields, 'nb_link')) {
+			return (Meteor.userId() === userId);
+		}
+
 		return false;
+	}
+});
+
+Repos_history.allow({
+	insert: function (userId, file) {
+		return (Meteor.userId() === userId);
+	}
+});
+
+Repos_files.allow({
+	insert: function (userId, file) {
+		return (Meteor.userId() === userId);
 	}
 });

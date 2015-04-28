@@ -46,8 +46,61 @@ Template.link_modal.rendered = function() {
 };
 
 Template.link_modal_actions.events({
-	'click #add_link': function () {
-		console.log('add link');
+	'submit form': function (event, template) {
+		var input_val = event.target.link_input.value;
+		if (input_val === '' || !validator.isURL(input_val)) {
+			return false;
+		}
+
+		var title = input_val;
+		var type = {subtype: 'link'};
+		var data = UI.getData();
+		var supported_services = {
+			'twitter.com': {name: 'twitter', item: 'tweet'}
+		}
+		var hostname = url('hostname', input_val);
+
+		if (supported_services[hostname]) {
+
+			if (url('2', input_val) !== 'status' || !url('3', input_val)) {
+				return false;
+			}
+
+			type.subtype = supported_services[hostname].item;
+			type.service_name = supported_services[hostname].name;
+			type.item_id = url('3', input_val);
+			title = 'From ' + supported_services[hostname].name;
+		}
+
+		var file_id = Repos_files.insert(
+			{title: title, url: input_val, timestamp: new Date().getTime(), type: type}
+		);
+
+		Repos_history.insert(
+			{
+				repo_id: data.repo._id,
+				repo_title: data.repo.title,
+				timestamp: new Date().getTime(),
+				user_id: Meteor.userId(),
+				user_name: Meteor.user().profile.name,
+				user_screen_name: Meteor.user().profile.screen_name,
+				user_profile_image: Meteor.user().profile.image,
+				file_id: file_id,
+				nb_link: 1,
+				link_type: type
+			}
+		);
+
+		Repos.update(
+			{"_id": data.repo._id},
+			{
+				$push: {file_structure: file_id},
+				$set: {last_update: new Date().getTime()},
+				$inc: {nb_link: 1}
+			}
+		);
+
+		return false;
 	}
 });
 

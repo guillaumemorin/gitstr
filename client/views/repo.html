@@ -1,3 +1,25 @@
+<!-- ADD LINK -->
+<!-- <div class="item">
+	<i class="ui teal linkify circular inverted icon"></i>
+	<span class="teal">{{#if repo.nb_link}} {{repo.nb_link}} {{else}} 0 {{/if}}</span>
+</div> -->
+
+<!-- {{#if equal type.subtype "tweet"}}
+{{addTweetToDisplay type.item_id}}
+<tr class="{{#if isInHistory _id}}warning{{/if}}">
+	<td><i class="twitter twitter-color icon"></i>{{title}}</td>
+	<td class="right aligned">{{setSize size}}</td>
+	<td class="right aligned">{{setDate timestamp}}</td>
+</tr>
+<tr class="extra-content {{#if isInHistory _id}}warning{{/if}}">
+	<td colspan="3" style="border-top: 0px; text-align: center">
+		<div id="tweet_{{type.item_id}}"></div>
+		<div class="ui hidden divider"></div>
+	</td>
+</tr>
+{{/if}} -->
+<!-- /ADD LINK -->
+
 <template name="repo">
 	{{> header page="repository"}}
 	<div class="ui page vertically padded grid">
@@ -71,60 +93,8 @@
 								</div>
 							</div>
 						</div>
-
-
-							<!-- <div class="left aligned eight wide column">
-								<div class="ui mini statistics">
-									<div class="statistic">
-										<div class="value">
-											<i class="ui download grey-light icon"></i>
-										</div>
-										<span>{{#if repo.nb_download}} {{repo.nb_download}} {{else}} 0 {{/if}}</span>
-										<span class="label">Download</span>
-									</div>
-									<div class="statistic">
-										<div class="value">
-											<i class="ui star grey-light icon"></i>
-										</div>
-										<span>{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
-										<span class="label">Subscriber</span>
-									</div>
-									<div class="statistic">
-										<div class="value">
-											<i class="ui file grey-light icon"></i>
-										</div>
-										<span>{{#if repo.nb_files}} {{repo.nb_files}} {{else}} 0 {{/if}}</span>
-										<span class="label">Files</span>
-									</div>
-								</div>
-							</div> -->
-						<!-- </div> -->
 					</div>
 				</div>
-
-
-
-
-							
-							<!-- <i class="star link {{#if subscribed}}yellow{{/if}} icon"></i>
-							<i class="copy link icon"></i> -->
-
-					<!-- <div class="ui hidden divider"></div>
-					<a class="ui small yellow image label">
-						<i class="star icon"></i>
-						Subscriber
-						<span class="detail">23 490</span>
-					</a>
-					<a class="ui small green image label">
-						<i class="copy icon"></i>
-						Copier
-						<span class="detail">6375</span>
-					</a>
-					<a class="ui small purple image label">
-						<i class="download icon"></i>
-						Downloader
-						<span class="detail">234</span>
-					</a> -->
 
 				<div class="ui segment">
 					<div class="ui grid">
@@ -278,7 +248,7 @@
 								{{#if supported type.subtype}}
 									{{#if equal type.subtype "audio"}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
-										<td><i class="{{setIcon type.subtype}} yellow icon"></i>{{title}}</td>
+										<td><i class="unmute yellow icon"></i>{{title}}</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
@@ -310,7 +280,7 @@
 
 									{{#if equal type.subtype "image"}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
-										<td><i class="{{setIcon type.subtype}} blue icon"></i>{{title}}</td>
+										<td><i class="camera blue icon"></i>{{title}}</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
@@ -327,7 +297,7 @@
 
 									{{#if equal type.subtype "video"}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
-										<td><i class="{{setIcon type.subtype}} red icon"></i>{{title}}</td>
+										<td><i class="record red icon"></i>{{title}}</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
@@ -351,6 +321,7 @@
 										</td>
 									</tr>
 									{{/if}}
+
 								{{else}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
 										<td>
@@ -380,7 +351,7 @@
 	{{/if}}
 
 	{{> upload_modal}}
-	{{> link_modal}}
 	{{> image_modal}}
+	<!-- {{> link_modal}} -->
 	
 </template>

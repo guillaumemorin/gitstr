@@ -34,7 +34,11 @@
 						<a class="user" href="/{{user_screen_name}}">{{user_screen_name}}</a> has updated his <a class="user" href="/{{user_screen_name}}/{{repo_title}}">{{repo_title}}</a> repository
 					</div>
 					<div class="meta">
-						Added {{nb_files}} file{{#if greater nb_files 1}}s{{/if}}
+						{{#if nb_link}}
+							Added {{nb_link}} {{#if link_type}}{{link_type.subtype}} <i class="{{link_type.service_name}} icon"></i> {{else}}link{{/if}}
+						{{else}}
+							Added {{nb_files}} file{{#if greater nb_files 1}}s{{/if}}
+						{{/if}}
 					</div>
 				</div>
 			</div>

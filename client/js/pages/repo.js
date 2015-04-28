@@ -4,13 +4,15 @@ var tmpFilesinit = function() {
 };
 
 var audio_player = {};
+var tweets = [];
 
 Template.repo.helpers({
 	supported: function (type) {
 		var cover_supported_type = {
 			image: true,
 			audio: true,
-			video: true
+			video: true,
+			tweet: true
 		}
 		return cover_supported_type[type];
 	},
@@ -76,7 +78,8 @@ Template.repo.helpers({
 		var type_map = {
 			image: 'camera',
 			video: 'record',
-			audio: 'unmute'
+			audio: 'unmute',
+			link: 'linkify'
 		}
 
 		if (!type || !type_map[type]) {
@@ -99,6 +102,9 @@ Template.repo.helpers({
 	},
 	nbTmpFiles: function() {
 		return Session.get('nb_tmp_files');
+	},
+	addTweetToDisplay: function(tweet_id) {
+		tweets.push(tweet_id);
 	}
 });
 
@@ -248,6 +254,15 @@ Template.repo.rendered = function () {
 	var data = UI.getData();
 	Session.set('repo_id', data.repo._id);
 	tmpFilesinit();
+
+	// _.map(tweets, function(tweet_id) {
+	// 	console.log('tweet_id', tweet_id)
+	// 	twttr.widgets.createTweet(
+	// 		tweet_id,
+	// 		document.getElementById('tweet_' + tweet_id),
+	// 		{width: 400, align: 'center'}
+	// 	);
+	// });
 
 	window.setTimeout(function() {
 		$('#page_loader').dimmer('hide');	
