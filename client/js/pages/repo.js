@@ -19,10 +19,14 @@ Template.repo.helpers({
 	twitterShareParams: function () {
 		var data = UI.getData();
 		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr! Subscribe to it right here';
+		var discover_text = 'I have discovered a new repository named "' + data.repo.title + '" on @gitstr! Have a look at it here';
+		
 		var url = data.repo.permalink;
 		if (data.repo.last_update) {
 			text = 'I have updated my @gitstr "' + data.repo.title + '" repository! Subscribe to it right here';
 		}
+
+		text = (Meteor.userId() === data.repo.user_id) ? text : discover_text;
 		return '?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
 	},
 	getFilterIcon: function(files) {
