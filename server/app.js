@@ -123,6 +123,10 @@ Accounts.onCreateUser(function(options, user) {
 		profile_image = 'https://graph.facebook.com/' + user.services.facebook.id + '/picture?width=640&height=640';
 		profile_screen_name = user.services.facebook.name;
 		var profile_name = profile_screen_name;
+		var users_count = Meteor.users.find({'profile.screen_name': user.services.facebook.name}).count(); 
+		if (users_count) {
+			profile_screen_name = profile_screen_name + (users_count + 1);
+		}
 
 		get_redirect_url(profile_image)
 		.then(function(redirect_url) {
@@ -135,12 +139,20 @@ Accounts.onCreateUser(function(options, user) {
 			profile_image = profile_image_url.replace('_normal', '_400x400');
 			profile_image_mini = profile_image_url.replace('_normal', '_mini');
 			profile_screen_name = user.services.twitter.screenName;
+			var users_count = Meteor.users.find({'profile.screen_name': user.services.twitter.screenName}).count(); 
+			if (users_count) {
+				profile_screen_name = profile_screen_name + (users_count + 1);
+			}
 		}
 
 		if (user.services.github) {
 			profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.github.id;
 			profile_screen_name = user.services.github.username;
 			var profile_name = profile_screen_name;
+			var users_count = Meteor.users.find({'profile.screen_name': user.services.github.username}).count(); 
+			if (users_count) {
+				profile_screen_name = profile_screen_name + (users_count + 1);
+			}
 		}
 
 		get_user_image(profile_image);
