@@ -358,8 +358,25 @@ video {
     login page
 --------------------*/
 #login-header {
-	height: 375px;
-	background-image: url(congruent_pentagon.png);
+	height: 390px;
+	background: linear-gradient(160deg, #f4a8a8, #94e5e1);
+	/*background-image: url(congruent_pentagon.png);*/
+}
+
+#login-segment {
+	#facebook_signin:hover {
+		color: @facebook @important;
+		box-shadow: 0px 0px 0px 1px @facebook inset @important;
+	}
+
+	#twitter_signin:hover {
+		color: @twitter @important;
+		box-shadow: 0px 0px 0px 1px @twitter inset @important;
+	}
+
+	#github_signin:hover {
+		box-shadow: 0px 0px 0px 1px @black inset @important;
+	}
 }
 
 .button {

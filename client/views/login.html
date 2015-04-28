@@ -5,82 +5,95 @@
 				<div class="column">
 					<div class="ui inverted large vertical animated button">
 						<div class="hidden content">
-							Gitstr.
+							<span class="oxygen">gitstr.</span>
 						</div>
 						<div class="visible content">
-							Gitstr.
+							<span class="oxygen">gitstr.</span>
 						</div>
 					</div>
-					<h2 class="ui inverted header">Full Width Background</h2>
-					<p>First section of content</p>
+					<h1 class="ui inverted header">Content that matters.</h1>
+					<p>Subscribe to repositories and be notified when content will be added to them</p>
 				</div>
 			</div>
-			<div class="five wide centered column grid">
-				<div class="column">
-					<div id="search_repo" class="ui fluid search">
-						<div class="ui left icon massive inverted input">
-							<input class="prompt" type="text" placeholder="Search for repository ... ">
-							<i class="search link icon"></i>
+			<div class="ui hidden divider"></div>
+			<div class="row">
+				<div class="five wide centered column grid">
+					<div class="center aligned column">
+						<div id="search_repo" class="ui left aligned fluid search">
+							<div class="ui left icon massive transparent input">
+								<input class="prompt" type="text" placeholder="Search for repository ... ">
+								<i class="search link icon"></i>
+							</div>
+							<div class="results"></div>
 						</div>
-						<div class="results"></div>
+						<div class="ui horizontal divider">
+						Or
+						</div>
+						<div>
+							<a href="/explore">
+								<div class="ui orange big button">
+								  <i class="icon rocket"></i>
+								  Explore
+								</div>
+							</a>
+						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="login-segment" class="ui secondary horizontal segment">
+		<div class="ui three column stackable page grid">
+			<div class="center aligned column">
+				<div id="facebook_signin" class="ui big basic facebook fluid button stackable">
+					<i class="facebook icon"></i>
+					Sign in with Facebook
+				</div>
+			</div>
+			<div class="center aligned column">
+				<div id="twitter_signin" class="ui big basic twitter fluid button stackable">
+					<i class="twitter icon"></i>
+					Sign in with Twitter
+				</div>
+			</div>
+			<div class="center aligned column">
+				<div id="github_signin" class="ui big basic github fluid button stackable">
+					<i class="github icon"></i>
+					Sign in with Github
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="login-segment" class="ui tertiary horizontal segment">
-		<div class="ui page grid">
-			<div class="ui one column middle aligned relaxed fitted stackable grid">
-				<div class="center aligned column">
-					<div class="button">
-						<div id="facebook_signin" class="ui large facebook button stackable">
-							<i class="facebook icon"></i>
-							Sign in with Facebook
-						</div>
-						<div id="twitter_signin" class="ui large twitter button stackable">
-							<i class="twitter icon"></i>
-							Sign in with Twitter
-						</div>
-						<div id="github_signin" class="ui large github button stackable">
-							<i class="github icon"></i>
-							Sign in with Github
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+	<div class="ui hidden divider"></div>
+	<div class="ui hidden divider"></div>
 	<div id="login-extra" class="ui basic segment">
-		<div class="ui page grid">
-			<div class="three column centered row">
-				<div class="center aligned stackable column">
-					<h2 class="ui icon center aligned header">
-					<i class="massive flag icon"></i>
+		<div class="ui three column stackable grid">
+			<div class="center aligned column">
+				<h2 class="ui icon center aligned header">
+					<i class="massive flag outline inverted orange icon"></i>
 					<div class="content">
 						Create a repository...
-						<div class="sub header">Easily findable, it will be something like /yourname/yourrepository</div>
+						<div class="sub header">Take a look at what it will look like here: <a href="/gitstr/architecture">/gitstr/architecture</a></div>
 					</div>
 				</h2>
-				</div>
-				<div class="center aligned stackable column">
-					<h2 class="ui icon center aligned header">
-					<i class="massive file icon"></i>
+			</div>
+			<div class="center aligned column">
+				<h2 class="ui icon center aligned header">
+					<i class="massive file outline inverted red icon"></i>
 					<div class="content">
 						Add some files to it...
-						<div class="sub header">Joined in {{moment user.createdAt}}</div>
+						<div class="sub header">Some Audio, Video, Image or whatever</div>
 					</div>
 				</h2>
-				</div>
-				<div class="center aligned stackable column">
-					<h2 class="ui icon center aligned header">
-					<i class="massive world icon"></i>
+			</div>
+			<div class="center aligned column">
+				<h2 class="ui icon center aligned header">
+					<i class="massive world inverted yellow icon"></i>
 					<div class="content">
 						And share it with everyone!
 						<div class="sub header">Or noOne, as you like ;)</div>
 					</div>
 				</h2>
-				</div>
 			</div>			
 		</div>
 	</div>
