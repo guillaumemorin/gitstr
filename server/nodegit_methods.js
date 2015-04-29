@@ -72,11 +72,11 @@ repository = function(repo_path) {
 		git.Repository.init(this.repo_path, 0)
 		.catch(function(err) {
 			console.log('catched', err);
-			reject()
+			// reject()
 		})
 		.done(function(error) {
-			resolve();
-			console.log('done');
+			// resolve();
+			// console.log('done');
 		})
 	}
 
