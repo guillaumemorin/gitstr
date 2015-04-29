@@ -62,56 +62,42 @@ Meteor.methods({
 		if (repo_name) {
 			throw new Meteor.Error("repo-already-exists", "This name already exists");
 		}
-
-		// var error_callback = function() {
-		//   throw new Meteor.Error("repo-init-failed", "Something went wrong :(");
-		// };
 		
-		// var done_callback = Meteor.bindEnvironment(function(err) {
-			var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name);
-			var repo_path_git = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name.split(' ').join('_'));
-			var gradient =  getDefaultRadient();
-			var insert_id = Repos.insert({
-				title: name,
-				created_at: new Date().getTime(),
-				user_id: Meteor.userId(),
-				user_name: Meteor.user().profile.name,
-				user_screen_name: Meteor.user().profile.screen_name,
-				user_profile_image: Meteor.user().profile.image,
-				url: '/' + repo_path,
-				description: 'By ' + Meteor.user().profile.name,
-				permalink: service_url + repo_path,
-				permaGit: service_git + repo_path_git,
-				file_structure: [],
-				samples: {
-					image:getDefaultRadient(),
-					video: getDefaultRadient(),
-					audio: getDefaultRadient(),
-					application: getDefaultRadient()
-				}
-			});
-		// })
+		var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name);
+		var repo_path_git = 'public/' + encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name.split(' ').join('_'));
+		var gradient =  getDefaultRadient();
+		var insert_id = Repos.insert({
+			title: name,
+			created_at: new Date().getTime(),
+			user_id: Meteor.userId(),
+			user_name: Meteor.user().profile.name,
+			user_screen_name: Meteor.user().profile.screen_name,
+			user_profile_image: Meteor.user().profile.image,
+			url: '/' + repo_path,
+			description: 'By ' + Meteor.user().profile.name,
+			permalink: service_url + repo_path,
+			permaGit: service_git + repo_path_git,
+			file_structure: [],
+			samples: {
+				image:getDefaultRadient(),
+				video: getDefaultRadient(),
+				audio: getDefaultRadient(),
+				application: getDefaultRadient()
+			}
+		});
+	
+		fs.symlink(
+			REPOSITORY_PATH + '/' + this.userId + '/' + insert_id,
+			HOME_PATH + '/public/' + Meteor.user().profile.screen_name + '/' + name.split(' ').join('_')
+		);
 
 		Meteor.users.update(
 			{_id: Meteor.userId()},
 			{$inc: {nb_repo: 1}}
 		);
 
-		var test = new repository(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id);
-		test.init(function() {
-			console.log('resolved');
-		}, function() {
-			console.log('rejected');
-		});
-
-		// Repository.init(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id, 0)
-		// .catch(function(err) {
-		// 	console.log('catched', err);
-		// })
-		// .done(function(error) {
-		// 	// done_callback()
-		// 	console.log('done');
-		// })
+		var repo = new repository(REPOSITORY_PATH + '/' + this.userId + '/' + insert_id);
+		repo.init();
 
 		return 'Pending...';
 	}
