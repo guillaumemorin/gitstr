@@ -180,5 +180,11 @@ Accounts.onCreateUser(function(options, user) {
 
 	user.subscription = [];
 
+	try {
+		fs.mkdirSync(HOME_PATH + '/public/' + profile_screen_name);
+	} catch(e) {
+		throw new Meteor.Error("onCreateUser-fail", "Something went wrong :(");
+	}
+
 	return user;
 });
