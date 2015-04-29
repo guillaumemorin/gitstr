@@ -91,19 +91,25 @@ Accounts.onCreateUser(function(options, user) {
 			})
 		})
 
-		var imagemagick_command = 'convert -blur 0x5 ' + profile_image + ' ' + user_image_path + '/blurred.jpg'
-		child = exec(imagemagick_command, function (error, stdout, stderr) {
-			// console.log('stdout: ' + stdout);
-			// console.log('stderr: ' + stderr);
-			if (error !== null) {
-				console.log('exec error: ' + error);
-			}
-		});
+		/** IMAGE BLUR **/
+		/** ERROR WITH FB URL **/
+
+		// var imagemagick_command = 'convert -blur 0x5 ' + profile_image + ' ' + user_image_path + '/blurred.jpg'
+		// child = exec(imagemagick_command, function (error, stdout, stderr) {
+		// 	// console.log('stdout: ' + stdout);
+		// 	// console.log('stderr: ' + stderr);
+		// 	if (error !== null) {
+		// 		console.log('exec error: ' + error);
+		// 	}
+		// });
 	}
 
 	var get_redirect_url = function(url) {
 		return new Promise(function(resolve, reject) {
 			https.get(url, function(res) {
+				if (res.headers && res.headers.location) {
+					resolve(res.headers.location);
+				}
 				res.on('end', function() {
 					if (res.statusCode >= 300 && res.statusCode < 400 && res.headers && res.headers.location) {
 						resolve(res.headers.location);
@@ -121,8 +127,9 @@ Accounts.onCreateUser(function(options, user) {
 
 	if (user.services.facebook) {
 		profile_image = 'https://graph.facebook.com/' + user.services.facebook.id + '/picture?width=640&height=640';
-		profile_screen_name = user.services.facebook.name;
-		var profile_name = profile_screen_name;
+		var profile_name = user.services.facebook.name;
+		profile_screen_name = user.services.facebook.name.split(' ').join('_');	
+
 		var users_count = Meteor.users.find({'profile.screen_name': user.services.facebook.name}).count(); 
 		if (users_count) {
 			profile_screen_name = profile_screen_name + (users_count + 1);
@@ -147,8 +154,9 @@ Accounts.onCreateUser(function(options, user) {
 
 		if (user.services.github) {
 			profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.github.id;
-			profile_screen_name = user.services.github.username;
-			var profile_name = profile_screen_name;
+			var profile_name = user.services.github.username;
+			profile_screen_name = user.services.github.username.split(' ').join('_');
+	
 			var users_count = Meteor.users.find({'profile.screen_name': user.services.github.username}).count(); 
 			if (users_count) {
 				profile_screen_name = profile_screen_name + (users_count + 1);

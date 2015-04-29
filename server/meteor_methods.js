@@ -69,6 +69,7 @@ Meteor.methods({
 		
 		// var done_callback = Meteor.bindEnvironment(function(err) {
 			var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name);
+			var repo_path_git = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name.split(' ').join('_'));
 			var gradient =  getDefaultRadient();
 			var insert_id = Repos.insert({
 				title: name,
@@ -80,7 +81,7 @@ Meteor.methods({
 				url: '/' + repo_path,
 				description: 'By ' + Meteor.user().profile.name,
 				permalink: service_url + repo_path,
-				permaGit: service_git + repo_path,
+				permaGit: service_git + repo_path_git,
 				file_structure: [],
 				samples: {
 					image:getDefaultRadient(),
