@@ -65,17 +65,19 @@ Router.map(function () {
 					return;
 				}
 
+				var subscription = (Meteor.user() && Meteor.user().subscription) ? Meteor.user().subscription : [];
+
 				if (type === 'rep') {
 					repos = Repos.find({user_id: Meteor.userId()}, {sort:{created_at: -1}});
 				}
 
 				if (type === 'sub') {
-					repos = Repos.find({_id: {$in: Meteor.user().subscription}});
+					repos = Repos.find({_id: {$in: subscription}});
 				}
 
 				if (type === 'feed') {
 					history = Repos_history.find(
-						{repo_id: {$in: Meteor.user().subscription}},
+						{repo_id: {$in: subscription}},
 						{sort: {timestamp: -1}}
 					);
 				}
@@ -116,7 +118,8 @@ Router.map(function () {
 				}
 
 				if (username_subpath === 'sub') {
-					repos = Repos.find({_id: {$in: Meteor.user().subscription}});
+					var subscription = (Meteor.user() && Meteor.user().subscription) ? Meteor.user().subscription : [];
+					repos = Repos.find({_id: {$in: subscription}});
 					this.render('profile', {data: {repo: repos, user: user, display: username_subpath, default_image_size: 'default-small'}});
 					return;
 				}
