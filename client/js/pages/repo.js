@@ -129,7 +129,7 @@ Template.repo.events({
 		event.preventDefault();
 		FB.ui({
 			method: 'share',
-			href: 'http://gitstr.com:3000'//encodeURI(UI.getData().repo.permalink),
+			href: encodeURI(UI.getData().repo.permalink),
 		}, function(response){});
 	},
 	'click .cover-video' : function (event, template) {
