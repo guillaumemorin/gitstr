@@ -78,11 +78,21 @@ body {
 	background-image: url(pw_maze_white.png);
 }
 
-/*a:hover {
-	color: black;
+a {
+	color: rgba(0, 0, 0, 0.5);
+	transition: @transition;
+}
+
+a:hover {
+	color: rgba(0, 0, 0, 0.7);
+	/*color: rgba(0, 0, 0, 0.5);
 	text-decoration: underline;
-	font-weight: normal @important;
-}*/
+	font-weight: normal @important;*/
+}
+
+.underlined {
+	text-decoration: underline;
+}
 
 .gradient-background {
 	background: @gradientBackground @important;
@@ -165,6 +175,14 @@ body {
 
 .link-dark:hover {
 	color: @black @important;
+}
+
+.ui.card {
+	.extra.content {
+		a:hover {
+			color: @black;
+		}
+	}
 }
 
 /*-------------------
@@ -387,6 +405,7 @@ video {
 /*-------------------
     login page
 --------------------*/
+
 #login-header {
 	height: 390px;
 	background: linear-gradient(160deg, #f4a8a8, #94e5e1);
