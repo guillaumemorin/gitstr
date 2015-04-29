@@ -1,8 +1,7 @@
 var path = Npm.require('path');
 
-GITSTR_PATH = (process.env.PLATFORM === 'DEV') ?  '/Users/guillaume/gitstr' : '/home/git/gitstr';
-
-console.log('>>', process.env.PLATFORM, process.env);
+HOME_PATH = (process.env.PLATFORM === 'DEV') ?  '/Users/guillaume' : '/home/git';
+GITSTR_PATH = HOME_PATH + '/gitstr';
 
 FILES_PATH = path.resolve(GITSTR_PATH + '/../gitstr_files/');
 REPOSITORY_PATH = FILES_PATH + '/repos/';
