@@ -19,7 +19,6 @@ Template.registerHelper('setLastUpdate', function(timestamp) {
 });
 
 Template.registerHelper('isOwner', function(repo_owner_id) {
-	console.log(repo_owner_id, Meteor.userId());
 	return repo_owner_id === Meteor.userId();
 });
 
