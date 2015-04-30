@@ -48,8 +48,14 @@ Meteor.startup(function () {
 	);
 });
 
+// Accounts.onLoginFailure(function(options, user) {
+// 	console.log('Accounts.onLoginFailure', options, user);
+// });
+
 Accounts.onLogin(function(options, user) {
-	loggly.log(options);
+	if (PLATFORM === 'PROD') {
+		loggly.log(options);
+	}
 });
 
 Accounts.onCreateUser(function(options, user) {
@@ -130,7 +136,7 @@ Accounts.onCreateUser(function(options, user) {
 		var profile_name = user.services.facebook.name;
 		profile_screen_name = user.services.facebook.name.split(' ').join('_');	
 
-		var users_count = Meteor.users.find({'profile.screen_name': user.services.facebook.name}).count(); 
+		var users_count = Meteor.users.find({'profile.screen_name': profile_screen_name}).count(); 
 		if (users_count) {
 			profile_screen_name = profile_screen_name + (users_count + 1);
 		}
@@ -146,7 +152,7 @@ Accounts.onCreateUser(function(options, user) {
 			profile_image = profile_image_url.replace('_normal', '_400x400');
 			profile_image_mini = profile_image_url.replace('_normal', '_mini');
 			profile_screen_name = user.services.twitter.screenName;
-			var users_count = Meteor.users.find({'profile.screen_name': user.services.twitter.screenName}).count(); 
+			var users_count = Meteor.users.find({'profile.screen_name': profile_screen_name}).count(); 
 			if (users_count) {
 				profile_screen_name = profile_screen_name + (users_count + 1);
 			}
@@ -157,7 +163,7 @@ Accounts.onCreateUser(function(options, user) {
 			var profile_name = user.services.github.username;
 			profile_screen_name = user.services.github.username.split(' ').join('_');
 	
-			var users_count = Meteor.users.find({'profile.screen_name': user.services.github.username}).count(); 
+			var users_count = Meteor.users.find({'profile.screen_name': profile_screen_name}).count(); 
 			if (users_count) {
 				profile_screen_name = profile_screen_name + (users_count + 1);
 			}
@@ -183,7 +189,7 @@ Accounts.onCreateUser(function(options, user) {
 	try {
 		fs.mkdirSync(HOME_PATH + '/public/' + profile_screen_name);
 	} catch(e) {
-		throw new Meteor.Error("onCreateUser-fail", "Something went wrong :(");
+		throw new Meteor.Error("onCreateUser-fail-mkdir-symlink");
 	}
 
 	return user;
