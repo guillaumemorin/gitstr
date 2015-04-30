@@ -113,7 +113,7 @@ Template.repo.helpers({
 });
 
 Template.repo.events({
-	'click .cover': function (event, template) {
+	'click .cover, click .cover-link': function (event, template) {
 		event.preventDefault();
 
 		var url = event.currentTarget.href || false;

@@ -281,7 +281,10 @@
 
 									{{#if equal type.subtype "image"}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
-										<td><i class="camera blue icon"></i>{{title}}</td>
+										<td>
+											<i class="camera blue icon"></i>
+											<a class="cover-link" href="{{url}}">{{title}}</a>
+										</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
