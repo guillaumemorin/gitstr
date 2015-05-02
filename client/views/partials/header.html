@@ -34,7 +34,7 @@
 
 	<div class="{{#unless padded}}ui page vertically padded grid{{/unless}}">
 		<div class="centered row">
-			<div class="column">
+			<div class="column computer only">
 				<div id="fixed_topbar" class="ui primary borderless large fixed menu" style="display: none">
 					<a class="item" href="/">
 						<!-- Gitstr. -->
@@ -87,10 +87,12 @@
 					<a class="item" href="/">
 						gitstr.
 					</a>
+					{{#unless equal ../display "explore"}}
 					<a class="item" href="/explore">
 						<i class="rocket orange icon"></i>
 						Explore
 					</a>
+					{{/unless}}
 					{{#if equal page "repository"}}
 					<div class="table-collapse item">
 						<i class="{{displayStatus}} link icon"></i>

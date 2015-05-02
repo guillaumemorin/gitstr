@@ -31,7 +31,7 @@
 				<div class="ui basic segment">
 					<div class="ui grid">
 						<div class="ui stackable grid">
-							<div class="left aligned eight wide column">
+							<div class="left aligned eight wide column computer tablet only">
 								<h2 class="ui header">
 									<a class="link-light" href="/{{user.profile.screen_name}}/rep">
 										<span>{{user.profile.screen_name}}</span>
@@ -66,7 +66,7 @@
 							</div>
 						</div>
 						<div class="ui stackable grid">
-							<div class="nine wide column">
+							<div class="nine wide column computer tablet only">
 								<div class="ui big horizontal list">
 	  								<div class="item">
 	  									<i class="ui blue camera circular inverted icon"></i>
@@ -171,7 +171,7 @@
 					</div>
 
 					{{#if tmpFiles}}
-					<table id="file-list" class="ui small very basic unstackable table grey-dark">
+					<table id="file-list" class="ui small very basic stackable table grey-dark">
 						<thead></thead>
 						<tbody>
 	  						<tr class="disabled">
@@ -240,7 +240,7 @@
 						</div>
 					</div>
 					{{else}}
-						<table id="file-list" class="ui small very basic unstackable table grey-dark">
+						<table id="file-list" class="ui small very basic stackable table grey-dark">
 							<thead></thead>
 							<tbody>
 		  						<tr class="disabled">
