@@ -134,7 +134,7 @@ Accounts.onCreateUser(function(options, user) {
 	if (user.services.facebook) {
 		profile_image = 'https://graph.facebook.com/' + user.services.facebook.id + '/picture?width=640&height=640';
 		var profile_name = user.services.facebook.name;
-		profile_screen_name = user.services.facebook.name.split(' ').join('_');	
+		profile_screen_name = user.services.facebook.name.split(' ').join('');	
 
 		var users_count = Meteor.users.find({'profile.screen_name': profile_screen_name}).count(); 
 		if (users_count) {
@@ -151,7 +151,7 @@ Accounts.onCreateUser(function(options, user) {
 			profile_image_url = user.services.twitter.profile_image_url_https;
 			profile_image = profile_image_url.replace('_normal', '_400x400');
 			profile_image_mini = profile_image_url.replace('_normal', '_mini');
-			profile_screen_name = user.services.twitter.screenName;
+			profile_screen_name = user.services.twitter.screenName.split('_').join('');
 			var users_count = Meteor.users.find({'profile.screen_name': profile_screen_name}).count(); 
 			if (users_count) {
 				profile_screen_name = profile_screen_name + (users_count + 1);
@@ -161,7 +161,7 @@ Accounts.onCreateUser(function(options, user) {
 		if (user.services.github) {
 			profile_image = 'https://avatars1.githubusercontent.com/u/' + user.services.github.id;
 			var profile_name = user.services.github.username;
-			profile_screen_name = user.services.github.username.split(' ').join('_');
+			profile_screen_name = user.services.github.username.split(' ').join('');
 	
 			var users_count = Meteor.users.find({'profile.screen_name': profile_screen_name}).count(); 
 			if (users_count) {

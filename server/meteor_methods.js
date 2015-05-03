@@ -63,11 +63,13 @@ Meteor.methods({
 			throw new Meteor.Error("repo-already-exists", "This name already exists");
 		}
 
-		var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name);
-		var repo_path_git = 'public/' + encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(name.split(' ').join('-'));
+		var screen_name = name.split(' ').join('-');
+		var repo_path = encodeURIComponent(Meteor.user().profile.screen_name) + '/' + encodeURIComponent(screen_name);
+		var repo_path_git = 'public/' + repo_path;
 		var gradient =  getDefaultRadient();
 		var insert_id = Repos.insert({
 			title: name,
+			screen_title: screen_name,
 			created_at: new Date().getTime(),
 			user_id: Meteor.userId(),
 			user_name: Meteor.user().profile.name,
