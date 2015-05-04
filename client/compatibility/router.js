@@ -118,7 +118,7 @@ Router.map(function () {
 				}
 
 				if (username_subpath === 'sub') {
-					var subscription = (Meteor.user() && Meteor.user().subscription) ? Meteor.user().subscription : [];
+					var subscription = (user.subscription) ? user.subscription : [];
 					repos = Repos.find({_id: {$in: subscription}});
 					this.render('profile', {data: {repo: repos, user: user, display: username_subpath, default_image_size: 'default-small'}});
 					return;
