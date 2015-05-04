@@ -122,7 +122,8 @@ Template.repo.events({
 			return;
 		}
 
-		Session.set('modal_info', {type: 'image', url: url});
+		var type = event.currentTarget.dataset.type;
+		Session.set('modal_info', {type: type, url: url});
 		$('#image_modal').modal('show');
 	},
 	'click #fb_share': function (event, template) {

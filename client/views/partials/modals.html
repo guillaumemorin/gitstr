@@ -65,16 +65,20 @@
 </template>
 
 <template name="image_modal">
-	<div id="image_modal" class="ui long basic modal">
+	<div id="image_modal" class="ui basic modal">
 		<!-- <i class="close icon"></i> -->
-		{{#if equal modalInfo.type "video"}}
-			<video width="100%" height="340" controls>
-				<source src="{{modalInfo.url}}" type="video/mp4">
-				Your browser does not support the video tag.
-			</video>
-		{{else}}
-		<img class="ui rounded centered massive image" src="{{modalInfo.url}}" />
-		{{/if}}
+		<div class="ui grid">
+			<div class="centered column">
+				{{#if equal modalInfo.type "video"}}
+					<video class="modal_video" controls>
+						<source src="{{modalInfo.url}}" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+				{{else}}
+					<img class="ui rounded centered massive image" src="{{modalInfo.url}}" />
+				{{/if}}	
+			</div>
+		</div>
 	</div>
 
 	<div id="image_fail_dimmer" class="ui page dimmer">

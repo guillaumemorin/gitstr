@@ -192,12 +192,26 @@ a {
 }
 
 /*-------------------
+    Image modal
+--------------------*/
+/*#image_modal {
+	>.close.icon {
+		top: 0.2rem;
+		right: 0.2rem;
+	}
+}*/
+
+/*-------------------
     Video player
 --------------------*/
 video {
-	width: 55%    !important;
-	height: auto   !important;
+	width: 55% @important;
+	height: auto @important;
 	display: none;
+	&.modal_video {
+		width: 100% @important;
+		display: block;
+	}
 }
 
 /*-------------------
@@ -230,13 +244,6 @@ video {
 	padding: 0.2rem;
 }
 
-/*#logo {
-	padding: 0.3rem 0.9rem;
-	background: #FFA5A5;
-	border-radius: 6px;
-	color: @white;
-}*/
-
 #topbar_repo_info {
 	position: fixed;
 	top: 0;
@@ -245,8 +252,8 @@ video {
 	width: 100%;
 
 	.segment {
-		background-color: white;
-  		padding: 0.95rem;
+/*		background-color: white;
+  		padding: 0.95rem;*/
 		box-shadow: 1px 0 0 rgba(147, 147, 147, 0.15), -1px 0 0 rgba(147, 147, 147, 0.15); /*lighted color*/
 		/*box-shadow: 1px 0 0 rgba(39, 41, 43, 0.15), -1px 0 0 rgba(39, 41, 43, 0.15); /*same color*/
 	}

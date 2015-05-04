@@ -309,7 +309,7 @@
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
 										<td>
 											<i class="camera blue icon"></i>
-											<a class="cover-link" href="{{url}}">{{title}}</a>
+											<a class="cover-link" href="{{url}}" data-type="image">{{title}}</a>
 										</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
@@ -327,7 +327,10 @@
 
 									{{#if equal type.subtype "video"}}
 									<tr class="{{#if isInHistory _id}}warning{{/if}}">
-										<td><i class="record red icon"></i>{{title}}</td>
+										<td>
+											<i class="record red icon"></i>
+											<a class="cover-link" href="{{url}}" data-type="video">{{title}}</a>
+										</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
