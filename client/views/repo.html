@@ -20,6 +20,55 @@
 {{/if}} -->
 <!-- /ADD LINK -->
 
+<template name="repo_stat_list">
+	<div class="ui big horizontal list">
+		<div class="item">
+			<i class="ui blue camera circular inverted icon"></i>
+			<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
+		</div>
+		<div class="item">
+			<i class="ui red record circular inverted icon"></i>
+			<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
+		</div>
+		<div class="item">
+			<i class="ui yellow unmute circular inverted icon"></i>
+			<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
+		</div>
+		<div class="item">
+			<i class="ui grey file outline circular icon"></i>
+			<span class="grey">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
+		</div>
+	</div>
+</template>
+
+<template name="repo_buttons">
+	<div class="right aligned bottom aligned eight wide column">
+		<a id="fb_share" href="{{repo.permalink}}" class="ui basic icon button stackable">
+			<i class="facebook facebook-color icon"></i>
+		</a>
+		<a href="http://twitter.com/intent/tweet{{twitterShareParams}}" class="ui basic icon button stackable">
+			<i class="twitter twitter-color icon"></i>
+		</a>
+		<div id="git_input_button" class="ui basic icon button stackable">
+			<i class="git black icon"></i>
+		</div>
+		<div id="subscribe" class="ui basic {{#if isOwner repo.user_id}}yellow disabled{{/if}} button">
+			<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}}{{#if isOwner repo.user_id}}yellow{{/if}} icon"></i>
+			<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
+		</div>
+	</div>
+</template>
+
+<template name="repo_git_input">
+	<div id="git_input" class="ui labeled right icon fluid input">
+		<div class="ui label">
+			Clone url
+		</div>
+		<input type="text" placeholder="git clone url" value="{{repo.permaGit}}">
+		<i id="git_input_close" class="remove circle link icon"></i>
+	</div>
+</template>
+
 <template name="repo">
 	<!-- Open Graph protocol -->
 	<meta property="og:title" content="{{repo.title}}" />
@@ -30,69 +79,49 @@
 			<div class="column">
 				<div class="ui basic segment">
 					<div class="ui grid">
-						<div class="ui stackable grid">
-							<div class="left aligned eight wide column computer tablet only">
-								<h2 class="ui header">
-									<a class="link-light" href="/{{user.profile.screen_name}}/rep">
-										<span>{{user.profile.screen_name}}</span>
-									</a>
-									<span class="grey-light"> / </span>
-									<span class="teal">#</span> {{repo.title}}
-									<div class="sub header">
-										{{#if repo.last_update}}
-											Updated {{setLastUpdate repo.last_update}}
-										{{else}}
-											Created {{setLastUpdate repo.created_at}}
-										{{/if}}	
-									</div>
-								</h2>
+						<div class="row  computer tablet only">
+							<div class="ui stackable grid">
+								<div class="left aligned eight wide column">
+									<h2 class="ui header">
+										<a class="link-light" href="/{{user.profile.screen_name}}/rep">
+											<span>{{user.profile.screen_name}}</span>
+										</a>
+										<span class="grey-light"> / </span>
+										<span class="teal">#</span> {{repo.title}}
+										<div class="sub header">
+											{{#if repo.last_update}}
+												Updated {{setLastUpdate repo.last_update}}
+											{{else}}
+												Created {{setLastUpdate repo.created_at}}
+											{{/if}}	
+										</div>
+									</h2>
+								</div>
+								<div class="right aligned eight wide column">
+									{{> repo_buttons}}
+								</div>
 							</div>
-							<div class="right aligned eight wide column">
-								<div class="right aligned bottom aligned eight wide column">
-									<a id="fb_share" href="{{repo.permalink}}" class="ui basic icon button stackable">
-										<i class="facebook facebook-color icon"></i>
-									</a>
-									<a href="http://twitter.com/intent/tweet{{twitterShareParams}}" class="ui basic icon button stackable">
-										<i class="twitter twitter-color icon"></i>
-									</a>
-									<div id="git_input_button" class="ui basic icon button stackable">
-										<i class="git black icon"></i>
-									</div>
-									<div id="subscribe" class="ui basic {{#if isOwner repo.user_id}}yellow disabled{{/if}} button">
-										<i class="star {{#if subscribed repo.subscribers}}yellow{{/if}}{{#if isOwner repo.user_id}}yellow{{/if}} icon"></i>
-										<span class="grey">{{#if repo.nb_subscribers}} {{repo.nb_subscribers}} {{else}} 0 {{/if}}</span>
-									</div>
+							<div class="ui stackable grid">
+								<div class="nine wide column">
+									{{> repo_stat_list}}
+								</div>
+								<div class="seven wide column">
+									{{> repo_git_input}}
 								</div>
 							</div>
 						</div>
-						<div class="ui stackable grid">
-							<div class="nine wide column computer tablet only">
-								<div class="ui big horizontal list">
-	  								<div class="item">
-	  									<i class="ui blue camera circular inverted icon"></i>
-	  									<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
-	  								</div>
-	  								<div class="item">
-	  									<i class="ui red record circular inverted icon"></i>
-	  									<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
-	  								</div>
-	  								<div class="item">
-	  									<i class="ui yellow unmute circular inverted icon"></i>
-	  									<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
-	  								</div>
-	  								<div class="item">
-	  									<i class="ui grey file outline circular icon"></i>
-	  									<span class="grey">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
-	  								</div>
-	  							</div>	
+						<div class="row mobile only">
+							<div class="ui grid">
+								<div class="left aligned eight wide column">
+									{{> repo_stat_list}}
+								</div>
+								<div class="right aligned eight wide column">
+									{{> repo_buttons}}
+								</div>
 							</div>
-							<div class="seven wide column">
-								<div id="git_input" class="ui labeled right icon fluid input">
-									<div class="ui label">
-										Clone url
-									</div>
-									<input type="text" placeholder="git clone url" value="{{repo.permaGit}}">
-									<i id="git_input_close" class="remove circle link icon"></i>
+							<div class="ui stackable grid">
+								<div class="column">
+									{{> repo_git_input}}
 								</div>
 							</div>
 						</div>
@@ -165,7 +194,7 @@
 					</div>
 
 					{{#if tmpFiles}}
-					<table id="file-list" class="ui small very basic stackable table grey-dark">
+					<table id="file-list" class="ui small very basic unstackable table grey-dark">
 						<thead></thead>
 						<tbody>
 	  						<tr class="disabled">
@@ -234,7 +263,7 @@
 						</div>
 					</div>
 					{{else}}
-						<table id="file-list" class="ui small very basic stackable table grey-dark">
+						<table id="file-list" class="ui small very basic unstackable table grey-dark">
 							<thead></thead>
 							<tbody>
 		  						<tr class="disabled">

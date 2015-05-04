@@ -1,3 +1,48 @@
+
+<template name="current_page_item_display">
+	{{#if equal ../display "explore"}}
+	<div class="item">
+		<i class="orange rocket icon"></i>
+		<span class="grey-light"> Explore</span>
+	</div>
+	{{/if}}
+
+	{{#if equal ../display "feed"}}
+	<div class="item">
+		<i class="green heartbeat icon"></i>
+		<span class="grey-light"> Activity</span>
+	</div>
+	{{/if}}
+
+	{{#if equal ../display "rep"}}
+	<div class="item">
+		<i class="orange flag icon"></i>
+		<span class="grey-light">
+			{{#if equal page "home"}}
+				Your
+			{{else}}
+				{{#if equal currentUser._id ../user._id}}Your{{else}}{{../user.profile.screen_name}}'s{{/if}}
+			{{/if}}
+			repositories
+		</span>
+	</div>
+	{{/if}}
+
+	{{#if equal ../display "sub"}}
+	<div class="item">
+		<i class="yellow star icon"></i>
+		<span class="grey-light">
+		{{#if equal page "home"}}
+				Your
+			{{else}}
+				{{#if equal currentUser._id ../user._id}}Your{{else}}{{../user.profile.screen_name}}'s{{/if}}
+			{{/if}}
+			subscriptions
+		</span>
+	</div>
+	{{/if}}
+</template>
+
 <template name="header">
 
 	<div id="topbar_repo_info" class="ui page grid">
@@ -32,56 +77,76 @@
 		{{/if}}
 	</div>
 
-	<div class="{{#unless padded}}ui page vertically padded grid{{/unless}}">
-		<div class="centered row">
-			<div class="column computer only">
+
+	<div class="ui vertically padded {{#unless equal page 'profile'}}page{{/unless}} grid">	
+		<div class="row mobile only">
+			<div class="column">
+				<div id="mobile_fixed_topbar" class="ui primary borderless large fixed menu">
+					{{#if equal page "repository"}}
+					<div class="item">
+						<a class="link-light" href="/{{../user.profile.screen_name}}">
+							{{../user.profile.screen_name}}
+						</a>
+						{{#if ../repo.title}} 
+							<span class="grey-light"> / </span>
+							<span class="teal">#</span> {{../repo.title}}
+							{{#unless isOwner ../repo.user_id}}
+								<i id="header_subscribe" class="favorite icon {{#if subscribed ../repo.subscribers}}yellow{{/if}}"></i>
+							{{/unless}}
+						{{/if}}
+					</div>
+					{{/if}}
+
+					{{> current_page_item_display}}
+
+					<div class="right floated item">
+						<i id="mobile_menu_button" class="ellipsis vertical link icon"></i>
+					</div>
+				</div>
+				<div id="mobile_menu" class="ui grid">
+					<div class="sixteen wide column">
+						<a href="/">
+							<i class="green heartbeat link big icon"></i>
+							Activity
+						</a>
+					</div>
+					<div class="sixteen wide column">
+						<a href="/rep">
+							<i class="orange flag link big icon"></i>
+							Repositories
+						</a>
+					</div>
+					<div class="sixteen wide column">
+						<a href="/sub">
+							<i class="yellow star link big icon"></i>
+							Subscriptions
+						</a>
+					</div>
+					<div class="sixteen wide column">
+						<a href="/explore">
+							<i class="orange rocket link big icon"></i>
+							Explore
+						</a>
+					</div>
+					<div class="sixteen wide column">
+						<a id="logout" href="#">
+							<i class="sign out link big icon"></i>
+							Log out
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="{{#if equal page 'profile'}}profile_topbar_row{{/if}}" class="row computer tablet only">
+			<div class="column">
 				<div id="fixed_topbar" class="ui primary borderless large fixed menu" style="display: none">
 					<a class="item" href="/">
 						<!-- Gitstr. -->
 						<span class="oxygen">gitstr.</span>
 					</a>
 
-					{{#if equal ../display "explore"}}
-					<div class="item">
-						<i class="orange rocket icon"></i>
-						<span class="grey-light"> Explore</span>
-					</div>
-					{{/if}}
+					{{> current_page_item_display}}
 
-					{{#if equal ../display "feed"}}
-					<div class="item">
-						<i class="green heartbeat icon"></i>
-						<span class="grey-light"> Activity</span>
-					</div>
-					{{/if}}
-
-					{{#if equal ../display "rep"}}
-					<div class="item">
-						<i class="orange flag icon"></i>
-						<span class="grey-light">
-							{{#if equal page "home"}}
-								Your
-							{{else}}
-								{{#if equal currentUser._id ../user._id}}Your{{else}}{{../user.profile.screen_name}}'s{{/if}}
-							{{/if}}
-							repositories
-						</span>
-					</div>
-					{{/if}}
-
-					{{#if equal ../display "sub"}}
-					<div class="item">
-						<i class="yellow star icon"></i>
-						<span class="grey-light">
-						{{#if equal page "home"}}
-								Your
-							{{else}}
-								{{#if equal currentUser._id ../user._id}}Your{{else}}{{../user.profile.screen_name}}'s{{/if}}
-							{{/if}}
-							subscriptions
-						</span>
-					</div>
-					{{/if}}
 				</div>
 				<div id="topbar" class="ui secondary menu">
 					<a class="item" href="/">
@@ -119,12 +184,11 @@
 						</a>
 						{{/if}}
 					</div>
-					{{#unless pointing}}
+					{{#unless equal page "profile"}}
 						<div class="ui divider"></div>
 					{{/unless}}
 				</div>
-
-			</div>	
+			</div>
 		</div>
 	</div>
 </template>

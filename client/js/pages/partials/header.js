@@ -14,6 +14,9 @@ Template.header.events({
 			})
 		})
 	},
+	'click #mobile_menu_button': function (event, template) {
+		template.$('#mobile_menu').transition('fade down');
+	},
 	'click #logout': function (event, template) {
 		Meteor.logout();
 		Router.go('/');
@@ -41,6 +44,10 @@ var fixed_topbar;
 var scroll_position;
 
 $(window).scroll(function() {
+
+	if ($(document).width() < 767) {
+		return;
+	}
 	
 	scroll_position = $(window).scrollTop();
 
