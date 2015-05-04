@@ -102,68 +102,62 @@
 				<div class="ui raised segment">
 					<div class="ui grid">
 						<div class="left aligned sixteen wide column">
-							<div class="ui buttons">
-								<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button stackable">
-									<span class="text">History</span>
-									<i class="history icon"></i>
-									<div class="menu">
-										{{#each history}}
-											<div class="item history" id="{{_id}}">
-												<i class="clock icon"></i>
-												Updated {{setLastUpdate timestamp}}
-												{{#if nb_video}} | {{nb_video}} Video {{/if}}
-												{{#if nb_image}} | {{nb_image}} Image {{/if}}
-												{{#if nb_audio}} | {{nb_audio}} Audio {{/if}}
-											</div>
-										{{/each}}
-									</div>
+							<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button stackable">
+								<span class="text">History</span>
+								<i class="history icon"></i>
+								<div class="menu">
+									{{#each history}}
+										<div class="item history" id="{{_id}}">
+											<i class="clock icon"></i>
+											Updated {{setLastUpdate timestamp}}
+											{{#if nb_video}} | {{nb_video}} Video {{/if}}
+											{{#if nb_image}} | {{nb_image}} Image {{/if}}
+											{{#if nb_audio}} | {{nb_audio}} Audio {{/if}}
+										</div>
+									{{/each}}
 								</div>
 							</div>
-							<div class="ui buttons">
-								<div id="filter_dropdown" class="ui floating small basic blue labeled dropdown icon button stackable">
-									<span class="text">Filter</span>
-									<i class="filter icon"></i>
-									<div class="menu">
-										<div id="filter_all" class="item" data-value="all">
-											<i class="list icon"></i>
-											All
-										</div>
-										<div id="filter_image" class="item" data-value="image">
-											<i class="blue camera icon"></i>
-											Image
-										</div>
-										<div id="filter_video" class="item" data-value="video">
-											<i class="red record icon"></i>
-											Video
-										</div>
-										<div id="filter_audio" class="item" data-value="audio">
-											<i class="yellow unmute icon"></i>
-											Audio
-										</div>
-										<div id="filter_application" class="item" data-value="application">
-											<i class="grey-light file outline icon"></i>
-											Other
-										</div>
+							<div id="filter_dropdown" class="ui floating small basic blue labeled dropdown icon button stackable">
+								<span class="text">Filter</span>
+								<i class="filter icon"></i>
+								<div class="menu">
+									<div id="filter_all" class="item" data-value="all">
+										<i class="list icon"></i>
+										All
+									</div>
+									<div id="filter_image" class="item" data-value="image">
+										<i class="blue camera icon"></i>
+										Image
+									</div>
+									<div id="filter_video" class="item" data-value="video">
+										<i class="red record icon"></i>
+										Video
+									</div>
+									<div id="filter_audio" class="item" data-value="audio">
+										<i class="yellow unmute icon"></i>
+										Audio
+									</div>
+									<div id="filter_application" class="item" data-value="application">
+										<i class="grey-light file outline icon"></i>
+										Other
 									</div>
 								</div>
 							</div>
 							{{#if files.count}}
 								{{#if isOwner repo.user_id}}
-								<div class="ui buttons">
-									<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
-										<span class="text">Add Files</span>
-										<i class="add icon"></i>
-<!-- 										<div class="menu">
-											<div id="upload_button" class="item">
-												<i class="file icon"></i>
-												Add File(s)
-											</div>
-											<div id="link_button" class="item">
-												<i class="linkify icon"></i>
-												Add Link(s)
-											</div>
-										</div> -->
-									</div>
+								<div id="add_dropdown" class="ui floating small basic teal labeled dropdown icon button stackable">
+									<span class="text">Add Files</span>
+									<i class="add icon"></i>
+									<!--<div class="menu">
+										<div id="upload_button" class="item">
+											<i class="file icon"></i>
+											Add File(s)
+										</div>
+										<div id="link_button" class="item">
+											<i class="linkify icon"></i>
+											Add Link(s)
+										</div>
+									</div> -->
 								</div>
 								{{/if}}
 							{{/if}}
