@@ -108,7 +108,7 @@ Router.map(function () {
 				return;
 			}
 
-			var repo = Repos.findOne({user_id: user._id, title: username_subpath});
+			var repo = Repos.findOne({user_id: user._id, screen_title: username_subpath});
 			if (!repo) {
 
 				if (username_subpath === 'rep') {
