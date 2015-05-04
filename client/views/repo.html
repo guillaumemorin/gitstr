@@ -326,19 +326,24 @@
 
 
 									{{#if equal type.subtype "video"}}
-									<tr class="{{#if isInHistory _id}}warning{{/if}}">
+									<tr class="{{#if isInHistory _id}}warning{{/if}} {{#if equal cover_url '/image_small_default.jpg'}}negative{{/if}}">
 										<td>
 											<i class="record red icon"></i>
-											<a class="cover-link" href="{{url}}" data-type="video">{{title}}</a>
+											{{#if equal cover_url "/image_small_default.jpg"}}
+												{{title}} - unplayable video file
+											{{else}}
+												<a class="cover-link" href="{{url}}" data-type="video">{{title}}</a>
+											{{/if}}
 										</td>
 										<td class="right aligned">{{setSize size}}</td>
 										<td class="right aligned">{{setDate timestamp}}</td>
 									</tr>
+									{{#unless equal cover_url "/image_small_default.jpg"}}
 									<tr class="extra-content {{#if isInHistory _id}}warning{{/if}}">
 										<td colspan="3" style="border-top: 0px; text-align: center">
 											<div class="ui basic segment">
 												{{#if equal cover_url "/image_small.jpg"}}
-												<div class="ui active inverted dimmer">
+												<div class="ui active inverted dimmer" style="z-index: 100">
 													<div class="ui large text loader">Generating thumbnail</div>
 												</div>
 												{{/if}}
@@ -353,6 +358,7 @@
 											<div class="ui hidden divider"></div>
 										</td>
 									</tr>
+									{{/unless}}
 									{{/if}}
 
 								{{else}}

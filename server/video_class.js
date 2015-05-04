@@ -6,7 +6,6 @@ var fs = Npm.require('fs');
 uploaded_video = function (userInfo, file, file_id) {
 
 	this.processing = function() {
-		console.log('processing');
 		convertToMp4()
 		.then(function() {
 			generateThumbnail();
@@ -22,7 +21,7 @@ uploaded_video = function (userInfo, file, file_id) {
 		return new Promise(function(resolve, reject) {
 			var mp4_output = UPLOAD_PATH + userInfo.id + '/' + file_md5 + '.mp4';
 			if (file.type.ext === 'mp4') {
-				try{
+				try {
 					fs.renameSync(source, mp4_output);	
 				} catch (e) {
 					console.log(e)
@@ -34,10 +33,10 @@ uploaded_video = function (userInfo, file, file_id) {
 			ffmpeg(source)
 			.output(mp4_output)
 			.on('error', function(err, stdout, stderr) {
+				updatingVideoInfo(err);
 			    console.log('Cannot process video: ' + err.message);
 			})
 			.on('end', function() {
-				console.log('Finished processing');
 				resolve();
 			})
 			.run();
@@ -57,21 +56,24 @@ uploaded_video = function (userInfo, file, file_id) {
 			spritesheet: true
 		}, function(error, metadata) {
 			if (error) {
-				throw new Meteor.Error("preparingVideo-fail", error);
+				updatingVideoInfo(error);
+				return;
 			}
 			updatingVideoInfo(); 
 		});
 	}
 
-	var updatingVideoInfo = Meteor.bindEnvironment(function() {
-
-			var cover_url = '/upload/' + userInfo.id + '/' + file_id + '/thumbnails.png';
+	var updatingVideoInfo = Meteor.bindEnvironment(function(error) {
+		
+			error = error || false;
+			var cover_url = (error) ? '/image_small_default.jpg' : '/upload/' + userInfo.id + '/' + file_id + '/thumbnails.png';
+			var url = (error) ? '/image_small_default.jpg' : '/upload/' + userInfo.id + '/' + file_md5 + '.mp4';
 
 			Repos_files.update(
 				{_id: file_id},
 				{
 					$set: {
-						url: '/upload/' + userInfo.id + '/' + file_md5 + '.mp4',
+						url: url,
 						cover_url: cover_url
 					}
 				}
