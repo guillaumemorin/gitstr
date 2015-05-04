@@ -82,13 +82,10 @@ a {
 	outline: none;
 	color: rgba(0, 0, 0, 0.5);
 	transition: @transition;
-}
 
-a:hover {
-	color: rgba(0, 0, 0, 0.7);
-	/*color: rgba(0, 0, 0, 0.5);
-	text-decoration: underline;
-	font-weight: normal @important;*/
+	&:hover, &.active {
+		color: rgba(0, 0, 0, 0.8) @important;	
+	};
 }
 
 .underlined {
@@ -165,25 +162,9 @@ a:hover {
 	.link;
 }
 
-.link-light:hover {
-	color: @black @important;
-}
-
 .link-dark {
 	color: @darkGrey @important;
 	.link;
-}
-
-.link-dark:hover {
-	color: @black @important;
-}
-
-.ui.card {
-	.extra.content {
-		a:hover {
-			color: @black;
-		}
-	}
 }
 
 /*-------------------
@@ -386,15 +367,6 @@ video {
 		.content {
 			font-size: 0.8rem;
 		}
-	}
-}
-
-#feed_list, #repo_list, #sub_list {
-	color: #939393;
-	transition: @transition;
-	font-weight: normal @important;
-	&:hover {
-		color: #494949;
 	}
 }
 

@@ -13,17 +13,17 @@
 		</div>
 		<div class="extra content">
 			<div>
-				<i class="heartbeat green icon"></i>
-				<a id="feed_list" href="/">Activity</a>
+				<i class="heartbeat {{#if equal display 'feed'}}green{{/if}} icon"></i>
+				<a id="feed_list" class="{{#if equal display 'feed'}}active{{/if}}" href="/">Activity</a>
 			</div>		
 			<div>
-				<i class="flag orange icon"></i>
-				<a id="repo_list" href="/rep">Repositories</a>
+				<i class="flag {{#if equal display 'rep'}}orange{{/if}} icon"></i>
+				<a id="repo_list" class="{{#if equal display 'rep'}}active{{/if}}" href="/rep">Repositories</a>
 				<span class="right floated">{{#if currentUser.nb_repo}} {{currentUser.nb_repo}} {{else}} 0 {{/if}}</span>
 			</div>		
 			<div>
-				<i class="star yellow icon"></i>
-				<a id="sub_list" href="/sub">Subscriptions</a>
+				<i class="star {{#if equal display 'sub'}}yellow{{/if}} icon"></i>
+				<a id="sub_list" class="{{#if equal display 'sub'}}active{{/if}}" href="/sub">Subscriptions</a>
 				<span class="right floated">{{#if currentUser.nb_subscription}} {{currentUser.nb_subscription}} {{else}} 0 {{/if}}</span>
 			</div>
 		</div>
