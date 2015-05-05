@@ -64,8 +64,8 @@
 								{{/unless}}
 								{{/if}}
 								<div class="ui right floated">
-									<a class="table-collapse item">
-										<i class="{{displayStatus}} black link icon"></i>
+									<a id="header_table_collapse" class="item">
+										<i class="{{displayStatus}} large teal link icon"></i>
 									</a>
 								</div>
 							</div>
@@ -158,11 +158,6 @@
 						Explore
 					</a>
 					{{/unless}}
-					{{#if equal page "repository"}}
-					<div class="table-collapse item">
-						<i class="{{displayStatus}} link icon"></i>
-					</div>
-					{{/if}}
 					<div class="right menu">
 						<div class="item">
 							<div class="ui search">

@@ -30,6 +30,10 @@ Template.registerHelper('moment', function(date) {
 	return moment(date).format('MMMM YYYY');
 });
 
+Template.registerHelper('displayStatus', function() {
+	return Session.get('display_status');
+});
+
 Template.registerHelper('setSize', function(size) {
 	return filesize(size);
 });

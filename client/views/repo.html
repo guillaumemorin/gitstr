@@ -19,7 +19,9 @@
 </tr>
 {{/if}} -->
 <!-- /ADD LINK -->
-
+<head>
+	<meta property="og:title" content="fb link" />
+</head>
 <template name="repo_stat_list">
 	<div class="ui big horizontal list">
 		<div class="item">
@@ -70,9 +72,6 @@
 </template>
 
 <template name="repo">
-	<!-- Open Graph protocol -->
-	<meta property="og:title" content="{{repo.title}}" />
-	<!-- /Open Graph protocol -->
 	{{> header page="repository"}}
 	<div class="ui page vertically padded grid">
 		<div class="centered row">
@@ -88,6 +87,7 @@
 										</a>
 										<span class="grey-light"> / </span>
 										<span class="teal">#</span> {{repo.title}}
+										<span><i id="repo_table_collapse" class="{{displayStatus}} teal small link icon"></i></span>
 										<div class="sub header">
 											{{#if repo.last_update}}
 												Updated {{setLastUpdate repo.last_update}}

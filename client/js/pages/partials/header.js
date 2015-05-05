@@ -1,9 +1,3 @@
-Template.header.helpers({
-	displayStatus: function () {
-		return Session.get('display_status');
-	}
-});
-
 Template.header.events({
 	'keypress .search': function (event, template) {
 		Meteor.call('search', event.target.value, function(error, result) {
@@ -24,11 +18,9 @@ Template.header.events({
 	'click #header_subscribe': function (event, template) {
 		_subscribe();	
 	},
-	'click .table-collapse' : function (event, template) {
-		template.$(event.currentTarget).toggleClass('act');
-		// $('.extra-content').transition('fade');
+	'click #header_table_collapse' : function (event, template) {
 		$('.extra-content').toggle();
-		var status = Session.get('display_status') === 'list' ? 'attach' : 'list';
+		var status = Session.get('display_status') === 'browser' ? 'attach' : 'browser';
 		Session.set('display_status', status);
 	}
 });
@@ -36,7 +28,7 @@ Template.header.events({
 Template.header.rendered = function() {
 	opacity_value = 1;
 	fixed_topbar = false;
-	Session.set('display_status', 'list');
+	Session.set('display_status', 'browser');
 }
 
 var opacity_value;

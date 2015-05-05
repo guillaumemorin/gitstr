@@ -113,6 +113,11 @@ Template.repo.helpers({
 });
 
 Template.repo.events({
+	'click #repo_table_collapse' : function (event, template) {
+		$('.extra-content').toggle();
+		var status = Session.get('display_status') === 'browser' ? 'attach' : 'browser';
+		Session.set('display_status', status);
+	},
 	'click .cover, click .cover-link': function (event, template) {
 		event.preventDefault();
 
