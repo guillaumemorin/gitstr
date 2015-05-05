@@ -127,7 +127,7 @@ Template.repo.events({
 			return;
 		}
 
-		var type = event.currentTarget.dataset.type;
+		var type = event.currentTarget.dataset.type || 'image';
 		Session.set('modal_info', {type: type, url: url});
 		$('#image_modal').modal('show');
 	},

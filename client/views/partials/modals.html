@@ -68,15 +68,21 @@
 	<div id="image_modal" class="ui basic modal">
 		<!-- <i class="close icon"></i> -->
 		<div class="ui grid">
-			<div class="centered column">
+			<div class="centered column">		
 				{{#if equal modalInfo.type "video"}}
 					<video class="modal_video" controls>
 						<source src="{{modalInfo.url}}" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
-				{{else}}
+				{{/if}}
+
+				{{#if equal modalInfo.type "image"}}
 					<img class="ui rounded centered massive image" src="{{modalInfo.url}}" />
-				{{/if}}	
+				{{/if}}
+
+				{{#unless modalInfo.type}}
+					<img class="ui rounded centered massive image" src="/white-image.png" />
+				{{/unless}}	
 			</div>
 		</div>
 	</div>
