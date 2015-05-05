@@ -248,7 +248,12 @@ Template.repo.events({
 	
 	},
 	'click #commit': function (event, template) {
-		Meteor.call('commit', {id: Meteor.userId(), repo_id: Session.get('repo_id'), repo_title: UI.getData().repo.title}, Session.get('tmp_files'), function(error, result) {
+		Meteor.call('commit', {
+			user_id: Meteor.userId(),
+			repo: UI.getData().repo
+		},
+		Session.get('tmp_files'),
+		function(error, result) {
 			if (error) {
 				console.log(error);
 				// error message to set

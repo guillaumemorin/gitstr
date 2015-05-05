@@ -31,7 +31,7 @@
 						{{setLastUpdate timestamp}}
 					</div>
 					<div class="summary">
-						<a class="user" href="/{{user_screen_name}}">{{user_screen_name}}</a> has updated his <a class="user" href="/{{user_screen_name}}/{{repo_title}}">{{repo_title}}</a> repository
+						<a class="user" href="/{{user_screen_name}}">{{user_screen_name}}</a> has updated his <a class="user" href="{{repo_url}}">{{repo_screen_title}}</a> repository
 					</div>
 					<div class="meta">
 						{{#if nb_link}}
@@ -56,7 +56,7 @@
 								<div class="item">
 									<i class="right triangle icon"></i>
           							<div class="content">
-          								<a href="/{{../user_screen_name}}/{{../repo_title}}/audio">{{title}}</a>
+          								<a href="{{../repo_url}}/audio">{{title}}</a>
           							</div>
           						</div>
 							{{/each}}
@@ -79,7 +79,7 @@
 								<div class="item">
 									<i class="right triangle icon"></i>
           							<div class="content">
-          								<a href="/{{../user_screen_name}}/{{../repo_title}}/application">{{title}}</a>
+          								<a href="{{../repo_url}}/application">{{title}}</a>
           							</div>
           						</div>
 							{{/each}}
@@ -99,7 +99,7 @@
 					<div class="ui doubling three column grid">
 						{{#each getFilesList files "video"}}
 						<div class="column">
-							<a href="/{{../user_screen_name}}/{{../repo_title}}/video" class="ui card">
+							<a href="/{{../repo_url}}/video" class="ui card">
 								<div class="image">
 									<img src="{{cover_url}}">
 								</div>
@@ -129,7 +129,7 @@
 					<div class="ui doubling three column grid">
 					{{#each getFilesList files "image"}}
 						<div class="column">
-							<a href="/{{../user_screen_name}}/{{../repo_title}}/image" class="ui card">
+							<a href="{{../repo_url}}/image" class="ui card">
 								<div class="image">
 									<img src="{{cover_url}}">
 								</div>

@@ -32,13 +32,13 @@ var crypto = Npm.require('crypto');
 
 uploaded_files = function (userInfo, files) {
 
-	if (!userInfo || !userInfo.id) {
+	if (!userInfo || !userInfo.user_id) {
 		throw new Meteor.Error("files-construct-fail", "Something went wrong :(");
 	}
 
-	var upload_path = UPLOAD_PATH + '/' + userInfo.id + '/';
-	var upload_cover_path = UPLOAD_PATH + '/' + userInfo.id + '/cover/';
-	var repository_dest_path = REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id + '/';
+	var upload_path = UPLOAD_PATH + '/' + userInfo.user_id + '/';
+	var upload_cover_path = UPLOAD_PATH + '/' + userInfo.user_id + '/cover/';
+	var repository_dest_path = REPOSITORY_PATH + '/' + userInfo.user_id + '/' + userInfo.repo._id + '/';
 
 	_writeFiles = function () {
 
@@ -92,8 +92,8 @@ uploaded_files = function (userInfo, files) {
 			var file_md5 = crypto.createHash('md5').update(file.title).digest('hex');
 			var file_ext = '.' + file.type.ext;
 
-			var url = (file.type.subtype === 'video') ? image_default : '/upload/' + userInfo.id + '/' + file_md5 + file_ext;
-			var cover_url = (file.type.subtype === 'video') ? image_default : '/upload/' + userInfo.id + '/cover/' + file_md5 + file_ext;
+			var url = (file.type.subtype === 'video') ? image_default : '/upload/' + userInfo.user_id + '/' + file_md5 + file_ext;
+			var cover_url = (file.type.subtype === 'video') ? image_default : '/upload/' + userInfo.user_id + '/cover/' + file_md5 + file_ext;
 
 			file.url = url;
 			file.cover_url = cover_url;
@@ -121,8 +121,10 @@ uploaded_files = function (userInfo, files) {
 
 		Repos_history.insert(
 			{
-				repo_id: userInfo.repo_id,
-				repo_title:userInfo.repo_title,
+				repo_id: userInfo.repo._id,
+				repo_title:userInfo.repo.title,
+				repo_screen_title:userInfo.repo.screen_title,
+				repo_url:userInfo.repo.url,
 				timestamp: new Date().getTime(),
 				user_id: Meteor.userId(),
 				user_name: Meteor.user().profile.name,
@@ -138,7 +140,7 @@ uploaded_files = function (userInfo, files) {
 		);
 
 		Repos.update(
-			{"_id": userInfo.repo_id},
+			{"_id": userInfo.repo._id},
 			{
 				$push: {
 					file_structure: {

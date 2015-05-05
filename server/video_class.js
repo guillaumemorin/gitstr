@@ -14,12 +14,12 @@ uploaded_video = function (userInfo, file, file_id) {
 
 	var file_md5 = crypto.createHash('md5').update(file.title).digest('hex');
 	var file_ext = '.' + file.type.ext;
-	var source = UPLOAD_PATH + userInfo.id + '/' + file_md5 + file_ext;
+	var source = UPLOAD_PATH + userInfo.user_id + '/' + file_md5 + file_ext;
 
 	var convertToMp4 = function() {
 
 		return new Promise(function(resolve, reject) {
-			var mp4_output = UPLOAD_PATH + userInfo.id + '/' + file_md5 + '.mp4';
+			var mp4_output = UPLOAD_PATH + userInfo.user_id + '/' + file_md5 + '.mp4';
 			if (file.type.ext === 'mp4') {
 				try {
 					fs.renameSync(source, mp4_output);	
@@ -46,7 +46,7 @@ uploaded_video = function (userInfo, file, file_id) {
 	var generateThumbnail = function () {
 
 		// Generating thumbnail
-		var thumbgen_output = UPLOAD_PATH + userInfo.id + '/thumbgen.vtt';
+		var thumbgen_output = UPLOAD_PATH + userInfo.user_id + '/thumbgen.vtt';
 
 		thumbgen(source, {
 			output: thumbgen_output,
@@ -66,8 +66,8 @@ uploaded_video = function (userInfo, file, file_id) {
 	var updatingVideoInfo = Meteor.bindEnvironment(function(error) {
 		
 			error = error || false;
-			var cover_url = (error) ? '/image_small_default.jpg' : '/upload/' + userInfo.id + '/' + file_id + '/thumbnails.png';
-			var url = (error) ? '/image_small_default.jpg' : '/upload/' + userInfo.id + '/' + file_md5 + '.mp4';
+			var cover_url = (error) ? '/image_small_default.jpg' : '/upload/' + userInfo.user_id + '/' + file_id + '/thumbnails.png';
+			var url = (error) ? '/image_small_default.jpg' : '/upload/' + userInfo.user_id + '/' + file_md5 + '.mp4';
 
 			Repos_files.update(
 				{_id: file_id},
@@ -80,7 +80,7 @@ uploaded_video = function (userInfo, file, file_id) {
 			);
 
 			Repos.update(
-				{"_id": userInfo.repo_id},
+				{"_id": userInfo.repo._id},
 				{$set: {'samples.video': cover_url}}
 			);
 		}

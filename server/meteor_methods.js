@@ -13,11 +13,11 @@ Meteor.methods({
 
 	commit: function (userInfo, files) {
 
-		if (!userInfo || !userInfo.id || !userInfo.repo_id) {
+		if (!userInfo || !userInfo.user_id || !userInfo.repo._id) {
 			throw new Meteor.Error("bad-user-info", "Something went wrong :(");
 		}
 
-		if (userInfo.id !== Meteor.userId()) {
+		if (userInfo.user_id !== Meteor.userId()) {
 			throw new Meteor.Error("bad-user-info", "Nice try ;)");
 		}
 
@@ -29,7 +29,7 @@ Meteor.methods({
 		var files = new uploaded_files(userInfo, files);
 		files.save();
 
-		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.id + '/' + userInfo.repo_id);
+		var repo = new repository(REPOSITORY_PATH + '/' + userInfo.user_id + '/' + userInfo.repo._id);
 		repo.commit(length, Meteor.user().profile)
 		.then(function(commit_id) {
 			console.log('commit: ', commit_id);
