@@ -53,8 +53,18 @@ Meteor.startup(function () {
 // });
 
 Accounts.onLogin(function(options, user) {
+	
+	var user = options.user;
+	var log = {
+		_id: user._id, 
+		createdAt: user.createdAt,
+		name: user.profile.name,
+		screen_name: user.profile.screen_name,
+		user_agent: options.connection.httpHeaders['user-agent']		
+	}
+
 	if (PLATFORM === 'PROD') {
-		loggly.log(options);
+		loggly.log(log);
 	}
 });
 
