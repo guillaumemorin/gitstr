@@ -6,16 +6,7 @@ var tmpFilesinit = function() {
 var audio_player = {};
 var tweets = [];
 
-Template.repo.helpers({
-	supported: function (type) {
-		var cover_supported_type = {
-			image: true,
-			audio: true,
-			video: true,
-			tweet: true
-		}
-		return cover_supported_type[type];
-	},
+Template.repo_buttons.helpers({
 	twitterShareParams: function () {
 		var data = UI.getData();
 		var text = 'I have created a new repository named "' + data.repo.title + '" on @gitstr! Subscribe to it right here';
@@ -28,6 +19,18 @@ Template.repo.helpers({
 
 		text = (Meteor.userId() === data.repo.user_id) ? text : discover_text;
 		return '?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+	}
+});
+
+Template.repo.helpers({
+	supported: function (type) {
+		var cover_supported_type = {
+			image: true,
+			audio: true,
+			video: true,
+			tweet: true
+		}
+		return cover_supported_type[type];
 	},
 	getFilterIcon: function(files) {
 		var icons = {image: 'camera', video: 'record', audio: 'unmute', application: 'file', all: 'file'}
