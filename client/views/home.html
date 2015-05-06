@@ -1,3 +1,175 @@
+<template name="feed">
+	{{#unless history.count}}
+	<div class="ui vertically padded transition grid">
+		<div class="center aligned column">
+			<div class="ui yellow floating message">
+				<div class="header">
+					That looks pretty empty! Because you haven't subscribe to any repository for now...
+				</div>
+				Explore some recently created repositories and subscribe to it!
+				<div class="ui hidden divider"></div>
+				<div>
+					<a href="/explore">
+						<div class="ui orange huge button">
+						  <i class="icon rocket"></i>
+						  Explore
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/unless}}
+	<div class="ui feed">
+		{{#each history}}
+			<div class="event">
+				<div class="label">
+					<img src="{{user_profile_image}}">
+				</div>
+				<div class="content">
+					<div class="date">
+						{{setLastUpdate timestamp}}
+					</div>
+					<div class="summary">
+						<a class="user" href="/{{user_screen_name}}">{{user_screen_name}}</a> has updated his <a class="user" href="{{repo_url}}">{{repo_screen_title}}</a> repository
+					</div>
+					<div class="meta">
+						{{#if nb_link}}
+							Added {{nb_link}} {{#if link_type}}{{link_type.subtype}} <i class="{{link_type.service_name}} icon"></i> {{else}}link{{/if}}
+						{{else}}
+							Added {{nb_files}} file{{#if greater nb_files 1}}s{{/if}}
+						{{/if}}
+					</div>
+				</div>
+			</div>
+
+			{{#if nb_audio}}
+			<div class="event">
+				<div class="label">
+					<span class="ui yellow circular label">{{nb_audio}}</span>
+					<i class="unmute yellow icon"></i>
+				</div>
+				<div class="content">
+					<div class="extra text">
+						<div class="ui list">
+							{{#each getFilesList files "audio"}}
+								<div class="item">
+									<i class="right triangle icon"></i>
+          							<div class="content">
+          								<a href="{{../repo_url}}/audio">{{title}}</a>
+          							</div>
+          						</div>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+	
+			{{#if nb_application}}
+			<div class="event">
+				<div class="label">
+					<span class="ui grey circular label">{{nb_application}}</span>
+					<i class="file outline grey icon"></i>
+				</div>
+				<div class="content">
+					<div class="extra text">
+						<div class="ui list">
+							{{#each getFilesList files "application"}}
+								<div class="item">
+									<i class="right triangle icon"></i>
+          							<div class="content">
+          								<a href="{{../repo_url}}/application">{{title}}</a>
+          							</div>
+          						</div>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{#if nb_video}}
+			<div class="event">
+				<div class="label">
+					<span class="ui red circular label">{{nb_video}}</span>
+					<i class="record red icon"></i>
+				</div>
+				<div class="content">
+					<div class="ui doubling three column grid">
+						{{#each getFilesList files "video"}}
+						<div class="column">
+							<a href="{{../repo_url}}/video" class="ui card">
+								<div class="image">
+									<img src="{{cover_url}}">
+								</div>
+								<div class="content">
+									<div class="description">
+									 	{{title}}
+									</div>
+									<div class="meta">
+										<span class="date">{{setSize size}}</span>
+									</div>
+								</div>
+							</a>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{#if nb_image}}
+			<div class="event">
+				<div class="label">
+					<span class="ui blue circular label">{{nb_image}}</span>
+					<i class="camera blue icon"></i>
+				</div>
+				<div class="content">
+					<div class="ui doubling three column grid">
+					{{#each getFilesList files "image"}}
+						<div class="column">
+							<a href="{{../repo_url}}/image" class="ui card">
+								<div class="image">
+									<img src="{{cover_url}}">
+								</div>
+								<div class="content">
+									 <div class="description">
+									 	{{title}}
+									</div>
+									<div class="meta">
+										<span class="date">{{setSize size}}</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{{/each}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			<div class="ui divider"></div>
+		{{/each}}
+		
+	</div>
+</template>
+
+<template name="repo_input">
+	<form>
+		<div class="ui form">
+			<div id="repo_input_error" class="ui negative message">
+				{{errorMessage}}
+			</div>
+			<div class="inline fields">
+				<div class="field {{#if errorMessage}}error{{/if}}">
+					<input type="text" name="repo_input" placeholder="New repository">
+					<input type="submit" class="ui positive button" value="Add" />
+				</div>
+			</div>
+		</div>
+	</form>
+</template>
 
 <template name="home_content">
 	<h2 class="ui header">
@@ -13,7 +185,7 @@
 		<div class="content">
 			Your repositories
 			<div class="sub header">
-				{{currentUser.nb_repo}} Repositories
+				{{#if currentUser.nb_repo}} {{currentUser.nb_repo}} {{else}} 0 {{/if}}Repositories
 			</div>
 		</div>
 		{{/if}}
@@ -30,27 +202,9 @@
 	</h2>
 
 	{{#if equal display "rep"}}
-	<form>
-		<div class="ui form">
-			<div id="repo_input_error" class="ui negative message">
-				<div class="header">
-					{{errorMessage}}
-				</div>
-			</div>
-			<div class="inline fields">
-				<i class="add square grey icon"></i>
-				<span class="grey">New repository: </span>
-				<div class="field {{#if errorMessage}}error{{/if}}">
-					<label>
-						<span class="grey-light">{{currentUser.profile.screen_name}} / </span>
-						<span class="teal">#</span>
-					</label>
-					<input type="text" name="repo_input" placeholder="Name">
-					<input type="submit" class="ui positive button" value="Add" />
-				</div>
-			</div>
-		</div>
-	</form>
+		{{#if repo.count}}
+			{{> repo_input}}
+		{{/if}}
 	{{/if}}
 
 	<div class="ui clearing divider"></div>
@@ -66,10 +220,9 @@
 							That looks pretty empty...
 						</div>
 						{{#if equal display "rep"}}
-							Try to create a repository and share it with the everyone.
-							<div>
-								<i class="ui massive world icon"></i>
-							</div>
+							Try to first create a repository here.
+							<div class="ui hidden divider"></div>
+							{{> repo_input}}
 							<div class="ui hidden divider"></div>
 						{{/if}}
 
@@ -114,45 +267,4 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="centered row">
-		<h2 class="ui header">
-			<img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png" class="ui circular image">
-			Guillaume Morin
-		</h2>
-		<div class="ui segment">
-			<div class="ui vertical segment">
-				<h2 class="ui center aligned icon header">
-					<img src="https://pbs.twimg.com/profile_images/425914532385402880/lqeOrhNF.png" class="ui circular image">
-				Guillaume Morin
-				</h2>
-			</div>
-			<div class="ui vertical segment">
-				<div class="ui compact menu">
-					<a class="item">
-						<i class="icon mail"></i> Messages
-						<div class="floating ui red label circular small">22</div>
-					</a>
-					<a class="item">
-						<i class="icon users"></i> Friends
-						<div class="floating ui teal label circular small">28</div>
-					</a>
-				</div>
-			</div>
-		</div>
-			
-			
-		<p>HOME</p>
-		<form>
-			<div class="ui input">
-				<input type="text" name="myInput" placeholder="new repo...">
-			</div>
-			<input type="submit" class="btn btn-primary btn-lg" value="Submit" />
-	    </form>
-	    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  	<span class="sr-only">Error:</span>{{errorMessage}}
-	  	<div>Repositories: {{repoCounter}}</div>
-		{{#each repoList}}
-			<h2><a class="link-repo" href="{{url}}">{{title}}</a></h2>
-		{{/each}}
-	</div> -->
 </template>

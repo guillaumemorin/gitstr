@@ -45,6 +45,11 @@ Router.map(function () {
 				this.render('login');
 				return;
 			}
+
+			if (!Repos.findOne({user_id: Meteor.userId()})) {
+				Router.go('/rep');
+			}
+
 			this.next();
 		},
 		data: function () {
