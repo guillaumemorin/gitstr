@@ -1,6 +1,6 @@
 service_name = 'Gitstr';
 service_url = 'http://gitstr.com/';
-service_git = 'git@gitstr.com:';
+service_git = 'git://gitstr.com/';
 image_404 = '/noun_25237_cc.png';
 image_default = '/image_small.jpg';
 image_default_white = '/white-image.png';

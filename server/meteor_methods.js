@@ -78,7 +78,7 @@ Meteor.methods({
 			url: '/' + repo_path,
 			description: 'By ' + Meteor.user().profile.name,
 			permalink: service_url + repo_path,
-			permaGit: service_git + repo_path_git,
+			permaGit: service_git + repo_path,
 			file_structure: [],
 			samples: {
 				image:getDefaultRadient(),
