@@ -81,7 +81,7 @@
 			<div class="content">
 				<div class="center">
 					<div>Unsubscribing from</div>
-					<div>{{user_name}}/#{{title}} ...</div>
+					<div>{{user_name}}/#{{screen_title}} ...</div>
 				</div>
 			</div>
 	 	</div>
@@ -89,7 +89,7 @@
 			{{#unless isOwner user_id}}
 				<i data-id="{{_id}}" class="subscribe right floated star {{#if subscribed subscribers}}yellow{{/if}} icon"></i>
 			{{/unless}}
-			<div class="header"><span class="teal">#</span> <a href="{{url}}">{{title}}</a></div>
+			<div class="header"><span class="teal">#</span> <a href="{{url}}">{{screen_title}}</a></div>
 			<div class="meta">	
 				<span class="time">
 				{{#if last_update}}

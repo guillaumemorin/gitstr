@@ -78,6 +78,10 @@ body {
 	background-image: url(pw_maze_white.png);
 }
 
+div {
+	outline: none;
+}
+
 a {
 	outline: none;
 	color: rgba(0, 0, 0, 0.5) @important;
@@ -85,6 +89,9 @@ a {
 
 	&:hover, &.active {
 		color: rgba(0, 0, 0, 0.8) @important;	
+	};
+	&:active, &:focus {
+		outline: none;	
 	};
 }
 
