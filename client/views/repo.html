@@ -23,24 +23,31 @@
 	<meta property="og:title" content="fb link" />
 </head>
 <template name="repo_stat_list">
-	<div class="ui big horizontal list">
-		<div class="item">
-			<i class="ui blue camera circular inverted icon"></i>
-			<span class="blue">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
-		</div>
-		<div class="item">
-			<i class="ui red record circular inverted icon"></i>
-			<span class="red">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
-		</div>
-		<div class="item">
-			<i class="ui yellow unmute circular inverted icon"></i>
-			<span class="yellow">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
-		</div>
-		<div class="item">
-			<i class="ui grey file outline circular icon"></i>
-			<span class="grey">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
-		</div>
-	</div>
+	<a href="{{repo.url}}" id="filter_all" class="ui large image label">
+		{{#if equal getFilter "all"}}<i class="ui check icon"></i>{{/if}}
+		<i class="ui file icon"></i>
+		<span class="detail">{{#if repo.nb_files}} {{repo.nb_files}} {{else}} 0 {{/if}}</span>
+	</a>
+	<a href="{{repo.url}}/image" id="filter_image" class="ui blue large image label">
+		{{#if equal getFilter "image"}}<i class="ui check icon"></i>{{/if}}
+		<i class="camera icon"></i>
+		<span class="detail">{{#if repo.nb_image}} {{repo.nb_image}} {{else}} 0 {{/if}}</span>
+	</a>
+	<a href="{{repo.url}}/video" id="filter_video" class="ui red large image label">
+		{{#if equal getFilter "video"}}<i class="ui check icon"></i>{{/if}}
+		<i class="ui record icon"></i>
+		<span class="detail">{{#if repo.nb_video}} {{repo.nb_video}} {{else}} 0 {{/if}}</span>
+	</a>
+	<a href="{{repo.url}}/audio" id="filter_audio" class="ui yellow large image label">
+		{{#if equal getFilter "audio"}}<i class="ui check icon"></i>{{/if}}
+		<i class="ui unmute icon"></i>
+		<span class="detail">{{#if repo.nb_audio}} {{repo.nb_audio}} {{else}} 0 {{/if}}</span>
+	</a>
+	<a href="{{repo.url}}/application" id="filter_application" class="ui green large image label">
+		{{#if equal getFilter "application"}}<i class="ui check icon"></i>{{/if}}
+		<i class="ui file text icon"></i>
+		<span class="detail">{{#if repo.nb_application}} {{repo.nb_application}} {{else}} 0 {{/if}}</span>
+	</a>
 </template>
 
 <template name="repo_buttons">
@@ -128,13 +135,19 @@
 					</div>
 				</div>
 
-				<div class="ui raised segment">
+				<div class="ui segment">
 					<div class="ui grid">
 						<div class="left aligned sixteen wide column">
 							<div id="history_dropdown" class="ui floating small basic pink labeled dropdown icon button stackable">
 								<span class="text">History</span>
 								<i class="history icon"></i>
 								<div class="menu">
+									{{#unless history.count}}
+										<div class="header">
+											<i class="clock icon"></i>
+											No history
+										</div>
+									{{/unless}}
 									{{#each history}}
 										<div class="item history" id="{{_id}}">
 											<i class="clock icon"></i>
@@ -144,32 +157,6 @@
 											{{#if nb_audio}} | {{nb_audio}} Audio {{/if}}
 										</div>
 									{{/each}}
-								</div>
-							</div>
-							<div id="filter_dropdown" class="ui floating small basic blue labeled dropdown icon button stackable">
-								<span class="text">Filter</span>
-								<i class="filter icon"></i>
-								<div class="menu">
-									<div id="filter_all" class="item" data-value="all">
-										<i class="list icon"></i>
-										All
-									</div>
-									<div id="filter_image" class="item" data-value="image">
-										<i class="blue camera icon"></i>
-										Image
-									</div>
-									<div id="filter_video" class="item" data-value="video">
-										<i class="red record icon"></i>
-										Video
-									</div>
-									<div id="filter_audio" class="item" data-value="audio">
-										<i class="yellow unmute icon"></i>
-										Audio
-									</div>
-									<div id="filter_application" class="item" data-value="application">
-										<i class="grey-light file outline icon"></i>
-										Other
-									</div>
 								</div>
 							</div>
 							{{#if files.count}}
@@ -235,29 +222,23 @@
 					<div class="ui vertically padded grid">
 						<div class="center aligned column">
 							{{#if isOwner repo.user_id}}
-							<div class="ui yellow floating message">
-								<div class="header">
-									That looks pretty empty...
-								</div>
-								Add some files here!
-								<div class="ui hidden divider"></div>
+							<div class="ui segment">
+								<h4 class="ui header grey">
+									That looks pretty empty. Try to add some files.
+								</h4>
 								<div class="ui buttons">
-									<div id="add_dropdown" class="ui floating yellow labeled dropdown icon button stackable">
+									<div id="add_dropdown" class="ui floating large orange labeled dropdown icon button stackable">
 										<span class="text">Add Files</span>
 										<i class="add icon"></i>
 									</div>
 								</div>
 							</div>
 							{{else}}
-							<div class="ui floating message">
-								<div class="red header">
-									{{emptyMessage}}
-									<i class="frown big icon"></i>
-								</div>
-								<div>
-									<i class="{{getFilterIcon}} red massive icon"></i>
-								</div>
-								<div class="ui hidden divider"></div>
+							<div class="ui segment">
+								<i class="{{getFilterIcon}} red massive icon"></i>
+							</div>
+							<div class="red header">
+								{{emptyMessage}}
 							</div>
 							{{/if}}
 						</div>
@@ -379,6 +360,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="ui hidden divider"></div>
 	
 	{{#if errorMessage}}
 		<div class="ui negative small message">

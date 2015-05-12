@@ -104,6 +104,9 @@ Router.map(function () {
 				return;
             }
 
+			var filter = this.params.filter_type || 'all';
+            Session.set('filter', filter);
+
 			var username_subpath = this.params.repo_name_or_user_section;
 			var repos;
 
@@ -146,7 +149,7 @@ Router.map(function () {
 				{sort: {timestamp: -1}, limit: 5}
 			);
 
-			return {repo: repo, user: user, history: history, files: files, filter_type: this.params.filter_type}
+			return {repo: repo, user: user, history: history, files: files}
 		}
 	});
 });

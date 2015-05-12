@@ -74,8 +74,9 @@
 /*-------------------
     Global declarations
 --------------------*/
+
 body {
-	background-image: url(pw_maze_white.png);
+	// background-image: url(pw_maze_white.png);
 }
 
 div {
@@ -93,6 +94,40 @@ a {
 	&:active, &:focus {
 		outline: none;	
 	};
+}
+
+.ui {
+	// font-family: 'Oxygen' @important;
+	&.card {
+		box-shadow: none;
+		&:hover {
+			box-shadow: none @important;
+		}	
+		.header {
+			> a {
+				color: @darkGrey @important;
+				&:hover {
+					color: @black;
+				}	
+			}
+		}
+	}
+	&.segment {
+		box-shadow: none;
+	}
+	&.secondary.menu {
+		.item {
+			transition: @transition @important;
+			&:hover{
+				background-color: transparent @important;
+			}
+		}
+	}
+	&.image.label {
+		> .icon {
+			margin: 0em 0.35em 0em 0.55em @important;
+		}
+	}
 }
 
 .underlined {
@@ -159,19 +194,20 @@ a {
 	color: @lightTeal;
 }
 
-.link {
-	text-decoration: none;
-	transition: @transition;
-}
+// .link {
+// 	text-decoration: none;
+// 	transition: @transition;
+// }
 
 .link-light {
 	color: @lightGrey @important;
-	.link;
 }
 
 .link-dark {
 	color: @darkGrey @important;
-	.link;
+	&:hover {
+		color: @lightGrey @important;
+	}
 }
 
 /*-------------------
@@ -249,13 +285,23 @@ video {
 --------------------*/
 #fixed_topbar {
 	padding: 0.2rem;
-	background-color: rgba(255,255,255,.97);
+	background-color: rgba(47, 47, 47, .97);
+	> a {
+		color: @white @important;
+	}
+}
+
+#header_subscribe {
+	font-size: 0.7em;
+	vertical-align: top;
+	margin-left: 0.3em;
 }
 
 #topbar_repo_info {
 	position: fixed;
 	top: 0;
 	display: none;
+	color: @white;
 	z-index: 102;
 	width: 100%;
 

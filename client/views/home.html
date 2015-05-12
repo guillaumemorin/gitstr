@@ -1,12 +1,12 @@
 <template name="feed">
 	{{#unless history.count}}
-	<div class="ui vertically padded transition grid">
+	<div class="ui grid">
 		<div class="center aligned column">
-			<div class="ui yellow floating message">
-				<div class="header">
-					That looks pretty empty! Because you haven't subscribe to any repository for now...
-				</div>
-				Explore some recently created repositories and subscribe to it!
+			<div class="ui segment">
+				<h3 class="ui header grey-dark">
+					That looks pretty empty.
+				</h3>
+				Explore and subscribe to repositories first.
 				<div class="ui hidden divider"></div>
 				<div>
 					<a href="/explore">
@@ -16,6 +16,7 @@
 						</div>
 					</a>
 				</div>
+				<div class="ui hidden divider"></div>
 			</div>
 		</div>
 	</div>
@@ -176,14 +177,17 @@
 		{{#if equal display "feed"}}
 		<i class="green heartbeat icon"></i>
 		<div class="content">
-			Activity
+			Subscriptions feed.
+			<div class="sub header">
+				News from your subscriptions.
+			</div>
 		</div>
 		{{/if}}
 
 		{{#if equal display "rep"}}
 		<i class="orange flag icon"></i>
 		<div class="content">
-			Your repositories
+			Repositories.
 			<div class="sub header">
 				{{#if currentUser.nb_repo}} {{currentUser.nb_repo}} {{else}} 0 {{/if}}Repositories
 			</div>
@@ -193,56 +197,66 @@
 		{{#if equal display "sub"}}
 		<i class="yellow star icon"></i>
 		<div class="content">
-			Your subscriptions
+			Subscriptions.
 			<div class="sub header">
-				{{currentUser.nb_subscription}} Subscriptions
+				{{#if currentUser.nb_subscription}} {{currentUser.nb_subscription}} {{else}} 0 {{/if}}Subscriptions
 			</div>
 		</div>
 		{{/if}}
 	</h2>
 
-	{{#if equal display "rep"}}
-		{{#if repo.count}}
-			{{> repo_input}}
-		{{/if}}
-	{{/if}}
-
 	<div class="ui clearing divider"></div>
 	{{#if equal display "feed"}}
 		{{> feed}}
 	{{else}}
-		<div class="ui doubling stackable two column grid">
-			{{#unless repo.count}}
-			<div class="ui vertically padded transition grid">
+		<div class="ui doubling stackable two column grid">					
+			{{#if equal display "rep"}}
+			<div class="ui vertically padded grid">
 				<div class="center aligned column">
-					<div class="ui yellow floating message">
-						<div class="header">
-							That looks pretty empty...
-						</div>
-						{{#if equal display "rep"}}
+					<div class="ui segment">
+						{{#if repo.count}}
+							<h3 class="ui header grey-dark">
+								Add a repository.
+							</h3>
+							{{> repo_input}}
+						{{else}}
+							<h3 class="ui header grey-dark">
+								That looks pretty empty.
+							</h3>
 							Try to create a repository first.
 							<div class="ui hidden divider"></div>
 							{{> repo_input}}
 							<div class="ui hidden divider"></div>
 						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
 
-						{{#if equal display "sub"}}
-							Explore some recently created repositories and subscribe to it.
+			{{#if equal display "sub"}}
+				{{#unless repo.count}}
+				<div class="ui vertically padded grid">
+					<div class="center aligned column">
+						<div class="ui segment">
+							<h3 class="ui header grey-dark">
+								That looks pretty empty.
+							</h3>
+							Explore and subscribe to repositories first.
 							<div class="ui hidden divider"></div>
 							<div>
 								<a href="/explore">
-									<div class="ui orange massive button">
+									<div class="ui orange huge button">
 									  <i class="icon rocket"></i>
 									  Explore
 									</div>
 								</a>
 							</div>
-						{{/if}}
+							<div class="ui hidden divider"></div>
+						</div>
 					</div>
 				</div>
-			</div>
-			{{/unless}}
-
+				{{/unless}}
+			{{/if}}
 			{{> repositories_grid}}
 		</div>
 	{{/if}}

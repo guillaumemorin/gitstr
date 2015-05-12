@@ -53,12 +53,13 @@
 					<div class="item">
 						<div class="middle aligned content">
 							<div class="header">
-								<a class="link-light" href="/{{../user.profile.screen_name}}">
+								<a class="link-dark" href="/{{../user.profile.screen_name}}">
 									{{../user.profile.screen_name}}
 								</a>
 								{{#if ../repo.title}} 
-								<span class="grey-light"> / </span>
-								<span class="teal">#</span> {{../repo.title}}
+								<span class="grey-dark">/</span>
+								<span class="teal">#</span>
+								<span class="grey-light">{{../repo.screen_title}}</span>
 								{{#unless isOwner ../repo.user_id}}
 								<i id="header_subscribe" class="favorite icon {{#if subscribed ../repo.subscribers}}yellow{{/if}}"></i>
 								{{/unless}}
